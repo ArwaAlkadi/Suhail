@@ -1,0 +1,582 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F712F8C1042003E343E /* FirebaseAnalytics */; };
+		EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F732F8C1042003E343E /* FirebaseFirestore */; };
+		EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F752F8C1042003E343E /* FirebaseFunctions */; };
+		EC309F7C2F8C1058003E343E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EC309F772F8C1058003E343E /* Assets.xcassets */; };
+		EC309F7D2F8C1058003E343E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */; };
+		EC309F7F2F8C1058003E343E /* DesertApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309F792F8C1058003E343E /* DesertApp.swift */; };
+		EC309F9C2F97FD87003E343E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309F9B2F97FD87003E343E /* SplashView.swift */; };
+		EC309F9E2F97FDA3003E343E /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309F9D2F97FDA3003E343E /* SplashViewModel.swift */; };
+		EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309F9F2F97FDBC003E343E /* OnboardingView.swift */; };
+		EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA12F97FDC9003E343E /* OnboardingViewModel.swift */; };
+		EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA32F97FDDF003E343E /* HomeView.swift */; };
+		EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA52F97FDF5003E343E /* HomeViewModel.swift */; };
+		EC309FA82F97FE0D003E343E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA72F97FE0D003E343E /* MapView.swift */; };
+		EC309FAA2F97FE1F003E343E /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */; };
+		EC309FAC2F97FE66003E343E /* TripCardSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAB2F97FE66003E343E /* TripCardSheet.swift */; };
+		EC309FAE2F97FE79003E343E /* TripCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */; };
+		EC309FB02F97FE92003E343E /* TripHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAF2F97FE92003E343E /* TripHistoryView.swift */; };
+		EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */; };
+		EC309FB42F97FEBD003E343E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB32F97FEBD003E343E /* Components.swift */; };
+		EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB52F97FEDD003E343E /* AppSettings.swift */; };
+		EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB72F97FF5A003E343E /* SavedInfo.swift */; };
+		EC309FBA2F97FF69003E343E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB92F97FF69003E343E /* Trip.swift */; };
+		EC309FBC2F980013003E343E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBB2F980013003E343E /* LocationManager.swift */; };
+		EC309FBE2F980024003E343E /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBD2F980024003E343E /* FirebaseService.swift */; };
+		EC309FC02F9800DE003E343E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBF2F9800DE003E343E /* RootView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
+		EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EC309F802F91773C003E343E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EC309F9B2F97FD87003E343E /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		EC309F9D2F97FDA3003E343E /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		EC309F9F2F97FDBC003E343E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		EC309FA12F97FDC9003E343E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		EC309FA32F97FDDF003E343E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		EC309FA52F97FDF5003E343E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		EC309FA72F97FE0D003E343E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
+		EC309FAB2F97FE66003E343E /* TripCardSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCardSheet.swift; sourceTree = "<group>"; };
+		EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCardViewModel.swift; sourceTree = "<group>"; };
+		EC309FAF2F97FE92003E343E /* TripHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryView.swift; sourceTree = "<group>"; };
+		EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryViewModel.swift; sourceTree = "<group>"; };
+		EC309FB32F97FEBD003E343E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		EC309FB52F97FEDD003E343E /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		EC309FB72F97FF5A003E343E /* SavedInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedInfo.swift; sourceTree = "<group>"; };
+		EC309FB92F97FF69003E343E /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		EC309FBB2F980013003E343E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		EC309FBD2F980024003E343E /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
+		EC309FBF2F9800DE003E343E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EC309F5D2F8C0EB3003E343E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */,
+				EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */,
+				EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EC309F572F8C0EB3003E343E = {
+			isa = PBXGroup;
+			children = (
+				EC309F7B2F8C1058003E343E /* Desert */,
+				EC309F612F8C0EB3003E343E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EC309F612F8C0EB3003E343E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F602F8C0EB3003E343E /* Desert.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EC309F7B2F8C1058003E343E /* Desert */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F902F97FAFF003E343E /* App */,
+				EC309F982F97FCCE003E343E /* Services */,
+				EC309F8F2F97FAFD003E343E /* Models */,
+				EC309F8E2F97FAF9003E343E /* Pages */,
+				EC309F962F97FCAE003E343E /* SharedComponents */,
+				EC309F9A2F97FD07003E343E /* Other */,
+			);
+			path = Desert;
+			sourceTree = "<group>";
+		};
+		EC309F8A2F97FAF9003E343E /* HistoryPage */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FAF2F97FE92003E343E /* TripHistoryView.swift */,
+				EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */,
+			);
+			path = HistoryPage;
+			sourceTree = "<group>";
+		};
+		EC309F8B2F97FAF9003E343E /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FA72F97FE0D003E343E /* MapView.swift */,
+				EC309FA32F97FDDF003E343E /* HomeView.swift */,
+				EC309FA52F97FDF5003E343E /* HomeViewModel.swift */,
+				EC309F942F97FC29003E343E /* TripCard */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
+		EC309F8C2F97FAF9003E343E /* OnboardingPage */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F9F2F97FDBC003E343E /* OnboardingView.swift */,
+				EC309FA12F97FDC9003E343E /* OnboardingViewModel.swift */,
+			);
+			path = OnboardingPage;
+			sourceTree = "<group>";
+		};
+		EC309F8D2F97FAF9003E343E /* SplashPage */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F9B2F97FD87003E343E /* SplashView.swift */,
+				EC309F9D2F97FDA3003E343E /* SplashViewModel.swift */,
+			);
+			path = SplashPage;
+			sourceTree = "<group>";
+		};
+		EC309F8E2F97FAF9003E343E /* Pages */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F8D2F97FAF9003E343E /* SplashPage */,
+				EC309F8C2F97FAF9003E343E /* OnboardingPage */,
+				EC309F8B2F97FAF9003E343E /* HomePage */,
+				EC309F8A2F97FAF9003E343E /* HistoryPage */,
+			);
+			path = Pages;
+			sourceTree = "<group>";
+		};
+		EC309F8F2F97FAFD003E343E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FB52F97FEDD003E343E /* AppSettings.swift */,
+				EC309FB72F97FF5A003E343E /* SavedInfo.swift */,
+				EC309FB92F97FF69003E343E /* Trip.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		EC309F902F97FAFF003E343E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F792F8C1058003E343E /* DesertApp.swift */,
+				EC309FBF2F9800DE003E343E /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		EC309F942F97FC29003E343E /* TripCard */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */,
+				EC309FAB2F97FE66003E343E /* TripCardSheet.swift */,
+				EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */,
+			);
+			path = TripCard;
+			sourceTree = "<group>";
+		};
+		EC309F962F97FCAE003E343E /* SharedComponents */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FB32F97FEBD003E343E /* Components.swift */,
+			);
+			path = SharedComponents;
+			sourceTree = "<group>";
+		};
+		EC309F982F97FCCE003E343E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FBB2F980013003E343E /* LocationManager.swift */,
+				EC309FBD2F980024003E343E /* FirebaseService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EC309F9A2F97FD07003E343E /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				EC309F772F8C1058003E343E /* Assets.xcassets */,
+				EC309F802F91773C003E343E /* Info.plist */,
+				EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EC309F5F2F8C0EB3003E343E /* Desert */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Desert" */;
+			buildPhases = (
+				EC309F5C2F8C0EB3003E343E /* Sources */,
+				EC309F5D2F8C0EB3003E343E /* Frameworks */,
+				EC309F5E2F8C0EB3003E343E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Desert;
+			packageProductDependencies = (
+				EC309F712F8C1042003E343E /* FirebaseAnalytics */,
+				EC309F732F8C1042003E343E /* FirebaseFirestore */,
+				EC309F752F8C1042003E343E /* FirebaseFunctions */,
+			);
+			productName = Desert;
+			productReference = EC309F602F8C0EB3003E343E /* Desert.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC309F582F8C0EB3003E343E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					EC309F5F2F8C0EB3003E343E = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+				};
+			};
+			buildConfigurationList = EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Desert" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EC309F572F8C0EB3003E343E;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EC309F702F8C1042003E343E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EC309F612F8C0EB3003E343E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EC309F5F2F8C0EB3003E343E /* Desert */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EC309F5E2F8C0EB3003E343E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC309F7C2F8C1058003E343E /* Assets.xcassets in Resources */,
+				EC309F7D2F8C1058003E343E /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EC309F5C2F8C0EB3003E343E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */,
+				EC309FAC2F97FE66003E343E /* TripCardSheet.swift in Sources */,
+				EC309FAE2F97FE79003E343E /* TripCardViewModel.swift in Sources */,
+				EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */,
+				EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */,
+				EC309FBE2F980024003E343E /* FirebaseService.swift in Sources */,
+				EC309F7F2F8C1058003E343E /* DesertApp.swift in Sources */,
+				EC309FB42F97FEBD003E343E /* Components.swift in Sources */,
+				EC309FAA2F97FE1F003E343E /* TripSummaryCard.swift in Sources */,
+				EC309F9C2F97FD87003E343E /* SplashView.swift in Sources */,
+				EC309FC02F9800DE003E343E /* RootView.swift in Sources */,
+				EC309FB02F97FE92003E343E /* TripHistoryView.swift in Sources */,
+				EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */,
+				EC309FBA2F97FF69003E343E /* Trip.swift in Sources */,
+				EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */,
+				EC309FA82F97FE0D003E343E /* MapView.swift in Sources */,
+				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
+				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
+				EC309FBC2F980013003E343E /* LocationManager.swift in Sources */,
+				EC309F9E2F97FDA3003E343E /* SplashViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EC309F692F8C0EB3003E343E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EC309F6A2F8C0EB3003E343E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		EC309F6C2F8C0EB3003E343E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Desert/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "التطبيق يحتاج موقعك لتسجيل مسار رحلتك وإرساله لأهلك في حالة الطوارئ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "التطبيق يحتاج موقعك لتسجيل مسار رحلتك";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2026.Desert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
+		EC309F6D2F8C0EB3003E343E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Desert/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "التطبيق يحتاج موقعك لتسجيل مسار رحلتك وإرساله لأهلك في حالة الطوارئ";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "التطبيق يحتاج موقعك لتسجيل مسار رحلتك";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 15.6;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.2026.Desert;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				XROS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Desert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC309F692F8C0EB3003E343E /* Debug */,
+				EC309F6A2F8C0EB3003E343E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Desert" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EC309F6C2F8C0EB3003E343E /* Debug */,
+				EC309F6D2F8C0EB3003E343E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EC309F702F8C1042003E343E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EC309F712F8C1042003E343E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC309F702F8C1042003E343E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		EC309F732F8C1042003E343E /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC309F702F8C1042003E343E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		EC309F752F8C1042003E343E /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EC309F702F8C1042003E343E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = EC309F582F8C0EB3003E343E /* Project object */;
+}
