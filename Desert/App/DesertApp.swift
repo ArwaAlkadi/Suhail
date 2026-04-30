@@ -5,28 +5,18 @@
 
 import SwiftUI
 
-import SwiftUI
-import Firebase
-import SwiftData
-
 @main
 struct DesertApp: App {
     
-    init() {
-        FirebaseApp.configure()
-    }
-    
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ContentView()
         }
-        .modelContainer(for: [
-            AppSettings.self,
-            SavedInfo.self,
-            SavedContact.self,
-            Trip.self,
-            Contact.self,
-            LocationPoint.self
-        ])
+    }
+}
+
+struct ContentView: View {
+    var body: some View {
+        Text("Hello, World!")
     }
 }

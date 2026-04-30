@@ -19,19 +19,20 @@
 		EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA12F97FDC9003E343E /* OnboardingViewModel.swift */; };
 		EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA32F97FDDF003E343E /* HomeView.swift */; };
 		EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA52F97FDF5003E343E /* HomeViewModel.swift */; };
-		EC309FA82F97FE0D003E343E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA72F97FE0D003E343E /* MapView.swift */; };
-		EC309FAA2F97FE1F003E343E /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */; };
-		EC309FAC2F97FE66003E343E /* TripCardSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAB2F97FE66003E343E /* TripCardSheet.swift */; };
-		EC309FAE2F97FE79003E343E /* TripCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */; };
 		EC309FB02F97FE92003E343E /* TripHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FAF2F97FE92003E343E /* TripHistoryView.swift */; };
 		EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */; };
-		EC309FB42F97FEBD003E343E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB32F97FEBD003E343E /* Components.swift */; };
 		EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB52F97FEDD003E343E /* AppSettings.swift */; };
 		EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB72F97FF5A003E343E /* SavedInfo.swift */; };
 		EC309FBA2F97FF69003E343E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB92F97FF69003E343E /* Trip.swift */; };
 		EC309FBC2F980013003E343E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBB2F980013003E343E /* LocationManager.swift */; };
 		EC309FBE2F980024003E343E /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBD2F980024003E343E /* FirebaseService.swift */; };
 		EC309FC02F9800DE003E343E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBF2F9800DE003E343E /* RootView.swift */; };
+		EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */; };
+		EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */; };
+		EC309FC62FA385FC003E343E /* CreateTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC52FA385FC003E343E /* CreateTripView.swift */; };
+		EC309FCB2FA3870C003E343E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FCA2FA3870C003E343E /* Map.swift */; };
+		EC309FCD2FA3874C003E343E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FCC2FA3874C003E343E /* Components.swift */; };
+		EC309FD52FA388CF003E343E /* HomePageTripsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FD42FA388CF003E343E /* HomePageTripsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,19 +47,20 @@
 		EC309FA12F97FDC9003E343E /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		EC309FA32F97FDDF003E343E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		EC309FA52F97FDF5003E343E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
-		EC309FA72F97FE0D003E343E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
-		EC309FAB2F97FE66003E343E /* TripCardSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCardSheet.swift; sourceTree = "<group>"; };
-		EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCardViewModel.swift; sourceTree = "<group>"; };
 		EC309FAF2F97FE92003E343E /* TripHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryView.swift; sourceTree = "<group>"; };
 		EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryViewModel.swift; sourceTree = "<group>"; };
-		EC309FB32F97FEBD003E343E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		EC309FB52F97FEDD003E343E /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		EC309FB72F97FF5A003E343E /* SavedInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedInfo.swift; sourceTree = "<group>"; };
 		EC309FB92F97FF69003E343E /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		EC309FBB2F980013003E343E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EC309FBD2F980024003E343E /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		EC309FBF2F9800DE003E343E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryInDetailsView.swift; sourceTree = "<group>"; };
+		EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripCardView.swift; sourceTree = "<group>"; };
+		EC309FC52FA385FC003E343E /* CreateTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripView.swift; sourceTree = "<group>"; };
+		EC309FCA2FA3870C003E343E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		EC309FCC2FA3874C003E343E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		EC309FD42FA388CF003E343E /* HomePageTripsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageTripsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +100,7 @@
 				EC309F982F97FCCE003E343E /* Services */,
 				EC309F8F2F97FAFD003E343E /* Models */,
 				EC309F8E2F97FAF9003E343E /* Pages */,
-				EC309F962F97FCAE003E343E /* SharedComponents */,
+				EC309FC92FA386C8003E343E /* Shared */,
 				EC309F9A2F97FD07003E343E /* Other */,
 			);
 			path = Desert;
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				EC309FAF2F97FE92003E343E /* TripHistoryView.swift */,
+				EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */,
 				EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */,
 			);
 			path = HistoryPage;
@@ -116,10 +119,9 @@
 		EC309F8B2F97FAF9003E343E /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				EC309FA72F97FE0D003E343E /* MapView.swift */,
 				EC309FA32F97FDDF003E343E /* HomeView.swift */,
 				EC309FA52F97FDF5003E343E /* HomeViewModel.swift */,
-				EC309F942F97FC29003E343E /* TripCard */,
+				EC309FD32FA38875003E343E /* HomePageTrips */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -172,24 +174,6 @@
 			path = App;
 			sourceTree = "<group>";
 		};
-		EC309F942F97FC29003E343E /* TripCard */ = {
-			isa = PBXGroup;
-			children = (
-				EC309FA92F97FE1F003E343E /* TripSummaryCard.swift */,
-				EC309FAB2F97FE66003E343E /* TripCardSheet.swift */,
-				EC309FAD2F97FE79003E343E /* TripCardViewModel.swift */,
-			);
-			path = TripCard;
-			sourceTree = "<group>";
-		};
-		EC309F962F97FCAE003E343E /* SharedComponents */ = {
-			isa = PBXGroup;
-			children = (
-				EC309FB32F97FEBD003E343E /* Components.swift */,
-			);
-			path = SharedComponents;
-			sourceTree = "<group>";
-		};
 		EC309F982F97FCCE003E343E /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +191,25 @@
 				EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		EC309FC92FA386C8003E343E /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FCA2FA3870C003E343E /* Map.swift */,
+				EC309FCC2FA3874C003E343E /* Components.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		EC309FD32FA38875003E343E /* HomePageTrips */ = {
+			isa = PBXGroup;
+			children = (
+				EC309FC52FA385FC003E343E /* CreateTripView.swift */,
+				EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */,
+				EC309FD42FA388CF003E343E /* HomePageTripsViewModel.swift */,
+			);
+			path = HomePageTrips;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,23 +292,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */,
-				EC309FAC2F97FE66003E343E /* TripCardSheet.swift in Sources */,
-				EC309FAE2F97FE79003E343E /* TripCardViewModel.swift in Sources */,
 				EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */,
 				EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */,
 				EC309FBE2F980024003E343E /* FirebaseService.swift in Sources */,
 				EC309F7F2F8C1058003E343E /* DesertApp.swift in Sources */,
-				EC309FB42F97FEBD003E343E /* Components.swift in Sources */,
-				EC309FAA2F97FE1F003E343E /* TripSummaryCard.swift in Sources */,
+				EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */,
 				EC309F9C2F97FD87003E343E /* SplashView.swift in Sources */,
 				EC309FC02F9800DE003E343E /* RootView.swift in Sources */,
+				EC309FD52FA388CF003E343E /* HomePageTripsViewModel.swift in Sources */,
 				EC309FB02F97FE92003E343E /* TripHistoryView.swift in Sources */,
+				EC309FCD2FA3874C003E343E /* Components.swift in Sources */,
+				EC309FCB2FA3870C003E343E /* Map.swift in Sources */,
 				EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */,
+				EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */,
 				EC309FBA2F97FF69003E343E /* Trip.swift in Sources */,
 				EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */,
-				EC309FA82F97FE0D003E343E /* MapView.swift in Sources */,
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
+				EC309FC62FA385FC003E343E /* CreateTripView.swift in Sources */,
 				EC309FBC2F980013003E343E /* LocationManager.swift in Sources */,
 				EC309F9E2F97FDA3003E343E /* SplashViewModel.swift in Sources */,
 			);
