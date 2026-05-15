@@ -1,0 +1,119 @@
+/* App */
+"app_name" = "Desert";
+"onboarding_subtitle" = "Your desert safety companion";
+"get_started" = "Get Started";
+
+/* Welcome */
+"welcome_title" = "Ready to head out?";
+"welcome_subtitle" = "Track your location and stay safe.";
+"start_new_trip" = "Start a New Trip";
+
+/* Tab Bar */
+"tab_map" = "Map";
+"tab_history" = "History";
+
+/* Steps */
+"step_trip_details" = "Trip Details";
+"step_personal_details" = "Personal Details";
+"step_vehicle_details" = "Vehicle Details";
+
+/* Trip Details */
+"trip_name" = "Trip Name";
+"trip_name_placeholder" = "e.g. Camp";
+"destination" = "Destination";
+"destination_placeholder" = "Select on Map";
+"destination_required" = "Destination is required";
+"time" = "Time";
+"start_time" = "Start time";
+"end_time" = "End time *";
+"return_time" = "Return Time";
+"return_time_invalid" = "Return time must be in the future";
+"return_time_updated" = "Return time updated";
+"update_return_time" = "Update Return Time";
+"update_return_time_warning" = "Please update your return time before starting";
+"group" = "Group";
+"group_question" = "Are you with a group?";
+"group_size" = "Group size: %d";
+"group_contacts_optional" = "Group contact (optional)";
+"destination_group" = "Destination & Group";
+
+/* Personal Details */
+"name" = "Name";
+"full_name_placeholder" = "Full Name";
+"name_required" = "Name is required";
+"phone_number" = "Phone Number";
+"phone_placeholder" = "+966 5X XXX XXXX";
+"phone_required" = "Phone number is required";
+"emergency_contacts" = "Emergency Contacts";
+"emergency_contacts_count" = "Emergency Contacts (%d)";
+"emergency_contact_required" = "At least one emergency contact is required";
+"emergency_contact" = "Emergency Contact";
+"add_contact" = "Add Contact";
+"max_contacts_reached" = "Maximum 3 contacts allowed";
+
+/* Vehicle Details */
+"car_model" = "Car model";
+"car_model_placeholder" = "e.g Toyota";
+"car_color" = "Car color";
+"car_color_placeholder" = "e.g White";
+"4wd" = "4WD";
+"4wd_question" = "Is this a 4WD vehicle?";
+"plate_info" = "Plate info";
+
+/* Summary */
+"summary" = "Summary";
+"trip_details" = "Trip Details";
+"car_details" = "Car Details";
+"car" = "Car";
+"plate_number" = "Plate Number";
+"plate" = "Plate";
+"individuals" = "No. of individuals";
+"people_count" = "%d people";
+"solo" = "Solo";
+"start_trip" = "Start Trip";
+"repeat_trip" = "Repeat Trip";
+"repeat_this_trip" = "Repeat This Trip";
+
+/* Active Trip Card */
+"active" = "Active";
+"last_upload" = "Last Upload";
+"not_yet" = "Not yet";
+"uploaded" = "Uploaded";
+"not_uploaded_yet" = "Not uploaded yet";
+"gps_points" = "%d GPS points";
+"emergency" = "Emergency";
+"im_back_safely" = "I'm Back Safely";
+
+/* History */
+"history_title" = "History";
+"no_trips_yet" = "No trips yet";
+"alert_sent" = "Alert Sent";
+"no_alert" = "No Alert";
+"delete_trips_alert" = "Delete %d trip(s)?";
+"delete_trips_message" = "This action cannot be undone.";
+"duration" = "Duration";
+"distance" = "Distance";
+"days" = "days";
+
+/* Common */
+"yes" = "Yes";
+"no" = "No";
+"back" = "Back";
+"next" = "Next";
+"review" = "Review";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"discard" = "Discard";
+"discard_changes_title" = "Discard Changes?";
+"discard_changes_message" = "Are you sure you want to leave? Your changes will be lost.";
+"open_settings" = "Open Settings";
+"search" = "Search";
+
+/* Location Permission */
+"location_permission_required" = "Location Permission Required";
+"location_permission_message" = "Please enable Always Allow location permission in Settings to start a trip.";
+
+/* Destination Picker */
+"select_destination" = "Select Destination";
+"confirm_destination" = "Confirm Destination";
+

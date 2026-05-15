@@ -1,0 +1,119 @@
+/* App */
+"app_name" = "ديزرت";
+"onboarding_subtitle" = "رفيقك للسلامة في البرية";
+"get_started" = "ابدأ";
+
+/* Welcome */
+"welcome_title" = "مستعد للخروج؟";
+"welcome_subtitle" = "تتبع موقعك وابقَ بأمان.";
+"start_new_trip" = "ابدأ رحلة جديدة";
+
+/* Tab Bar */
+"tab_map" = "الخريطة";
+"tab_history" = "السجل";
+
+/* Steps */
+"step_trip_details" = "تفاصيل الرحلة";
+"step_personal_details" = "البيانات الشخصية";
+"step_vehicle_details" = "بيانات المركبة";
+
+/* Trip Details */
+"trip_name" = "اسم الرحلة";
+"trip_name_placeholder" = "مثال: تخييم";
+"destination" = "الوجهة";
+"destination_placeholder" = "اختر على الخريطة";
+"destination_required" = "الوجهة مطلوبة";
+"time" = "الوقت";
+"start_time" = "وقت البداية";
+"end_time" = "وقت العودة *";
+"return_time" = "وقت العودة";
+"return_time_invalid" = "يجب أن يكون وقت العودة في المستقبل";
+"return_time_updated" = "تم تحديث وقت العودة";
+"update_return_time" = "تحديث وقت العودة";
+"update_return_time_warning" = "يرجى تحديث وقت العودة قبل البدء";
+"group" = "مجموعة";
+"group_question" = "هل أنت مع مجموعة؟";
+"group_size" = "عدد الأفراد: %d";
+"group_contacts_optional" = "أفراد المجموعة (اختياري)";
+"destination_group" = "الوجهة والمجموعة";
+
+/* Personal Details */
+"name" = "الاسم";
+"full_name_placeholder" = "الاسم الكامل";
+"name_required" = "الاسم مطلوب";
+"phone_number" = "رقم الجوال";
+"phone_placeholder" = "+966 5X XXX XXXX";
+"phone_required" = "رقم الجوال مطلوب";
+"emergency_contacts" = "جهات الطوارئ";
+"emergency_contacts_count" = "جهات الطوارئ (%d)";
+"emergency_contact_required" = "يجب إضافة جهة طوارئ واحدة على الأقل";
+"emergency_contact" = "جهة الطوارئ";
+"add_contact" = "إضافة جهة اتصال";
+"max_contacts_reached" = "الحد الأقصى 3 جهات اتصال";
+
+/* Vehicle Details */
+"car_model" = "موديل السيارة";
+"car_model_placeholder" = "مثال: تويوتا";
+"car_color" = "لون السيارة";
+"car_color_placeholder" = "مثال: أبيض";
+"4wd" = "دفع رباعي";
+"4wd_question" = "هل المركبة دفع رباعي؟";
+"plate_info" = "بيانات اللوحة";
+
+/* Summary */
+"summary" = "الملخص";
+"trip_details" = "تفاصيل الرحلة";
+"car_details" = "بيانات السيارة";
+"car" = "السيارة";
+"plate_number" = "رقم اللوحة";
+"plate" = "اللوحة";
+"individuals" = "عدد الأفراد";
+"people_count" = "%d أشخاص";
+"solo" = "منفرد";
+"start_trip" = "ابدأ الرحلة";
+"repeat_trip" = "إعادة الرحلة";
+"repeat_this_trip" = "أعد هذه الرحلة";
+
+/* Active Trip Card */
+"active" = "نشطة";
+"last_upload" = "آخر رفع";
+"not_yet" = "لم يتم بعد";
+"uploaded" = "تم الرفع";
+"not_uploaded_yet" = "لم يُرفع بعد";
+"gps_points" = "%d نقطة GPS";
+"emergency" = "الطوارئ";
+"im_back_safely" = "عدت بسلام";
+
+/* History */
+"history_title" = "السجل";
+"no_trips_yet" = "لا توجد رحلات بعد";
+"alert_sent" = "تم إرسال التنبيه";
+"no_alert" = "لا تنبيه";
+"delete_trips_alert" = "حذف %d رحلة؟";
+"delete_trips_message" = "لا يمكن التراجع عن هذا الإجراء.";
+"duration" = "المدة";
+"distance" = "المسافة";
+"days" = "أيام";
+
+/* Common */
+"yes" = "نعم";
+"no" = "لا";
+"back" = "رجوع";
+"next" = "التالي";
+"review" = "مراجعة";
+"cancel" = "إلغاء";
+"delete" = "حذف";
+"discard" = "تجاهل";
+"discard_changes_title" = "تجاهل التغييرات؟";
+"discard_changes_message" = "هل أنت متأكد أنك تريد الخروج؟ ستُفقد تغييراتك.";
+"open_settings" = "فتح الإعدادات";
+"search" = "بحث";
+
+/* Location Permission */
+"location_permission_required" = "إذن الموقع مطلوب";
+"location_permission_message" = "يرجى تفعيل خيار «دائمًا» لإذن الموقع من الإعدادات لبدء الرحلة.";
+
+/* Destination Picker */
+"select_destination" = "اختر الوجهة";
+"confirm_destination" = "تأكيد الوجهة";
+
