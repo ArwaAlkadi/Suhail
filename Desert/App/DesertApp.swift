@@ -28,6 +28,13 @@ struct DesertApp: App {
             LocationPoint.self
         ])
     }
+    
+    init() {
+        if UserDefaults.standard.object(forKey: "AppLanguageSet") == nil {
+            UserDefaults.standard.set(["en"], forKey: "AppleLanguages")
+            UserDefaults.standard.set(true, forKey: "AppLanguageSet")
+        }
+    }
 }
 
 // MARK: - AppDelegate
