@@ -169,7 +169,9 @@ struct TripHistoryInDetailsView: View {
                 Button(action: {
                     dismiss()
                 }) {
-                    Image(systemName: "chevron.left")
+                    Image(systemName: layoutDirection == .rightToLeft
+                          ? "chevron.left"
+                          : "chevron.right")
                         .font(.headline)
                         .foregroundColor(.primary)
                         .padding(10)
