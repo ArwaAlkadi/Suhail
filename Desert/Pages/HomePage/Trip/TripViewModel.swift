@@ -46,10 +46,17 @@ class TripsViewModel: ObservableObject {
 
     var destinationIsValid: Bool { !destination.isEmpty }
     var userNameIsValid: Bool { !userName.isEmpty }
-    var phoneNumberIsValid: Bool { !phoneNumber.isEmpty }
+    var phoneNumberIsValid: Bool {
+        let digits = phoneNumber.filter { $0.isNumber }
+        return digits.hasPrefix("9665") && digits.count == 12
+    }
     var returnTimeIsValid: Bool { returnTime > Date() }
     var emergencyContactsIsValid: Bool { !emergencyContacts.isEmpty }
-
+    var carNameIsValid: Bool { !carName.isEmpty }
+    var carColorIsValid: Bool { !carColor.isEmpty }
+    var plateLettersIsValid: Bool { plateLetters.count == 3 }
+    var plateNumbersIsValid: Bool { plateNumbers.count == 4 }
+    
     let saudiPlateLetters: [(ar: String, en: String)] = [
         ("أ", "A"), ("ب", "B"), ("ح", "J"), ("د", "D"),
         ("ر", "R"), ("س", "S"), ("ص", "X"), ("ط", "T"),
@@ -62,7 +69,34 @@ class TripsViewModel: ObservableObject {
         userNameIsValid &&
         phoneNumberIsValid &&
         returnTimeIsValid &&
-        emergencyContactsIsValid
+        emergencyContactsIsValid &&
+        carNameIsValid &&
+        carColorIsValid &&
+        plateLettersIsValid &&
+        plateNumbersIsValid
+    }
+    
+    func formatUserPhoneInput(_ value: String) {
+
+        let digits = value.filter { $0.isNumber }
+
+        var localNumber = digits
+
+        if localNumber.hasPrefix("966") {
+            localNumber = String(localNumber.dropFirst(3))
+        }
+
+        if localNumber.hasPrefix("0") {
+            localNumber = String(localNumber.dropFirst())
+        }
+
+        localNumber = String(localNumber.prefix(9))
+
+        if localNumber.isEmpty {
+            phoneNumber = ""
+        } else {
+            phoneNumber = "+966 " + localNumber
+        }
     }
 }
 
@@ -123,6 +157,12 @@ extension TripsViewModel {
 
     func importEmergencyContact(_ contact: CNContact) {
 
+        guard emergencyContacts.count < 3 else {
+            contactErrorMessage = "max_contacts_reached".localized
+            showContactError = true
+            return
+        }
+
         guard let email = contact.emailAddresses.first?.value as String?,
               !email.isEmpty else {
 
@@ -131,10 +171,23 @@ extension TripsViewModel {
             return
         }
 
+        let name = "\(contact.givenName) \(contact.familyName)"
+            .trimmingCharacters(in: .whitespaces)
+
+        let alreadyExists = emergencyContacts.contains {
+            $0.phone.lowercased() == email.lowercased()
+        }
+
+        guard !alreadyExists else {
+            contactErrorMessage = "contact_already_added".localized
+            showContactError = true
+            return
+        }
+
         showContactError = false
 
         emergencyContacts.append(Contact(
-            name: "\(contact.givenName) \(contact.familyName)",
+            name: name,
             phone: email
         ))
     }
@@ -149,10 +202,23 @@ extension TripsViewModel {
             return
         }
 
+        let name = "\(contact.givenName) \(contact.familyName)"
+            .trimmingCharacters(in: .whitespaces)
+
+        let alreadyExists = groupContacts.contains {
+            $0.phone.lowercased() == email.lowercased()
+        }
+
+        guard !alreadyExists else {
+            contactErrorMessage = "contact_already_added".localized
+            showContactError = true
+            return
+        }
+
         showContactError = false
 
         groupContacts.append(Contact(
-            name: "\(contact.givenName) \(contact.familyName)",
+            name: name,
             phone: email
         ))
     }

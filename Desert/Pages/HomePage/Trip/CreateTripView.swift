@@ -104,14 +104,14 @@ struct CreateTripView: View {
                 }
 
                 Button(currentStep == totalSteps - 1 ? "review".localized : "next".localized) {
-                    if currentStep == totalSteps - 1 {
-                        showSummary = true
-                    } else {
-                        if canProceedFromStep(currentStep) {
-                            currentStep += 1
+                    if canProceedFromStep(currentStep) {
+                        if currentStep == totalSteps - 1 {
+                            showSummary = true
                         } else {
-                            vm.showErrors = true
+                            currentStep += 1
                         }
+                    } else {
+                        vm.showErrors = true
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -119,6 +119,7 @@ struct CreateTripView: View {
                 .background(Color.primary)
                 .foregroundColor(Color(UIColor.systemBackground))
                 .cornerRadius(14)
+               
             }
             .padding()
         }
@@ -205,10 +206,18 @@ struct CreateTripView: View {
         switch step {
         case 0:
             return vm.destinationIsValid && vm.returnTimeIsValid
+
         case 1:
-            return vm.userNameIsValid && vm.phoneNumberIsValid && vm.emergencyContactsIsValid
+            return vm.userNameIsValid &&
+                   vm.phoneNumberIsValid &&
+                   vm.emergencyContactsIsValid
+
         case 2:
-            return true
+            return vm.carNameIsValid &&
+                   vm.carColorIsValid &&
+                   vm.plateLettersIsValid &&
+                   vm.plateNumbersIsValid
+
         default:
             return true
         }
@@ -239,8 +248,10 @@ extension CreateTripView {
                                  : vm.destination)
                                 .foregroundColor(vm.destination.isEmpty ? .secondary : .primary)
                             Spacer()
-                            // Chevron flips automatically with RTL layout
-                            Image(systemName: "chevron.right")
+                            
+                            Image(systemName: layoutDirection == .rightToLeft
+                                  ? "chevron.left"
+                                  : "chevron.right")
                                 .foregroundColor(.secondary)
                                 .font(.caption)
                         }
@@ -333,17 +344,25 @@ extension CreateTripView {
                 }
 
                 FieldSection(title: "phone_number") {
+
                     TextField("phone_placeholder".localized, text: $vm.phoneNumber)
                         .keyboardType(.phonePad)
+                        .environment(\.layoutDirection, .leftToRight)
+                        .multilineTextAlignment(.leading)
+                        .onChange(of: vm.phoneNumber) { _, newValue in
+                            vm.formatUserPhoneInput(newValue)
+                        }
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(12)
+
                     if vm.showErrors && !vm.phoneNumberIsValid {
                         Text("phone_required".localized)
-                            .font(.caption).foregroundColor(.red)
+                            .font(.caption)
+                            .foregroundColor(.red)
                     }
                 }
-
+                
                 FieldSection(title: "emergency_contacts") {
                     VStack(spacing: 8) {
                         ForEach(vm.emergencyContacts, id: \.name) { contact in
@@ -399,13 +418,26 @@ extension CreateTripView {
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(12)
+                    
+                    if vm.showErrors && !vm.carNameIsValid {
+                        Text("car_model_required".localized)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
                 }
+                
 
                 FieldSection(title: "car_color") {
                     TextField("car_color_placeholder".localized, text: $vm.carColor)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(12)
+                    
+                    if vm.showErrors && !vm.carColorIsValid {
+                        Text("car_color_required".localized)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
                 }
 
                 FieldSection(title: "4wd") {
@@ -446,6 +478,12 @@ extension CreateTripView {
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(12)
+                    
+                    if vm.showErrors && (!vm.plateLettersIsValid || !vm.plateNumbersIsValid) {
+                        Text("plate_required".localized)
+                            .font(.caption)
+                            .foregroundColor(.red)
+                    }
                 }
             }
             .padding()

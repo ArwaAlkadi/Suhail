@@ -13,6 +13,7 @@ struct TripHistoryInDetailsView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.layoutDirection) private var layoutDirection
 
     @StateObject private var vm = TripHistoryViewModel()
 

@@ -5,7 +5,7 @@
 
 /* Welcome */
 "welcome_title" = "Ready to head out?";
-"welcome_subtitle" = "Track your location and stay safe.";
+"welcome_subtitle" = "Share your location and stay safe.";
 "start_new_trip" = "Start a New Trip";
 
 /* Tab Bar */
@@ -131,3 +131,11 @@
 "notification_stay_vehicle_title" = "Stay With Your Vehicle";
 "notification_stay_vehicle_body" = "Do not wander. Rescuers search along known routes first.";
 
+
+"car_model_required" = "Car model is required";
+"car_color_required" = "Car color is required";
+"plate_required" = "Plate information is required";
+
+"trip_safety_notice" = "Emergency alerts are only sent if your return time passes and Desert stops receiving location updates for a period of time, which may indicate no signal or connectivity. Your last known location and trip details will then be shared with your emergency contacts.";
+
+"no_internet_connection" = "You can't start the trip, No internet connection";

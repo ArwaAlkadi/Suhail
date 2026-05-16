@@ -126,8 +126,23 @@ struct TripSummaryView: View {
                     )
                 }
 
+
+                Text("trip_safety_notice".localized)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(Color.yellow.opacity(0.12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color(.systemGray5), lineWidth: 0.5)
+                    )
+                    .cornerRadius(16)
+                    .padding(.horizontal)
+                
                 if !isConnected {
-                    Text("No internet connection")
+                    Text("no_internet_connection".localized)
                         .font(.caption)
                         .foregroundColor(.red)
                         .padding(.horizontal)
@@ -349,13 +364,29 @@ struct RepeatTripSummaryView: View {
                     }
                 }
 
+            
+
+                Text("trip_safety_notice".localized)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(Color.yellow.opacity(0.12))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color(.systemGray5), lineWidth: 0.5)
+                    )
+                    .cornerRadius(16)
+                    .padding(.horizontal)
+                
                 if !isConnected {
-                    Text("No internet connection")
+                    Text("no_internet_connection".localized)
                         .font(.caption)
                         .foregroundColor(.red)
                         .padding(.horizontal)
                 }
-
+                
                 Button(action: {
                     let started = vm.startTrip(context: context)
 
