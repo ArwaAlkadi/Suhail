@@ -82,6 +82,14 @@
 		ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSessionManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "thmanyah font";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		EC309F5D2F8C0EB3003E343E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -199,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				EC309F772F8C1058003E343E /* Assets.xcassets */,
+				ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */,
 				ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */,
 				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
 				EC309FE42FABCB93003E343E /* Documentation.docc */,
@@ -254,6 +263,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */,
 			);
 			name = Desert;
 			packageProductDependencies = (
