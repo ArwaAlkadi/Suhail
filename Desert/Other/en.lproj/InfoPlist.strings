@@ -4,3 +4,4 @@
 
 "NSUserNotificationsUsageDescription" = "The app uses notifications to send safety alerts and trip-related reminders.";
 
+"CFBundleDisplayName" = "Suhail";
