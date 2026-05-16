@@ -55,8 +55,17 @@ class TripsViewModel: ObservableObject {
     var carNameIsValid: Bool { !carName.isEmpty }
     var carColorIsValid: Bool { !carColor.isEmpty }
     var plateLettersIsValid: Bool { plateLetters.count == 3 }
-    var plateNumbersIsValid: Bool { plateNumbers.count == 4 }
-    
+
+    var plateNumbersIsValid: Bool {
+        let digits = plateNumbers.filter { $0.isNumber }
+        return digits.count >= 1 && digits.count <= 4
+    }
+
+    var plateNumbersDisplay: String {
+        let digits = plateNumbers.filter { $0.isNumber }
+        return digits + String(repeating: "-", count: max(0, 4 - digits.count))
+    }
+
     let saudiPlateLetters: [(ar: String, en: String)] = [
         ("أ", "A"), ("ب", "B"), ("ح", "J"), ("د", "D"),
         ("ر", "R"), ("س", "S"), ("ص", "X"), ("ط", "T"),
