@@ -67,6 +67,7 @@ struct HomeView: View {
         .onAppear {
             vm.onAppear(context: context)
         }
+        .navigationBarBackButtonHidden()
     }
 
     // MARK: - Navigation
