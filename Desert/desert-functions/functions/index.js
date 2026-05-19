@@ -31,24 +31,37 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
         const trip = doc.data();
         const tripId = doc.id;
 
-        const tripInfo    = trip["e-tripInfo"] ?? {};
-        const location    = trip["c-lastKnownLocation"] ?? {};
+        const status = trip["b-status"];
+        const tripInfo = trip["e-tripInfo"] ?? {};
+        const location = trip["c-lastKnownLocation"] ?? {};
         const alertStatus = trip["h-alertStatus"] ?? {};
 
-        const returnTime     = tripInfo.returnTime;
+        const returnTime = tripInfo.returnTime;
         const lastUploadTime = location.lastUploadTime ?? 0;
 
         if (!returnTime) continue;
 
-        const returnTimePassed       = now >= returnTime;
-        const noRecentUploadFor35Min = lastUploadTime === 0 || now - lastUploadTime >= NO_RECENT_UPLOAD_LIMIT;
-        const alertAlreadySent       = alertStatus.alertSent === true;
+        const returnTimePassed = now >= returnTime;
+        const noRecentUploadFor35Min =
+            lastUploadTime === 0 ||
+            now - lastUploadTime >= NO_RECENT_UPLOAD_LIMIT;
 
+        const alertAlreadySent = alertStatus.alertSent === true;
+
+        // Step 1: Mark trip as overdue immediately when return time passes
+        if (returnTimePassed && status !== "overdue") {
+            await db.collection("trips").doc(tripId).update({
+                "b-status": "overdue"
+            });
+
+            console.log(`Trip marked as overdue: ${tripId}`);
+        }
+
+        // Step 2: Send alert only if no recent upload for 35 minutes
         if (returnTimePassed && noRecentUploadFor35Min && !alertAlreadySent) {
             await sendAlert({ tripId, trip, type: "initial" });
 
             await db.collection("trips").doc(tripId).update({
-                "b-status": "overdue",
                 "h-alertStatus": {
                     alertSent: true,
                     alertSentAt: now,
@@ -66,17 +79,17 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
 // MARK: - Location Update Trigger
 exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", async (event) => {
     const before = event.data.before.data();
-    const after  = event.data.after.data();
+    const after = event.data.after.data();
 
     const tripId = event.params.tripId;
 
     const beforeLocation = before["c-lastKnownLocation"] ?? {};
-    const afterLocation  = after["c-lastKnownLocation"] ?? {};
-    const alertStatus    = after["h-alertStatus"] ?? {};
-    const status         = after["b-status"];
+    const afterLocation = after["c-lastKnownLocation"] ?? {};
+    const alertStatus = after["h-alertStatus"] ?? {};
+    const status = after["b-status"];
 
-    const oldUploadTime    = beforeLocation.lastUploadTime ?? 0;
-    const newUploadTime    = afterLocation.lastUploadTime ?? 0;
+    const oldUploadTime = beforeLocation.lastUploadTime ?? 0;
+    const newUploadTime = afterLocation.lastUploadTime ?? 0;
     const newUploadArrived = newUploadTime > oldUploadTime;
 
     if (status !== "overdue") return;
@@ -99,7 +112,6 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 async function sendAlert({ tripId, trip, type }) {
     const tripInfo = trip["e-tripInfo"] ?? {};
     const userInfo = trip["c-userInfo"] ?? {};
-    const carInfo  = trip["f-carInfo"] ?? {};
     const contacts = trip["d-emergencyContacts"] ?? [];
     const location = trip["c-lastKnownLocation"] ?? {};
 
@@ -108,24 +120,49 @@ async function sendAlert({ tripId, trip, type }) {
         return;
     }
 
-    const userName    = userInfo.userName    ?? "Unknown";
-    const phone       = userInfo.phoneNumber ?? "Unknown";
-    const tripName    = tripInfo.tripName    ?? "Desert Trip";
-    const destination = tripInfo.destination ?? "Unknown";
-    const returnTime  = tripInfo.returnTimeReadable ?? "Unknown";
-    const carDetails  = `${carInfo.carColor ?? ""} ${carInfo.carName ?? ""}`.trim() || "Unknown";
-    const plate       = `${carInfo.plateNumbers ?? ""} | ${carInfo.plateLetters ?? ""}`.trim() || "Unknown";
-    const lat         = location.lat ?? "Unknown";
-    const lng         = location.lng ?? "Unknown";
-    const lastUpload  = location.lastUploadTimeReadable ?? "Unknown";
+    const userName = userInfo.userName ?? "المستخدم";
+    const tripStartTime = tripInfo.startTimeReadable ?? "غير معروف";
+    const returnTime = tripInfo.returnTimeReadable ?? "غير معروف";
 
-    const title = type === "updated"
-        ? "🚨 تحديث موقع جديد بعد التأخر"
-        : "🚨 تنبيه عدم العودة";
+    const lat = location.lat ?? "Unknown";
+    const lng = location.lng ?? "Unknown";
+    const lastUpload = location.lastUploadTimeReadable ?? "غير معروف";
+
+    const mapsLink =
+        lat !== "Unknown" && lng !== "Unknown"
+            ? `https://maps.google.com/?q=${lat},${lng}`
+            : "غير متوفر";
 
     const message = type === "updated"
-        ? `${title}\n\nتم استقبال موقع جديد لـ ${userName} بعد إرسال تنبيه عدم العودة.\n\nآخر موقع: ${lat}, ${lng}\nآخر تحديث: ${lastUpload}`
-        : `${title}\n\nلم يعد ${userName} في الموعد المحدد من رحلته البرية.\n\nالجوال: ${phone}\nاسم الرحلة: ${tripName}\nالوجهة: ${destination}\nوقت العودة: ${returnTime}\nالسيارة: ${carDetails}\nاللوحة: ${plate}\nآخر موقع: ${lat}, ${lng}\nآخر تحديث: ${lastUpload}`;
+        ? `السلام عليكم،
+
+وصلنا تحديث جديد لموقع ${userName} بعد تنبيه عدم العودة السابق.
+
+الموقع الحالي:
+${mapsLink}
+
+آخر تحديث للموقع:
+${lastUpload}
+
+راح نستمر بمتابعة أي تحديثات جديدة، وبنبلغكم مباشرة إذا وصل موقع جديد.
+
+— تطبيق سهيل`
+        : `السلام عليكم،
+
+ما وصلنا أي تحديث لموقع ${userName} بعد وقت العودة المتوقع. الرحلة بدأت الساعة ${tripStartTime} وكان المفروض تنتهي الساعة ${returnTime}.
+
+ آخر موقع معروف:
+${mapsLink}
+
+آخر تحديث للموقع:
+${lastUpload}
+
+نعرف إن الموقف ممكن يسبب قلق، لذلك ننصح بمحاولة التواصل معه مباشرة. وإذا ما قدرتوا توصلون له، نرجو التواصل مع الجهات المختصة أو مع دعم إنجاد على الرقم:
+920018911
+
+راح نستمر بمتابعة أي تحديثات جديدة، وبنبلغكم مباشرة إذا وصل موقع جديد.
+
+— تطبيق سهيل`;
 
     for (const contact of contacts) {
         const contactPhone = contact.phone?.replace(/\D/g, '');
@@ -136,6 +173,7 @@ async function sendAlert({ tripId, trip, type }) {
                 phone: contactPhone,
                 message
             });
+
             console.log(`WhatsApp sent to ${contactPhone} for trip ${tripId}`);
         } catch (err) {
             console.error(`Failed to send WhatsApp to ${contactPhone}:`, err.message);
