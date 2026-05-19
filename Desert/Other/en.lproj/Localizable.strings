@@ -43,7 +43,7 @@
 "name_required" = "Name is required";
 "phone_number" = "Phone Number";
 "phone_placeholder" = "+966 5X XXX XXXX";
-"phone_required" = "Phone number is required";
+"phone_required" = "Phone number must be right";
 "emergency_contacts" = "Emergency Contacts";
 "emergency_contacts_count" = "Emergency Contacts (%d)";
 "emergency_contact_required" = "At least one emergency contact is required";

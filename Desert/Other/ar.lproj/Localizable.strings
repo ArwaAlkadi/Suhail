@@ -43,7 +43,7 @@
 "name_required" = "الاسم مطلوب";
 "phone_number" = "رقم الجوال";
 "phone_placeholder" = "+966 5X XXX XXXX";
-"phone_required" = "رقم الجوال مطلوب";
+"phone_required" = "ادخل رقم جوال صحيح";
 "emergency_contacts" = "جهات الطوارئ";
 "emergency_contacts_count" = "جهات الطوارئ (%d)";
 "emergency_contact_required" = "يجب إضافة جهة طوارئ واحدة على الأقل";
