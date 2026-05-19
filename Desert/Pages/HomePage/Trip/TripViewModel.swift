@@ -172,9 +172,9 @@ extension TripsViewModel {
             return
         }
 
-        guard let email = contact.emailAddresses.first?.value as String?,
-              !email.isEmpty else {
+        let rawPhone = contact.phoneNumbers.first?.value.stringValue ?? ""
 
+        guard let formattedPhone = formatSaudiPhone(rawPhone) else {
             contactErrorMessage = "contact_phone_invalid".localized
             showContactError = true
             return
@@ -184,7 +184,7 @@ extension TripsViewModel {
             .trimmingCharacters(in: .whitespaces)
 
         let alreadyExists = emergencyContacts.contains {
-            $0.phone.lowercased() == email.lowercased()
+            $0.phone == formattedPhone
         }
 
         guard !alreadyExists else {
@@ -194,11 +194,7 @@ extension TripsViewModel {
         }
 
         showContactError = false
-
-        emergencyContacts.append(Contact(
-            name: name,
-            phone: email
-        ))
+        emergencyContacts.append(Contact(name: name, phone: formattedPhone))
     }
 
     func importGroupContact(_ contact: CNContact) {
