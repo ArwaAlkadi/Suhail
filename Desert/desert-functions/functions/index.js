@@ -59,7 +59,16 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
 
         // Step 2: Send alert only if no recent upload for 35 minutes
         if (returnTimePassed && noRecentUploadFor35Min && !alertAlreadySent) {
-            await sendAlert({ tripId, trip, type: "initial" });
+            const alertSentSuccessfully = await sendAlert({
+                tripId,
+                trip,
+                type: "initial"
+            });
+
+            if (!alertSentSuccessfully) {
+                console.log(`Initial alert not marked as sent for ${tripId}`);
+                continue;
+            }
 
             await db.collection("trips").doc(tripId).update({
                 "h-alertStatus": {
@@ -97,7 +106,16 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
     if (alertStatus.alertSent !== true) return;
     if (alertStatus.updatedAlertSent === true) return;
 
-    await sendAlert({ tripId, trip: after, type: "updated" });
+    const updateSentSuccessfully = await sendAlert({
+        tripId,
+        trip: after,
+        type: "updated"
+    });
+
+    if (!updateSentSuccessfully) {
+        console.log(`Updated alert not marked as sent for ${tripId}`);
+        return;
+    }
 
     await db.collection("trips").doc(tripId).update({
         "h-alertStatus.updatedAlertSent": true,
@@ -117,21 +135,23 @@ async function sendAlert({ tripId, trip, type }) {
 
     if (contacts.length === 0) {
         console.log(`No emergency contacts for ${tripId}`);
-        return;
+        return false;
+    }
+
+    const lat = location.lat;
+    const lng = location.lng;
+
+    if (lat == null || lng == null) {
+        console.log(`No location available for ${tripId}, alert not sent`);
+        return false;
     }
 
     const userName = userInfo.userName ?? "المستخدم";
     const tripStartTime = tripInfo.startTimeReadable ?? "غير معروف";
     const returnTime = tripInfo.returnTimeReadable ?? "غير معروف";
-
-    const lat = location.lat ?? "Unknown";
-    const lng = location.lng ?? "Unknown";
     const lastUpload = location.lastUploadTimeReadable ?? "غير معروف";
 
-    const mapsLink =
-        lat !== "Unknown" && lng !== "Unknown"
-            ? `https://maps.google.com/?q=${lat},${lng}`
-            : "غير متوفر";
+    const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
 
     const message = type === "updated"
         ? `السلام عليكم،
@@ -151,7 +171,7 @@ ${lastUpload}
 
 ما وصلنا أي تحديث لموقع ${userName} بعد وقت العودة المتوقع. الرحلة بدأت الساعة ${tripStartTime} وكان المفروض تنتهي الساعة ${returnTime}.
 
- آخر موقع معروف:
+آخر موقع معروف:
 ${mapsLink}
 
 آخر تحديث للموقع:
@@ -164,19 +184,28 @@ ${lastUpload}
 
 — تطبيق سهيل`;
 
+    let sentToAtLeastOneContact = false;
+
     for (const contact of contacts) {
-        const contactPhone = contact.phone?.replace(/\D/g, '');
+        const contactPhone = contact.phone?.replace(/\D/g, "");
         if (!contactPhone) continue;
 
         try {
-            await axios.post(`${WHATSAPP_SERVER}/send`, {
+            const response = await axios.post(`${WHATSAPP_SERVER}/send`, {
                 phone: contactPhone,
                 message
             });
 
-            console.log(`WhatsApp sent to ${contactPhone} for trip ${tripId}`);
+            if (response.data?.success === true) {
+                sentToAtLeastOneContact = true;
+                console.log(`WhatsApp sent to ${contactPhone} for trip ${tripId}`);
+            } else {
+                console.error(`WhatsApp failed for ${contactPhone}:`, response.data);
+            }
         } catch (err) {
             console.error(`Failed to send WhatsApp to ${contactPhone}:`, err.message);
         }
     }
+
+    return sentToAtLeastOneContact;
 }
