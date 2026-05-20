@@ -194,7 +194,6 @@ struct TripHistoryInDetailsView: View {
             Button("cancel".localized, role: .cancel) { }
 
             Button("delete".localized, role: .destructive) {
-                // Routed through TripHistoryViewModel — not SwiftData directly
                 vm.deleteTrip(trip, context: context)
                 dismiss()
             }

@@ -508,6 +508,7 @@ struct TripHistoryRow: View {
     var dateRange: String
     var duration: String
     var distance: String
+    var alertSent: Bool
     var onOpenDetails: () -> Void
     var onRepeatTrip: () -> Void
 
@@ -519,7 +520,6 @@ struct TripHistoryRow: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(trip.tripName)
                             .font(.body.bold())
-                            
 
                         Text(dateRange)
                             .font(.subheadline)
@@ -528,12 +528,12 @@ struct TripHistoryRow: View {
 
                     Spacer()
 
-                    Text(trip.alertSent ? "alert_sent".localized : "no_alert".localized)
+                    Text(alertSent ? "alert_sent".localized : "no_alert".localized)
                         .font(.caption)
                         .fontWeight(.semibold)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
-                        .background(trip.alertSent ? Color.red.opacity(0.15) : Color.green.opacity(0.15))
+                        .background(alertSent ? Color.red.opacity(0.15) : Color.green.opacity(0.15))
                         .clipShape(Capsule())
                 }
 

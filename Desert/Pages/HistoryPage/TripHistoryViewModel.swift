@@ -16,16 +16,44 @@ class TripHistoryViewModel: ObservableObject {
 
     @Published var selectedTrips: Set<String> = []
     @Published var showDeleteAlert = false
+    @Published var alertStatuses: [String: Bool] = [:]
 
-    // MARK: - Delete
+    private let firebase = FirebaseManager.shared
 
-    /// Deletes all trips whose IDs are in the current selection.
+    func fetchAlertStatus(
+        tripId: String,
+        completion: @escaping (Bool) -> Void
+    ) {
+        firebase.fetchAlertStatus(tripId: tripId) { [weak self] sent in
+            DispatchQueue.main.async {
+                self?.alertStatuses[tripId] = sent
+                completion(sent)
+            }
+        }
+    }
+
+    func syncAlertStatusIfNeeded(for trip: Trip, context: ModelContext) {
+        guard trip.didSyncAlertStatus == false else { return }
+
+        firebase.fetchAlertStatus(tripId: trip.tripId) { sent in
+            DispatchQueue.main.async {
+                trip.alertSent = sent
+                trip.didSyncAlertStatus = true
+                try? context.save()
+            }
+        }
+    }
+    
     func deleteSelected(trips: [Trip], context: ModelContext) {
         let toDelete = trips.filter { selectedTrips.contains($0.tripId) }
-        for trip in toDelete { context.delete(trip) }
+        for trip in toDelete {
+            context.delete(trip)
+        }
         selectedTrips.removeAll()
     }
 
+    
+    
     /// Deletes a single trip and saves the context.
     func deleteTrip(_ trip: Trip, context: ModelContext) {
         context.delete(trip)

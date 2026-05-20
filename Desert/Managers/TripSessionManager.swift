@@ -11,10 +11,10 @@ import Combine
 /// Coordinates between LocationManager, NotificationsManager, and FirebaseManager.
 ///
 /// ## Layer Responsibilities
-/// - LocationManager: GPS tracking and location context only.
-/// - NotificationsManager: Local notifications only.
-/// - FirebaseManager: Cloud sync only.
-/// - TripSessionManager: Trip lifecycle decisions only.
+/// - LocationManager:       GPS tracking and location context only.
+/// - NotificationsManager:  Local notifications only.
+/// - FirebaseManager:       Cloud sync only.
+/// - TripSessionManager:    Trip lifecycle decisions only.
 ///
 /// ## Trip Status Flow
 /// ```
@@ -22,11 +22,32 @@ import Combine
 /// "overdue" → user safely returns → "completed"
 /// ```
 ///
-/// ## Key Decisions
-/// - The trip becomes overdue immediately after returnTime passes.
-/// - Auto-end logic starts only 1 hour after returnTime.
-/// - WhatsApp alerts are handled by Firebase Cloud Functions, not the device.
-/// - The device only schedules local notifications and reads alert status from Firebase.
+/// ## Auto-End Logic
+/// Before return time:
+/// - No CLMonitor. User ends the trip manually only.
+///
+/// After return time:
+/// - Trip status changes to "overdue" immediately.
+/// - Auto-end logic starts 1 hour after return time.
+/// - CLMonitor starts watching a 2km circle around the trip origin.
+/// - overdueTimer checks every 60 seconds using CLGeocoder:
+///     - Urban area (street or neighborhood found) → finishTrip() automatically.
+///     - Outskirts (no street or neighborhood)     → keep monitoring.
+///     - No network (geocoder unavailable)         → local notification only.
+/// - If CLMonitor fires (user returned to origin)  → finishTrip() immediately.
+///
+/// ## Alert Responsibility
+/// - WhatsApp alerts are sent by Firebase Cloud Functions — not the device.
+/// - Cloud Function checks every 5 minutes:
+///     returnTime passed + no upload for 35 min + alert not yet sent → sends WhatsApp.
+/// - The device reads h-alertStatus from Firebase to update the UI only.
+/// - The device schedules local notifications for the traveler when upload fails.
+///
+/// ## Upload Distance (Dynamic)
+/// - < 5 m/s  → 1km
+/// - 5–15 m/s → 3km
+/// - > 15 m/s → 5km
+/// - Time fallback: every 30 minutes regardless of movement.
 class TripSessionManager: NSObject, ObservableObject {
 
     static let shared = TripSessionManager()
@@ -37,10 +58,12 @@ class TripSessionManager: NSObject, ObservableObject {
     private let notifications = NotificationsManager.shared
     private let firebase = FirebaseManager.shared
 
+    /// Fires every 60 seconds to check overdue status and location context.
     private var overdueTimer: Timer?
 
     // MARK: - Start Trip
 
+    /// Creates a trip ID, saves locally and to Firebase, and begins GPS tracking.
     func startTrip(trip: Trip, context: ModelContext) {
         firebase.createTripId { [weak self] tripId in
             guard let self else { return }
@@ -60,6 +83,7 @@ class TripSessionManager: NSObject, ObservableObject {
 
     // MARK: - Finish Trip
 
+    /// Stops tracking, cancels notifications, and marks the trip as completed.
     func finishTrip(trip: Trip, context: ModelContext) {
         trip.status = "completed"
         firebase.endTrip(tripId: trip.tripId)
@@ -74,6 +98,7 @@ class TripSessionManager: NSObject, ObservableObject {
 
     // MARK: - Resume Session
 
+    /// Resumes GPS tracking if a trip was active when the app was last closed.
     func resumeActiveSessionIfNeeded(context: ModelContext) {
         let descriptor = FetchDescriptor<AppSettings>()
 
@@ -91,6 +116,7 @@ class TripSessionManager: NSObject, ObservableObject {
 
     // MARK: - Return Time Reminder
 
+    /// Called when the user updates the return time during an active trip.
     func rescheduleReturnTimeReminder(returnTime: Date) {
         notifications.cancelAllNotifications()
         notifications.scheduleReturnTimeReminder(returnTime: returnTime)
@@ -99,9 +125,10 @@ class TripSessionManager: NSObject, ObservableObject {
 
     // MARK: - Overdue Timer
 
+    /// Starts a repeating 60-second timer for the full trip duration.
+    /// Acts only after return time has passed.
     private func startOverdueTimer(context: ModelContext) {
         stopOverdueTimer()
-
         overdueTimer = Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { [weak self] _ in
             self?.checkIfOverdue(context: context)
         }
@@ -114,11 +141,23 @@ class TripSessionManager: NSObject, ObservableObject {
 
     // MARK: - Overdue Decision
 
+    /// Runs every 60 seconds. Acts only after return time has passed.
+    ///
+    /// Steps:
+    /// 1. Mark trip as overdue immediately after return time passes.
+    /// 2. Wait 1 hour after return time before starting auto-end logic.
+    /// 3. Start CLMonitor to watch for the user returning to origin.
+    /// 4. Use CLGeocoder to determine location context:
+    ///    - Urban  → end the trip automatically.
+    ///    - Outskirts → keep monitoring.
+    ///    - No network → schedule local notification only.
+    ///    WhatsApp alert is handled by Cloud Function — not here.
     private func checkIfOverdue(context: ModelContext) {
         guard let trip = fetchActiveTrip(context: context) else { return }
         guard trip.isActive || trip.isOverdue else { return }
         guard Date() > trip.returnTime else { return }
 
+        // mark as overdue immediately
         DispatchQueue.main.async {
             if trip.isActive {
                 trip.status = "overdue"
@@ -126,17 +165,21 @@ class TripSessionManager: NSObject, ObservableObject {
             }
         }
 
+        // auto-end logic starts 1 hour after return time
         let autoEndStartTime = trip.returnTime.addingTimeInterval(60 * 60)
-
         guard Date() >= autoEndStartTime else {
             print("TripSessionManager: auto-end not started yet — waiting 1 hour after return time")
             return
         }
 
+        // start CLMonitor — only after return time passes
         locationManager.startOriginMonitoringIfNeeded()
 
         guard let lastLocation = locationManager.lastKnownLocation else {
-            sendAlertIfNeeded(trip: trip)
+            // no location available — schedule local notification only
+            // WhatsApp alert is handled by Cloud Function
+            notifications.scheduleOverdueNotifications()
+            print("TripSessionManager: no location available — local notification scheduled")
             return
         }
 
@@ -145,33 +188,21 @@ class TripSessionManager: NSObject, ObservableObject {
 
             switch result {
             case .urban:
+                // user is in a real urban area — end the trip automatically
                 DispatchQueue.main.async {
                     self.finishTrip(trip: trip, context: context)
                     print("TripSessionManager: trip auto-ended — user in urban area")
                 }
 
             case .outskirts:
+                // user is in outskirts or desert — keep monitoring
                 print("TripSessionManager: user in outskirts — monitoring continues")
 
             case .unavailable:
-                self.sendAlertIfNeeded(trip: trip)
-            }
-        }
-    }
-
-    // MARK: - Local Alert Status Sync
-
-    private func sendAlertIfNeeded(trip: Trip) {
-        firebase.fetchAlertStatus(tripId: trip.tripId) { [weak self] alertSentFromServer in
-            DispatchQueue.main.async {
-                trip.alertSent = alertSentFromServer
-
-                if !alertSentFromServer {
-                    self?.notifications.scheduleOverdueNotifications()
-                    print("TripSessionManager: overdue notification scheduled — \(trip.tripId)")
-                } else {
-                    print("TripSessionManager: alert already confirmed by server — \(trip.tripId)")
-                }
+                // no network — schedule local notification only
+                // WhatsApp alert is handled by Cloud Function
+                self.notifications.scheduleOverdueNotifications()
+                print("TripSessionManager: no network — local notification scheduled")
             }
         }
     }
@@ -181,6 +212,7 @@ class TripSessionManager: NSObject, ObservableObject {
 
 extension TripSessionManager: LocationManagerDelegate {
 
+    /// Called on every valid location update — saves locally and uploads if conditions are met.
     func onNewLocationReceived(_ location: CLLocation) {
         guard let context = activeModelContext else { return }
         guard let trip = fetchActiveTrip(context: context) else { return }
@@ -192,6 +224,8 @@ extension TripSessionManager: LocationManagerDelegate {
         }
     }
 
+    /// Called when CLMonitor detects the user has returned to the trip's starting point.
+    /// Ends the trip immediately regardless of return time status.
     func onUserReturnedToStartPoint() {
         guard let context = activeModelContext else { return }
         guard let trip = fetchActiveTrip(context: context) else { return }
@@ -204,6 +238,7 @@ extension TripSessionManager: LocationManagerDelegate {
 
     // MARK: - Local GPS Track
 
+    /// Saves a GPS point locally every 250m — never uploaded to Firebase.
     private func saveGPSPointLocally(_ location: CLLocation, trip: Trip) {
         if let last = lastSavedCoordinate {
             let lastCL = CLLocation(latitude: last.latitude, longitude: last.longitude)
@@ -224,6 +259,9 @@ extension TripSessionManager: LocationManagerDelegate {
 
     // MARK: - Cloud Upload
 
+    /// Uploads the current location to Firebase.
+    /// On success: updates local trip record.
+    /// On failure: schedules local overdue notification if return time has passed.
     private func uploadLocationToCloud(_ location: CLLocation, trip: Trip, context: ModelContext) {
         let direction = location.course >= 0 ? location.course : nil
 
@@ -235,21 +273,23 @@ extension TripSessionManager: LocationManagerDelegate {
             onSuccess: { [weak self] in
                 guard let self else { return }
 
+                // cancel notifications only if trip is not overdue yet
                 if !trip.isOverdue {
                     self.notifications.cancelAllNotifications()
                 }
 
-                trip.lastKnownLat = location.coordinate.latitude
-                trip.lastKnownLng = location.coordinate.longitude
+                trip.lastKnownLat   = location.coordinate.latitude
+                trip.lastKnownLng   = location.coordinate.longitude
                 trip.lastUploadTime = Date()
-                trip.lastDirection = direction
+                trip.lastDirection  = direction
 
-                self.lastUploadDate = Date()
+                self.lastUploadDate         = Date()
                 self.lastUploadedCoordinate = location.coordinate
 
                 print("TripSessionManager: location uploaded to cloud")
             },
             onFailure: { [weak self] in
+                // only schedule notification if return time has already passed
                 guard Date() >= trip.returnTime else { return }
                 self?.notifications.scheduleOverdueNotifications()
                 print("TripSessionManager: upload failed — overdue notifications scheduled")
@@ -259,25 +299,28 @@ extension TripSessionManager: LocationManagerDelegate {
 
     // MARK: - Upload Decision
 
+    /// Returns true if the user has moved far enough or enough time has passed.
+    ///
+    /// Upload distance adapts to speed:
+    /// - Stationary / slow (< 5 m/s):   1km
+    /// - Normal off-road (5–15 m/s):    3km
+    /// - High speed (> 15 m/s):         5km
+    ///
+    /// Time fallback: every 30 minutes regardless of movement.
     private func shouldUploadLocationNow(_ location: CLLocation) -> Bool {
         guard let last = lastUploadedCoordinate else { return true }
-
         let lastCL = CLLocation(latitude: last.latitude, longitude: last.longitude)
-
         if location.distance(from: lastCL) >= uploadDistance(for: location.speed) { return true }
         if Date().timeIntervalSince(lastUploadDate) >= maxTimeBetweenUploads { return true }
-
         return false
     }
 
+    /// Dynamic upload distance based on speed.
     private func uploadDistance(for speed: CLLocationSpeed) -> CLLocationDistance {
         switch speed {
-        case ..<5:
-            return 1000
-        case 5..<15:
-            return 3000
-        default:
-            return 5000
+        case ..<5:   return 1000
+        case 5..<15: return 3000
+        default:     return 5000
         }
     }
 }
@@ -285,6 +328,8 @@ extension TripSessionManager: LocationManagerDelegate {
 // MARK: - Private State
 
 extension TripSessionManager {
+
+    // MARK: Persisted GPS State
 
     var lastSavedCoordinate: CLLocationCoordinate2D? {
         get {
@@ -303,6 +348,8 @@ extension TripSessionManager {
         get { UserDefaults.standard.integer(forKey: "savedPointsCount") }
         set { UserDefaults.standard.set(newValue, forKey: "savedPointsCount") }
     }
+
+    // MARK: Persisted Upload State
 
     var lastUploadDate: Date {
         get {
@@ -327,8 +374,12 @@ extension TripSessionManager {
         }
     }
 
+    // MARK: Constants
+
     var minDistanceBetweenSavedPoints: CLLocationDistance { 250 }
     var maxTimeBetweenUploads: TimeInterval { 30 * 60 }
+
+    // MARK: SwiftData Context
 
     var activeModelContext: ModelContext? { _activeModelContext }
 
@@ -343,7 +394,7 @@ extension TripSessionManager {
         _activeModelContext = context
     }
 
-    // MARK: - AppSettings
+    // MARK: AppSettings Helpers
 
     private func saveActiveTripToSettings(tripId: String, context: ModelContext) {
         let descriptor = FetchDescriptor<AppSettings>()
@@ -366,9 +417,9 @@ extension TripSessionManager {
             settings.currentTripId = ""
         }
 
-        savedPointsCount = 0
-        lastUploadedCoordinate = nil
-        lastSavedCoordinate = nil
+        savedPointsCount        = 0
+        lastUploadedCoordinate  = nil
+        lastSavedCoordinate     = nil
     }
 
     private func fetchActiveTrip(context: ModelContext) -> Trip? {

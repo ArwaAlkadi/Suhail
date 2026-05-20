@@ -74,6 +74,11 @@ struct TripHistoryView: View {
         }
         .background(Color(UIColor.systemGroupedBackground))
         .ignoresSafeArea(edges: .bottom)
+        .onAppear {
+            for trip in trips {
+                vm.syncAlertStatusIfNeeded(for: trip, context: context)
+            }
+        }
     }
 
     var emptyState: some View {
@@ -101,6 +106,7 @@ struct TripHistoryView: View {
                     dateRange: vm.formatDateRange(trip.startTime, trip.returnTime),
                     duration: vm.tripDuration(trip),
                     distance: "\(trip.gpsTrack.count * 250 / 1000) KM",
+                    alertSent: trip.alertSent,
                     onOpenDetails: {
                         selectedTrip = trip
                         showDetails = true

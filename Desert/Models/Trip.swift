@@ -65,6 +65,8 @@ class Trip {
     
     /// `true` once the emergency alert/SMS has been sent.
     var alertSent: Bool
+    /// `true` once the alert status has been synced from Firebase.
+    var didSyncAlertStatus: Bool = false
     
     init(
         tripId: String,
@@ -108,6 +110,7 @@ class Trip {
         self.plateNumbers = plateNumbers
         self.gpsTrack = []
         self.alertSent = false
+        self.didSyncAlertStatus = false
     }
     
     /// `true` if the trip is currently active.
