@@ -165,6 +165,12 @@ class TripSessionManager: NSObject, ObservableObject {
             }
         }
 
+        if let lastLocation = locationManager.lastKnownLocation {
+            if Date().timeIntervalSince(lastUploadDate) >= maxTimeBetweenUploads {
+                uploadLocationToCloud(lastLocation, trip: trip, context: context)
+            }
+        }
+
         // auto-end logic starts 1 hour after return time
         let autoEndStartTime = trip.returnTime.addingTimeInterval(60 * 60)
         guard Date() >= autoEndStartTime else {
