@@ -7,6 +7,7 @@ import Foundation
 import SwiftData
 import CoreLocation
 import Combine
+import UIKit
 
 /// Coordinates between LocationManager, NotificationsManager, and FirebaseManager.
 ///
@@ -82,6 +83,7 @@ class TripSessionManager: NSObject, ObservableObject {
 
     /// Creates a trip ID, saves locally and to Firebase, and begins GPS tracking.
     func startTrip(trip: Trip, context: ModelContext) {
+        UIDevice.current.isBatteryMonitoringEnabled = true
         firebase.createTripId { [weak self] tripId in
             guard let self else { return }
 
@@ -103,6 +105,8 @@ class TripSessionManager: NSObject, ObservableObject {
 
     /// Stops tracking, cancels notifications, and marks the trip as completed.
     func finishTrip(trip: Trip, context: ModelContext) {
+        UIDevice.current.isBatteryMonitoringEnabled = false
+
         trip.status = "completed"
         firebase.endTrip(tripId: trip.tripId)
         locationManager.stopTracking()

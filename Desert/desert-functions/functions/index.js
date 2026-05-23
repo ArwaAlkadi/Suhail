@@ -104,6 +104,7 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 
     const now = Date.now() / 1000;
 
+    // ✅ تحقق من مرور 30 دقيقة منذ آخر تحديث
     const lastUpdatedAt = alertStatus.updatedAlertSentAt ?? 0;
     const thirtyMinutesPassed = now - lastUpdatedAt >= 30 * 60;
 
@@ -111,6 +112,7 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
     if (!newUploadArrived) return;
     if (alertStatus.alertSent !== true) return;
 
+    // ✅ لو أُرسل تحديث قبل — تحقق إن مرت 30 دقيقة
     if (alertStatus.updatedAlertSent === true && !thirtyMinutesPassed) return;
 
     const updateSentSuccessfully = await sendAlert({
@@ -148,6 +150,7 @@ async function sendAlert({ tripId, trip, type }) {
     const lat = location.lat;
     const lng = location.lng;
 
+    // ✅ تحقق من وجود موقع صحيح
     if (!lat || !lng || lat === "Unknown" || lng === "Unknown") {
         console.log(`No location available for ${tripId}, alert not sent`);
         return false;
@@ -160,6 +163,12 @@ async function sendAlert({ tripId, trip, type }) {
 
     const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
 
+    // ✅ البطارية — تُضاف فقط لو فيها قيمة صحيحة
+    const batteryLevel = location.deviceBatteryLevel;
+    const batteryLine = (batteryLevel != null && batteryLevel >= 0)
+        ? `\nنسبة البطارية:\n${batteryLevel}%`
+        : "";
+
     const message = type === "updated"
         ? `السلام عليكم،
 
@@ -169,7 +178,7 @@ async function sendAlert({ tripId, trip, type }) {
 ${mapsLink}
 
 آخر تحديث للموقع:
-${lastUpload}
+${lastUpload}${batteryLine}
 
 راح نستمر بمتابعة أي تحديثات جديدة، وبنبلغكم مباشرة إذا وصل موقع جديد.
 
@@ -182,7 +191,7 @@ ${lastUpload}
 ${mapsLink}
 
 آخر تحديث للموقع:
-${lastUpload}
+${lastUpload}${batteryLine}
 
 نعرف إن الموقف ممكن يسبب قلق، لذلك ننصح بمحاولة التواصل معه مباشرة. وإذا ما قدرتوا توصلون له، نرجو التواصل مع الجهات المختصة أو مع دعم إنجاد على الرقم:
 920018911

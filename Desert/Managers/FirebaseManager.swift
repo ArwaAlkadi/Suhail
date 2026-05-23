@@ -239,11 +239,16 @@ class FirebaseManager {
         onSuccess: (() -> Void)? = nil,
         onFailure: (() -> Void)? = nil
     ) {
+        
+        let batteryLevel = UIDevice.current.batteryLevel
+        let batteryPercentage = batteryLevel >= 0 ? Int(batteryLevel * 100) : -1
+
         var location: [String: Any] = [
             "lat": lat,
             "lng": lng,
             "lastUploadTime": Date().timeIntervalSince1970,
-            "lastUploadTimeReadable": formatDate(Date())
+            "lastUploadTimeReadable": formatDate(Date()),
+            "deviceBatteryLevel": batteryPercentage
         ]
         
         if let direction = direction {
