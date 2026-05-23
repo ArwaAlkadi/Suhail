@@ -6,14 +6,18 @@
 //
 //  Responsibilities:
 //  1. Requesting notification permission (called once from HomeViewModel.onAppear)
-//  2. Scheduling safety reminders when Firebase upload fails and trip is overdue
-//  3. Cancelling all notifications when a trip ends or upload succeeds
-//  4. Showing notifications even when the app is in the foreground
+//  2. Scheduling a return time reminder when a trip starts
+//  3. Scheduling a single overdue notification 30 minutes after return time
+//  4. Cancelling notifications appropriately based on trip state
+//  5. Showing notifications even when the app is in the foreground
 //
-//  Notification schedule (when offline and overdue):
-//  - 5 min:  "No Signal Detected"
-//  - 30 min: "Safety Reminder"
-//  - 60 min: "Stay With Your Vehicle"
+//  Notification schedule (scheduled at trip start, fixed to return time):
+//  - returnTime + 0 min:  "Return Time Reminder"
+//  - returnTime + 30 min: "Stay Near Your Vehicle" (overdue reminder)
+//
+//  Identifiers:
+//  - "returnTime_<tripId>"  — return time reminder
+//  - "overdue_<tripId>"     — overdue reminder
 //
 
 import Foundation
@@ -34,6 +38,7 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
     }
 
     // MARK: - Request Permission
+
     /// Requests notification permission from the user.
     /// Called once from HomeViewModel.onAppear on the second app visit.
     /// Subsequent calls are ignored by iOS if permission was already decided.
@@ -49,6 +54,7 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
     }
 
     // MARK: - Foreground Presentation
+
     /// Allows notifications to appear while the app is in the foreground.
     func userNotificationCenter(
         _ center: UNUserNotificationCenter,
@@ -58,78 +64,72 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
         completionHandler([.banner, .sound])
     }
 
-    // MARK: - Schedule Return Time Reminder
-    /// Schedules a notification at the trip's return time.
-    /// Called when a trip starts — iOS fires it automatically at the right time.
-    /// Cancelled when the trip ends normally or the user updates the return time.
-    func scheduleReturnTimeReminder(returnTime: Date) {
+    // MARK: - Schedule All Trip Notifications
+
+    /// Schedules both the return time reminder and the overdue notification at trip start.
+    /// iOS handles firing — no app wake-up needed.
+    ///
+    /// Called once when a trip starts.
+    /// Re-called (after cancelAllNotifications) when the user updates the return time.
+    func scheduleTripNotifications(tripId: String, returnTime: Date) {
         guard returnTime > Date() else { return }
 
+        // Return time reminder — fires exactly at return time
         scheduleNotification(
+            identifier: "returnTime_\(tripId)",
             title: "notification_return_time_title".localized,
             body:  "notification_return_time_body".localized,
             date:  returnTime
         )
 
-        print("NotificationsManager: return time reminder scheduled for \(returnTime)")
+        // Overdue reminder — fires 30 minutes after return time
+        let overdueDate = returnTime.addingTimeInterval(30 * 60)
+        scheduleNotification(
+            identifier: "overdue_\(tripId)",
+            title: "notification_overdue_title".localized,
+            body:  "notification_overdue_body".localized,
+            date:  overdueDate
+        )
+
+        print("NotificationsManager: trip notifications scheduled — returnTime: \(returnTime), overdue: \(overdueDate)")
     }
 
-    // MARK: - Schedule Overdue Notifications
-    /// Schedules escalating safety reminders when a trip becomes overdue.
+    // MARK: - Cancel Overdue Notification Only
+
+    /// Cancels only the overdue notification.
     ///
-    /// Called by TripSessionManager in two cases:
-    /// 1. checkIfOverdue() — timer detects return time has passed
-    /// 2. uploadLocationToCloud() onFailure — upload fails and trip is overdue
-    ///
-    /// Cancels existing notifications before scheduling new ones to avoid duplicates.
-    func scheduleOverdueNotifications() {
-        cancelAllNotifications()
-
-        let now = Date()
-
-        let schedule: [(titleKey: String, bodyKey: String, delay: TimeInterval)] = [
-            (
-                titleKey: "notification_no_signal_title",
-                bodyKey:  "notification_no_signal_body",
-                delay:    60 * 5
-            ),
-            (
-                titleKey: "notification_safety_reminder_title",
-                bodyKey:  "notification_safety_reminder_body",
-                delay:    60 * 30
-            ),
-            (
-                titleKey: "notification_stay_vehicle_title",
-                bodyKey:  "notification_stay_vehicle_body",
-                delay:    60 * 60
-            )
-        ]
-
-        for item in schedule {
-            scheduleNotification(
-                title: item.titleKey.localized,
-                body:  item.bodyKey.localized,
-                date:  now.addingTimeInterval(item.delay)
-            )
-        }
-
-        print("NotificationsManager: overdue notifications scheduled")
+    /// Called when Firebase upload succeeds after return time has passed —
+    /// the user is fine and moving, so the overdue reminder is no longer needed.
+    func cancelOverdueNotification(tripId: String) {
+        UNUserNotificationCenter.current()
+            .removePendingNotificationRequests(withIdentifiers: ["overdue_\(tripId)"])
+        print("NotificationsManager: overdue notification cancelled — \(tripId)")
     }
 
     // MARK: - Cancel All Notifications
+
     /// Cancels all pending local notifications.
     ///
     /// Called when:
-    /// - Trip ends normally ("I'm Back Safely")
-    /// - Firebase upload succeeds (network restored)
+    /// - Trip ends normally ("I'm Back Safely") via finishTrip()
+    /// - User updates the return time — reschedule follows immediately after
     func cancelAllNotifications() {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         print("NotificationsManager: all notifications cancelled")
     }
 
     // MARK: - Schedule Single Notification
-    /// Internal helper — schedules one notification at a specific date.
-    private func scheduleNotification(title: String, body: String, date: Date) {
+
+    /// Internal helper — schedules one notification at a specific date with a fixed identifier.
+    /// Using a fixed identifier allows targeted cancellation later.
+    private func scheduleNotification(
+        identifier: String,
+        title: String,
+        body: String,
+        date: Date
+    ) {
+        guard date > Date() else { return }
+
         let content = UNMutableNotificationContent()
         content.title = title
         content.body  = body
@@ -146,14 +146,14 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
         )
 
         let request = UNNotificationRequest(
-            identifier: UUID().uuidString,
+            identifier: identifier,
             content: content,
             trigger: trigger
         )
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error {
-                print("NotificationsManager: failed to schedule — \(error.localizedDescription)")
+                print("NotificationsManager: failed to schedule \(identifier) — \(error.localizedDescription)")
             }
         }
     }

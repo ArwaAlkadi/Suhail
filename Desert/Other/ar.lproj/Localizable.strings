@@ -122,19 +122,16 @@
 "confirm_destination" = "تأكيد الوجهة";
 
 /* Local Notifications */
-"notification_return_time_title" = "حان وقت العودة";
-"notification_return_time_body" = "لقد حان وقت عودتك المتوقع. يرجى تأكيد سلامتك.";
-"notification_no_signal_title" = "لا توجد إشارة";
-"notification_no_signal_body" = "يبدو أنك خارج نطاق التغطية. ابقَ بالقرب من سيارتك.";
-"notification_safety_reminder_title" = "تذكير بالسلامة";
-"notification_safety_reminder_body" = "ابقَ هادئاً وظاهراً. من الأسهل إيجادك بالقرب من سيارتك.";
-"notification_stay_vehicle_title" = "ابقَ مع سيارتك";
-"notification_stay_vehicle_body" = "لا تبتعد. فرق الإنقاذ تبحث على طول المسارات المعروفة أولاً.";
+"notification_return_time_title" = "حان وقت رجعتك";
+"notification_return_time_body" = "إذا كنت بأمان ورجعت، أنهِ رحلتك الحين عشان ما نرسل تنبيه بالغلط لجهات الطوارئ.";
+"notification_overdue_title" = "لاحظنا إنك ما رجعت";
+"notification_overdue_body" = "أرسلنا لأهلك بآخر موقع لك. ابقَ في مكانك ولا تبتعد عن سيارتك.";
 
 "car_model_required" = "موديل السيارة مطلوب";
 "car_color_required" = "لون السيارة مطلوب";
 "plate_required" = "معلومات اللوحة مطلوبة";
 
-"trip_safety_notice" = "يتم إرسال تنبيهات الطوارئ فقط إذا تجاوزت وقت العودة المحدد وتوقف تطبيق Desert عن استقبال تحديثات الموقع لفترة من الوقت، مما قد يدل على عدم وجود شبكة أو اتصال. عندها سيتم مشاركة آخر موقع معروف وتفاصيل الرحلة مع جهات الاتصال للطوارئ.";
+"trip_safety_notice" = "يتم إرسال تنبيهات الطوارئ فقط إذا تجاوزت وقت العودة المحدد وتوقف تطبيق سهيل عن استقبال تحديثات الموقع لفترة من الوقت، مما قد يدل على عدم وجود شبكة أو اتصال. عندها سيتم مشاركة آخر موقع معروف وتفاصيل الرحلة مع جهات الاتصال للطوارئ.";
 
 "no_internet_connection" = "لا يمكنك بدء الرحلة لعدم توفر الانترنت";
+

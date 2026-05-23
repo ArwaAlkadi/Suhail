@@ -122,15 +122,10 @@
 "confirm_destination" = "Confirm Destination";
 
 /* Local Notifications */
-"notification_return_time_title" = "Time to Head Back";
-"notification_return_time_body" = "Your expected return time has been reached. Please confirm your safety.";
-"notification_no_signal_title" = "No Signal Detected";
-"notification_no_signal_body" = "You appear to be out of range. Stay near your vehicle.";
-"notification_safety_reminder_title" = "Safety Reminder";
-"notification_safety_reminder_body" = "Stay calm and remain visible. Help is easier to find near your vehicle.";
-"notification_stay_vehicle_title" = "Stay With Your Vehicle";
-"notification_stay_vehicle_body" = "Do not wander. Rescuers search along known routes first.";
-
+"notification_return_time_title" = "Your Return Time Has Arrived";
+"notification_return_time_body" = "If you're safe and back, please end your trip now so we don't send a false alert to your emergency contacts.";
+"notification_overdue_title" = "We Noticed You Haven't Returned";
+"notification_overdue_body" = "We've shared your last known location with your emergency contacts. Stay where you are and don't move away from your vehicle.";
 
 "car_model_required" = "Car model is required";
 "car_color_required" = "Car color is required";
@@ -139,3 +134,4 @@
 "trip_safety_notice" = "Emergency alerts are only sent if your return time passes and Desert stops receiving location updates for a period of time, which may indicate no signal or connectivity. Your last known location and trip details will then be shared with your emergency contacts.";
 
 "no_internet_connection" = "You can't start the trip, No internet connection";
+
