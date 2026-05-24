@@ -8,6 +8,7 @@ import SwiftData
 import CoreLocation
 import Combine
 import UIKit
+import FirebaseFirestore
 
 /// Coordinates between LocationManager, NotificationsManager, and FirebaseManager.
 ///
@@ -25,17 +26,16 @@ import UIKit
 ///
 /// ## Auto-End Logic
 /// Before return time:
-/// - No CLMonitor. User ends the trip manually only.
+/// - User ends the trip manually only.
 ///
 /// After return time:
 /// - Trip status changes to "overdue" immediately.
-/// - Auto-end logic starts 1 hour after return time.
-/// - CLMonitor starts watching a 2km circle around the trip origin.
 /// - overdueTimer checks every 60 seconds using CLGeocoder:
 ///     - Urban area (street or neighborhood found) → finishTrip() automatically.
 ///     - Outskirts (no street or neighborhood)     → keep monitoring.
-///     - No network (geocoder unavailable)         → notifications already scheduled at trip start.
-/// - If CLMonitor fires (user returned to origin)  → finishTrip() immediately.
+///     - No network (geocoder unavailable)         → monitoring continues, Cloud Function handles alert delivery.
+/// - Cloud Function sends 3 updated location alerts → trip is automatically marked as completed.
+/// - Firestore listener detects Cloud Function completion and ends the session locally.
 ///
 /// ## Alert Responsibility
 /// - WhatsApp alerts are sent by Firebase Cloud Functions — not the device.
@@ -69,6 +69,9 @@ class TripSessionManager: NSObject, ObservableObject {
     /// Fires every 60 seconds to check overdue status and location context.
     private var overdueTimer: DispatchSourceTimer?
     private var uploadTimer: DispatchSourceTimer?
+
+    /// Listens to trip status changes from Cloud Functions.
+    private var tripStatusListener: ListenerRegistration?
 
     private func startUploadTimer(context: ModelContext) {
         uploadTimer?.cancel()
@@ -108,6 +111,7 @@ class TripSessionManager: NSObject, ObservableObject {
             saveActiveTripToSettings(tripId: tripId, context: context)
             startOverdueTimer(context: context)
             startUploadTimer(context: context)
+            startTripStatusListener(tripId: tripId, context: context)
 
             DispatchQueue.main.async { self.hasActiveTrip = true }
             print("TripSessionManager: trip started — \(tripId)")
@@ -128,6 +132,8 @@ class TripSessionManager: NSObject, ObservableObject {
         stopOverdueTimer()
         uploadTimer?.cancel()
         uploadTimer = nil
+        tripStatusListener?.remove()
+        tripStatusListener = nil
 
         DispatchQueue.main.async { self.hasActiveTrip = false }
         print("TripSessionManager: trip finished — \(trip.tripId)")
@@ -147,6 +153,7 @@ class TripSessionManager: NSObject, ObservableObject {
         locationManager.resumeTrackingForTrip(settings.currentTripId)
         startOverdueTimer(context: context)
         startUploadTimer(context: context)
+        startTripStatusListener(tripId: settings.currentTripId, context: context)
 
         DispatchQueue.main.async { self.hasActiveTrip = true }
         print("TripSessionManager: session resumed — \(settings.currentTripId)")
@@ -166,6 +173,25 @@ class TripSessionManager: NSObject, ObservableObject {
         notifications.scheduleTripNotifications(tripId: tripId, returnTime: returnTime)
 
         print("TripSessionManager: notifications rescheduled for new return time — \(returnTime)")
+    }
+
+    // MARK: - Trip Status Listener
+
+    /// Listens to Firestore for trip status changes made by Cloud Functions.
+    /// When the Cloud Function marks the trip as completed after 3 updated alerts,
+    /// the listener detects the change and ends the session locally on the device.
+    private func startTripStatusListener(tripId: String, context: ModelContext) {
+        tripStatusListener = firebase.listenToTripStatus(tripId: tripId) { [weak self] status in
+            guard let self else { return }
+            guard status == "completed" else { return }
+            guard let trip = self.fetchActiveTrip(context: context) else { return }
+            guard !trip.isCompleted else { return }
+
+            DispatchQueue.main.async {
+                self.finishTrip(trip: trip, context: context)
+                print("TripSessionManager: trip completed by Cloud Function — \(tripId)")
+            }
+        }
     }
 
     // MARK: - Overdue Timer
@@ -194,12 +220,10 @@ class TripSessionManager: NSObject, ObservableObject {
     ///
     /// Steps:
     /// 1. Mark trip as overdue immediately after return time passes.
-    /// 2. Wait 1 hour after return time before starting auto-end logic.
-    /// 3. Start CLMonitor to watch for the user returning to origin.
-    /// 4. Use CLGeocoder to determine location context:
+    /// 2. Use CLGeocoder to determine location context:
     ///    - Urban  → end the trip automatically.
     ///    - Outskirts → keep monitoring.
-    ///    - No network → notifications already scheduled at trip start, nothing extra needed.
+    ///    - No network → monitoring continues, Cloud Function handles alert delivery.
     ///    WhatsApp alert is handled by Cloud Function — not here.
     private func checkIfOverdue(context: ModelContext) {
         guard let trip = fetchActiveTrip(context: context) else { return }
@@ -220,19 +244,7 @@ class TripSessionManager: NSObject, ObservableObject {
             }
         }
 
-        // auto-end logic starts 1 hour after return time
-        let autoEndStartTime = trip.returnTime.addingTimeInterval(60 * 60)
-        guard Date() >= autoEndStartTime else {
-            print("TripSessionManager: auto-end not started yet — waiting 1 hour after return time")
-            return
-        }
-
-        // start CLMonitor — only after return time passes
-        locationManager.startOriginMonitoringIfNeeded()
-
         guard let lastLocation = locationManager.lastKnownLocation else {
-            // No location available — overdue notification already scheduled at trip start
-            // WhatsApp alert is handled by Cloud Function
             print("TripSessionManager: no location available — overdue notification already scheduled at trip start")
             return
         }
@@ -253,9 +265,8 @@ class TripSessionManager: NSObject, ObservableObject {
                 print("TripSessionManager: user in outskirts — monitoring continues")
 
             case .unavailable:
-                // no network — overdue notification already scheduled at trip start
-                // WhatsApp alert is handled by Cloud Function
-                print("TripSessionManager: no network — overdue notification already scheduled at trip start")
+                // no network — monitoring continues, Cloud Function handles alert delivery
+                print("TripSessionManager: no network — monitoring continues")
             }
         }
     }
@@ -274,18 +285,6 @@ extension TripSessionManager: LocationManagerDelegate {
 
         if shouldUploadLocationNow(location) {
             uploadLocationToCloud(location, trip: trip, context: context)
-        }
-    }
-
-    /// Called when CLMonitor detects the user has returned to the trip's starting point.
-    /// Ends the trip immediately regardless of return time status.
-    func onUserReturnedToStartPoint() {
-        guard let context = activeModelContext else { return }
-        guard let trip = fetchActiveTrip(context: context) else { return }
-
-        DispatchQueue.main.async { [weak self] in
-            self?.finishTrip(trip: trip, context: context)
-            print("TripSessionManager: trip auto-ended — user returned to start point")
         }
     }
 

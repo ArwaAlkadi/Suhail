@@ -24,6 +24,7 @@ import FirebaseAuth
 /// 3. Saving full trip data to Firestore when a trip starts
 /// 4. Updating the last known location every 2km or 1 hour
 /// 5. Marking a trip as completed when it ends
+/// 6. Listening to trip status changes from Cloud Functions
 ///
 /// ## Usage
 /// ```swift
@@ -315,6 +316,31 @@ class FirebaseManager {
         }
     }
 
+    // MARK: - Listen to Trip Status
+    /// Listens to real-time changes on the trip document.
+    ///
+    /// Used by `TripSessionManager` to detect when the Cloud Function
+    /// marks the trip as completed after 3 updated alerts.
+    ///
+    /// - Parameters:
+    ///   - tripId: The Firebase trip ID to listen to.
+    ///   - onStatusChanged: Called with the new status whenever it changes.
+    /// - Returns: A `ListenerRegistration` — must be removed when the trip ends.
+    func listenToTripStatus(
+        tripId: String,
+        onStatusChanged: @escaping (String) -> Void
+    ) -> ListenerRegistration {
+        db.collection("trips").document(tripId).addSnapshotListener { snapshot, error in
+            if let error {
+                print("FirebaseManager: failed to listen to trip status — \(error.localizedDescription)")
+                return
+            }
+
+            guard let data = snapshot?.data() else { return }
+            let status = data["b-status"] as? String ?? ""
+            onStatusChanged(status)
+        }
+    }
 
     // MARK: - App Update Config
 
@@ -335,8 +361,7 @@ class FirebaseManager {
 
     // MARK: - Fetch Alert Status
     /// Reads the alert status from Firebase.
-    /// Firebase/server is the source of truth for whether the SMS alert was actually sent.
-
+    /// Firebase/server is the source of truth for whether the WhatsApp alert was actually sent.
     func fetchAlertStatus(
         tripId: String,
         completion: @escaping (Bool) -> Void

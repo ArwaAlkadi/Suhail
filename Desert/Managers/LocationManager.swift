@@ -12,7 +12,6 @@ import Combine
 
 protocol LocationManagerDelegate: AnyObject {
     func onNewLocationReceived(_ location: CLLocation)
-    func onUserReturnedToStartPoint()
 }
 
 // MARK: - Location Context Result
@@ -43,10 +42,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let gpsDistanceFilter: CLLocationDistance = 100
     private let maxAcceptableAccuracy: CLLocationAccuracy = 150
 
-    private var originMonitor: CLMonitor?
-    private var originMonitorTask: Task<Void, Never>?
-    private var originMonitoringStarted = false
-
     override init() {
         super.init()
         clManager.delegate = self
@@ -71,16 +66,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: - Start Tracking
 
     func startTrackingForTrip(_ tripId: String) {
-        stopOriginMonitoring()
-        originMonitoringStarted = false
-
         UserDefaults.standard.set(tripId, forKey: "activeTripId")
 
         activeTripId = tripId
         isTrackingActive = true
 
         clManager.activityType = .automotiveNavigation
-        clManager.pausesLocationUpdatesAutomatically = true
+        clManager.pausesLocationUpdatesAutomatically = false
         clManager.desiredAccuracy = kCLLocationAccuracyBest
         clManager.distanceFilter = gpsDistanceFilter
         clManager.allowsBackgroundLocationUpdates = true
@@ -101,10 +93,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         clManager.showsBackgroundLocationIndicator = false
         clManager.pausesLocationUpdatesAutomatically = false
 
-        stopOriginMonitoring()
-
         isTrackingActive = false
-        originMonitoringStarted = false
         activeTripId = ""
         lastKnownLocation = nil
 
@@ -118,10 +107,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func resumeTrackingForTrip(_ tripId: String) {
         activeTripId = tripId
         isTrackingActive = true
-        originMonitoringStarted = false
 
         clManager.activityType = .automotiveNavigation
-        clManager.pausesLocationUpdatesAutomatically = true
+        clManager.pausesLocationUpdatesAutomatically = false
         clManager.desiredAccuracy = kCLLocationAccuracyBest
         clManager.distanceFilter = gpsDistanceFilter
         clManager.allowsBackgroundLocationUpdates = true
@@ -141,10 +129,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
         activeTripId = tripId
         isTrackingActive = true
-        originMonitoringStarted = false
 
         clManager.activityType = .automotiveNavigation
-        clManager.pausesLocationUpdatesAutomatically = true
+        clManager.pausesLocationUpdatesAutomatically = false
         clManager.desiredAccuracy = kCLLocationAccuracyBest
         clManager.distanceFilter = gpsDistanceFilter
         clManager.allowsBackgroundLocationUpdates = true
@@ -154,21 +141,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         clManager.startMonitoringSignificantLocationChanges()
 
         print("LocationManager: session restored after force quit — \(tripId)")
-    }
-
-    // MARK: - Origin Monitoring Decision
-
-    func startOriginMonitoringIfNeeded() {
-        guard !originMonitoringStarted else { return }
-        guard let location = lastKnownLocation else { return }
-
-        startMonitoringReturnToStart(
-            lat: location.coordinate.latitude,
-            lng: location.coordinate.longitude
-        )
-
-        originMonitoringStarted = true
-        print("LocationManager: CLMonitor started")
     }
 
     // MARK: - Location Context Decision
@@ -249,43 +221,5 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("LocationManager: error — \(error.localizedDescription)")
-    }
-
-    // MARK: - Origin Monitor
-
-    private func startMonitoringReturnToStart(lat: Double, lng: Double) {
-        originMonitorTask = Task {
-            let center = CLLocationCoordinate2D(latitude: lat, longitude: lng)
-            let region = CLMonitor.CircularGeographicCondition(center: center, radius: 2000)
-            let monitorName = "origin\(UUID().uuidString.replacingOccurrences(of: "-", with: ""))"
-
-            originMonitor = await CLMonitor(monitorName)
-            await originMonitor?.add(region, identifier: "startPoint")
-
-            guard let originMonitor else { return }
-
-            var isFirstEvent = true
-
-            do {
-                for try await event in await originMonitor.events {
-                    if isFirstEvent {
-                        isFirstEvent = false
-                        continue
-                    }
-
-                    if event.state == .satisfied {
-                        delegate?.onUserReturnedToStartPoint()
-                    }
-                }
-            } catch {
-                print("LocationManager: CLMonitor error — \(error.localizedDescription)")
-            }
-        }
-    }
-
-    private func stopOriginMonitoring() {
-        originMonitorTask?.cancel()
-        originMonitorTask = nil
-        originMonitor = nil
     }
 }
