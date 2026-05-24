@@ -18,13 +18,17 @@ const WHATSAPP_SERVER = "https://suhail-whatsapp-production.up.railway.app";
 // 35 minutes without any Firebase upload
 const NO_RECENT_UPLOAD_LIMIT = 35 * 60;
 
-// Max updated alerts before auto-completing the trip
+// Debounce duration — wait 2 minutes after last upload before sending updated alert
+const DEBOUNCE_SECONDS = 2 * 60;
+
+// Max updated alert groups before auto-completing the trip
 const MAX_UPDATED_ALERTS = 3;
 
-// Lock duration in seconds — prevents duplicate alerts from parallel function instances
-const LOCK_DURATION_SECONDS = 30;
-
 // MARK: - Scheduled Trigger
+// Runs every 5 minutes.
+// Handles two responsibilities:
+// 1. Send initial overdue alert when no upload for 35 minutes after return time
+// 2. Send debounced updated alert when uploads arrive after overdue
 exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
     const now = Date.now() / 1000;
 
@@ -59,11 +63,10 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
             await db.collection("trips").doc(tripId).update({
                 "b-status": "overdue"
             });
-
             console.log(`Trip marked as overdue: ${tripId}`);
         }
 
-        // Step 2: Send alert only if no recent upload for 35 minutes
+        // Step 2: Send initial alert only if no recent upload for 35 minutes
         if (returnTimePassed && noRecentUploadFor35Min && !alertAlreadySent) {
             const alertSentSuccessfully = await sendAlert({
                 tripId,
@@ -81,19 +84,67 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
                     alertSent: true,
                     alertSentAt: now,
                     alertSentAtReadable: new Date().toLocaleString("ar-SA"),
-                    updatedAlertSent: false,
-                    updatedAlertSentAt: 0,
                     updatedAlertCount: 0,
+                    pendingAlertAt: 0,
                     reason: "return_time_passed_no_recent_upload"
                 }
             });
 
             console.log(`Initial overdue alert sent for ${tripId}`);
         }
+
+        // Step 3: Send debounced updated alert
+        // Fires when a pending alert has been waiting for at least 2 minutes
+        // This ensures we always send the latest location after uploads settle
+        const pendingAlertAt = alertStatus.pendingAlertAt ?? 0;
+        const hasPendingAlert = pendingAlertAt > 0;
+        const debounceElapsed = now - pendingAlertAt >= DEBOUNCE_SECONDS;
+        const currentCount = alertStatus.updatedAlertCount ?? 0;
+        const maxReached = currentCount >= MAX_UPDATED_ALERTS;
+
+        if (alertAlreadySent && hasPendingAlert && debounceElapsed && !maxReached) {
+            const newCount = currentCount + 1;
+            const shouldCompleteTrip = newCount >= MAX_UPDATED_ALERTS;
+
+            // Read latest trip data to get the most recent location
+            const latestDoc = await db.collection("trips").doc(tripId).get();
+            const latestTrip = latestDoc.data();
+
+            const alertSentSuccessfully = await sendAlert({
+                tripId,
+                trip: latestTrip,
+                type: "updated"
+            });
+
+            if (!alertSentSuccessfully) {
+                console.log(`Updated alert failed for ${tripId}`);
+                continue;
+            }
+
+            const updates = {
+                "h-alertStatus.updatedAlertCount": newCount,
+                "h-alertStatus.pendingAlertAt": 0,
+                "h-alertStatus.updatedAlertSentAt": now,
+                "h-alertStatus.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA")
+            };
+
+            if (shouldCompleteTrip) {
+                updates["b-status"] = "completed";
+                console.log(`Trip auto-completed after ${MAX_UPDATED_ALERTS} updated alert groups — ${tripId}`);
+            } else {
+                console.log(`Updated alert #${newCount} sent for ${tripId}`);
+            }
+
+            await db.collection("trips").doc(tripId).update(updates);
+        }
     }
 });
 
 // MARK: - Location Update Trigger
+// Triggered on every Firestore document update.
+// When a new location upload arrives during an overdue trip,
+// sets pendingAlertAt to now — the scheduled function handles the actual sending
+// after the debounce period, ensuring the latest location is used.
 exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", async (event) => {
     const before = event.data.before.data();
     const after = event.data.after.data();
@@ -102,6 +153,7 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 
     const beforeLocation = before["c-lastKnownLocation"] ?? {};
     const afterLocation = after["c-lastKnownLocation"] ?? {};
+    const alertStatus = after["h-alertStatus"] ?? {};
     const status = after["b-status"];
 
     const oldUploadTime = beforeLocation.lastUploadTime ?? 0;
@@ -110,110 +162,19 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 
     if (status !== "overdue") return;
     if (!newUploadArrived) return;
+    if (alertStatus.alertSent !== true) return;
+
+    const currentCount = alertStatus.updatedAlertCount ?? 0;
+    if (currentCount >= MAX_UPDATED_ALERTS) return;
 
     const now = Date.now() / 1000;
-    const tripRef = db.collection("trips").doc(tripId);
-    const lockRef = db.collection("alertLocks").doc(tripId);
 
-    // MARK: Step 1 — Acquire lock
-    // Prevents duplicate alerts when multiple uploads arrive simultaneously.
-    // Only one function instance can hold the lock at a time.
-    try {
-        await db.runTransaction(async (transaction) => {
-            const lockDoc = await transaction.get(lockRef);
-            const lockedAt = lockDoc.data()?.lockedAt ?? 0;
-
-            // If lock was acquired within the last 30 seconds — another instance is running
-            if (now - lockedAt < LOCK_DURATION_SECONDS) {
-                throw new Error("locked");
-            }
-
-            // Acquire the lock
-            transaction.set(lockRef, { lockedAt: now });
-        });
-    } catch (err) {
-        console.log(`Alert lock active for ${tripId} — skipping duplicate`);
-        return;
-    }
-
-    // MARK: Step 2 — Check alert eligibility
-    let shouldSendAlert = false;
-    let newCount = 0;
-    let shouldCompleteTrip = false;
-
-    try {
-        await db.runTransaction(async (transaction) => {
-            const tripDoc = await transaction.get(tripRef);
-            const currentAlertStatus = tripDoc.data()["h-alertStatus"] ?? {};
-
-            // Initial alert must have been sent first
-            if (currentAlertStatus.alertSent !== true) return;
-
-            const currentCount = currentAlertStatus.updatedAlertCount ?? 0;
-
-            // Already reached max — stop
-            if (currentCount >= MAX_UPDATED_ALERTS) return;
-
-            newCount = currentCount + 1;
-            shouldCompleteTrip = newCount >= MAX_UPDATED_ALERTS;
-
-            const updates = {
-                "h-alertStatus.updatedAlertSent": true,
-                "h-alertStatus.updatedAlertSentAt": now,
-                "h-alertStatus.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA"),
-                "h-alertStatus.updatedAlertCount": newCount
-            };
-
-            if (shouldCompleteTrip) {
-                updates["b-status"] = "completed";
-            }
-
-            transaction.update(tripRef, updates);
-            shouldSendAlert = true;
-        });
-    } catch (err) {
-        console.error(`Transaction failed for ${tripId}:`, err.message);
-        await lockRef.delete();
-        return;
-    }
-
-    if (!shouldSendAlert) {
-        console.log(`Updated alert skipped for ${tripId} — max alerts reached or initial not sent`);
-        await lockRef.delete();
-        return;
-    }
-
-    // MARK: Step 3 — Read latest data and send
-    // Always read latest Firebase data before sending to ensure
-    // emergency contacts receive the most recent location.
-    const latestDoc = await tripRef.get();
-    const latestTrip = latestDoc.data();
-
-    const updateSentSuccessfully = await sendAlert({
-        tripId,
-        trip: latestTrip,
-        type: "updated"
+    // Set pending alert timestamp — scheduled function will send after debounce
+    await db.collection("trips").doc(tripId).update({
+        "h-alertStatus.pendingAlertAt": now
     });
 
-    if (!updateSentSuccessfully) {
-        console.log(`Updated alert failed to send for ${tripId}`);
-
-        // Rollback count so it can be retried
-        await tripRef.update({
-            "h-alertStatus.updatedAlertCount": newCount - 1,
-            "h-alertStatus.updatedAlertSent": newCount - 1 > 0,
-            ...(shouldCompleteTrip ? { "b-status": "overdue" } : {})
-        });
-    } else {
-        if (shouldCompleteTrip) {
-            console.log(`Trip auto-completed after ${MAX_UPDATED_ALERTS} updated alerts — ${tripId}`);
-        } else {
-            console.log(`Updated alert #${newCount} sent for ${tripId}`);
-        }
-    }
-
-    // MARK: Step 4 — Release lock
-    await lockRef.delete();
+    console.log(`Pending alert set for ${tripId} — will send after ${DEBOUNCE_SECONDS}s debounce`);
 });
 
 // MARK: - Send Alert Helper
@@ -263,8 +224,6 @@ ${tripLink}
 آخر تحديث للموقع:
 ${lastUpload}${batteryLine}
 
-راح نستمر بمتابعة أي تحديثات جديدة، وبنبلغكم مباشرة إذا وصل موقع جديد.
-
 — تطبيق سهيل`
         : `السلام عليكم،
 
@@ -281,8 +240,6 @@ ${lastUpload}${batteryLine}
 
 نعرف إن الموقف ممكن يسبب قلق، لذلك ننصح بمحاولة التواصل معه مباشرة. وإذا ما قدرتوا توصلون له، نرجو التواصل مع الجهات المختصة أو مع دعم إنجاد على الرقم:
 920018911
-
-راح نستمر بمتابعة أي تحديثات جديدة، وبنبلغكم مباشرة إذا وصل موقع جديد.
 
 — تطبيق سهيل`;
 
