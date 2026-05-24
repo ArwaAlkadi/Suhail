@@ -18,6 +18,9 @@ const WHATSAPP_SERVER = "https://suhail-whatsapp-production.up.railway.app";
 // 35 minutes without any Firebase upload
 const NO_RECENT_UPLOAD_LIMIT = 35 * 60;
 
+// Max updated alerts before auto-completing the trip
+const MAX_UPDATED_ALERTS = 3;
+
 // MARK: - Scheduled Trigger
 exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
     const now = Date.now() / 1000;
@@ -77,6 +80,7 @@ exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
                     alertSentAtReadable: new Date().toLocaleString("ar-SA"),
                     updatedAlertSent: false,
                     updatedAlertSentAt: 0,
+                    updatedAlertCount: 0,
                     reason: "return_time_passed_no_recent_upload"
                 }
             });
@@ -95,44 +99,90 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 
     const beforeLocation = before["c-lastKnownLocation"] ?? {};
     const afterLocation = after["c-lastKnownLocation"] ?? {};
-    const alertStatus = after["h-alertStatus"] ?? {};
     const status = after["b-status"];
 
     const oldUploadTime = beforeLocation.lastUploadTime ?? 0;
     const newUploadTime = afterLocation.lastUploadTime ?? 0;
     const newUploadArrived = newUploadTime > oldUploadTime;
 
-    const now = Date.now() / 1000;
-
-    // ✅ تحقق من مرور 30 دقيقة منذ آخر تحديث
-    const lastUpdatedAt = alertStatus.updatedAlertSentAt ?? 0;
-    const thirtyMinutesPassed = now - lastUpdatedAt >= 30 * 60;
-
     if (status !== "overdue") return;
     if (!newUploadArrived) return;
-    if (alertStatus.alertSent !== true) return;
 
-    // ✅ لو أُرسل تحديث قبل — تحقق إن مرت 30 دقيقة
-    if (alertStatus.updatedAlertSent === true && !thirtyMinutesPassed) return;
+    const now = Date.now() / 1000;
+    const tripRef = db.collection("trips").doc(tripId);
+
+    let shouldSendAlert = false;
+    let newCount = 0;
+    let shouldCompleteTrip = false;
+
+    try {
+        await db.runTransaction(async (transaction) => {
+            const tripDoc = await transaction.get(tripRef);
+            const currentAlertStatus = tripDoc.data()["h-alertStatus"] ?? {};
+
+            // Initial alert must have been sent first
+            if (currentAlertStatus.alertSent !== true) return;
+
+            const currentCount = currentAlertStatus.updatedAlertCount ?? 0;
+
+            // Already reached max — stop
+            if (currentCount >= MAX_UPDATED_ALERTS) return;
+
+            newCount = currentCount + 1;
+            shouldCompleteTrip = newCount >= MAX_UPDATED_ALERTS;
+
+            const updates = {
+                "h-alertStatus.updatedAlertSent": true,
+                "h-alertStatus.updatedAlertSentAt": now,
+                "h-alertStatus.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA"),
+                "h-alertStatus.updatedAlertCount": newCount
+            };
+
+            if (shouldCompleteTrip) {
+                updates["b-status"] = "completed";
+            }
+
+            transaction.update(tripRef, updates);
+            shouldSendAlert = true;
+        });
+    } catch (err) {
+        console.error(`Transaction failed for ${tripId}:`, err.message);
+        return;
+    }
+
+    if (!shouldSendAlert) {
+        console.log(`Updated alert skipped for ${tripId} — max alerts reached or initial not sent`);
+        return;
+    }
+
+    // Read latest data from Firebase to ensure we send the most recent location
+    // This handles the case where 40 uploads arrive simultaneously — we always
+    // send the newest location regardless of which trigger won the transaction
+    const latestDoc = await tripRef.get();
+    const latestTrip = latestDoc.data();
 
     const updateSentSuccessfully = await sendAlert({
         tripId,
-        trip: after,
+        trip: latestTrip,
         type: "updated"
     });
 
     if (!updateSentSuccessfully) {
-        console.log(`Updated alert not marked as sent for ${tripId}`);
-        return;
+        console.log(`Updated alert failed to send for ${tripId}`);
+
+        // Rollback count so it can be retried
+        await tripRef.update({
+            "h-alertStatus.updatedAlertCount": newCount - 1,
+            "h-alertStatus.updatedAlertSent": newCount - 1 > 0,
+            ...(shouldCompleteTrip ? { "b-status": "overdue" } : {})
+        });
+    } else {
+        if (shouldCompleteTrip) {
+            console.log(`Trip auto-completed after ${MAX_UPDATED_ALERTS} updated alerts — ${tripId}`);
+        } else {
+            console.log(`Updated alert #${newCount} sent for ${tripId}`);
+        }
     }
-
-    await db.collection("trips").doc(tripId).update({
-        "h-alertStatus.updatedAlertSent": true,
-        "h-alertStatus.updatedAlertSentAt": now,
-        "h-alertStatus.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA")
-    });
-
-    console.log(`Updated location alert sent for ${tripId}`);
 });
 
 // MARK: - Send Alert Helper
@@ -150,7 +200,6 @@ async function sendAlert({ tripId, trip, type }) {
     const lat = location.lat;
     const lng = location.lng;
 
-    // ✅ تحقق من وجود موقع صحيح
     if (!lat || !lng || lat === "Unknown" || lng === "Unknown") {
         console.log(`No location available for ${tripId}, alert not sent`);
         return false;
@@ -162,8 +211,8 @@ async function sendAlert({ tripId, trip, type }) {
     const lastUpload = location.lastUploadTimeReadable ?? "غير معروف";
 
     const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
+    const tripLink = `https://suhail-1.web.app/?id=${tripId}`;
 
-    // ✅ البطارية — تُضاف فقط لو فيها قيمة صحيحة
     const batteryLevel = location.deviceBatteryLevel;
     const batteryLine = (batteryLevel != null && batteryLevel >= 0)
         ? `\nنسبة البطارية:\n${batteryLevel}%`
@@ -177,6 +226,9 @@ async function sendAlert({ tripId, trip, type }) {
 الموقع الحالي:
 ${mapsLink}
 
+تفاصيل الرحلة كاملة:
+${tripLink}
+
 آخر تحديث للموقع:
 ${lastUpload}${batteryLine}
 
@@ -189,6 +241,9 @@ ${lastUpload}${batteryLine}
 
 آخر موقع معروف:
 ${mapsLink}
+
+تفاصيل الرحلة كاملة:
+${tripLink}
 
 آخر تحديث للموقع:
 ${lastUpload}${batteryLine}
