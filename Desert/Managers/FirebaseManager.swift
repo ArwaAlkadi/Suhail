@@ -254,6 +254,7 @@ class FirebaseManager {
         
         if let direction = direction {
             location["direction"] = direction
+            location["directionReadable"] = readableDirection(from: direction)
         }
         
         db.collection("trips").document(tripId).updateData([
@@ -397,6 +398,25 @@ class FirebaseManager {
             title: data["title"] as? String ?? "Maintenance Mode",
             message: data["message"] as? String ?? "Desert is currently under maintenance."
         )
+    }
+
+    // MARK: - Readable Direction
+    /// Converts a heading in degrees to a human-readable compass direction.
+    ///
+    /// - Parameter course: The heading in degrees (0–360).
+    /// - Returns: A compass direction string, e.g. "North", "Southeast".
+    private func readableDirection(from course: Double) -> String {
+        switch course {
+        case 0..<22.5, 337.5...360: return "North"
+        case 22.5..<67.5:           return "Northeast"
+        case 67.5..<112.5:          return "East"
+        case 112.5..<157.5:         return "Southeast"
+        case 157.5..<202.5:         return "South"
+        case 202.5..<247.5:         return "Southwest"
+        case 247.5..<292.5:         return "West"
+        case 292.5..<337.5:         return "Northwest"
+        default:                    return "Unknown"
+        }
     }
 
     // MARK: - Format Date
