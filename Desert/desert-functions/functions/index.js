@@ -21,6 +21,9 @@ const NO_RECENT_UPLOAD_LIMIT = 35 * 60;
 // Max updated alerts before auto-completing the trip
 const MAX_UPDATED_ALERTS = 3;
 
+// Lock duration in seconds — prevents duplicate alerts from parallel function instances
+const LOCK_DURATION_SECONDS = 30;
+
 // MARK: - Scheduled Trigger
 exports.checkOverdueTrips = onSchedule("every 5 minutes", async () => {
     const now = Date.now() / 1000;
@@ -110,7 +113,30 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
 
     const now = Date.now() / 1000;
     const tripRef = db.collection("trips").doc(tripId);
+    const lockRef = db.collection("alertLocks").doc(tripId);
 
+    // MARK: Step 1 — Acquire lock
+    // Prevents duplicate alerts when multiple uploads arrive simultaneously.
+    // Only one function instance can hold the lock at a time.
+    try {
+        await db.runTransaction(async (transaction) => {
+            const lockDoc = await transaction.get(lockRef);
+            const lockedAt = lockDoc.data()?.lockedAt ?? 0;
+
+            // If lock was acquired within the last 30 seconds — another instance is running
+            if (now - lockedAt < LOCK_DURATION_SECONDS) {
+                throw new Error("locked");
+            }
+
+            // Acquire the lock
+            transaction.set(lockRef, { lockedAt: now });
+        });
+    } catch (err) {
+        console.log(`Alert lock active for ${tripId} — skipping duplicate`);
+        return;
+    }
+
+    // MARK: Step 2 — Check alert eligibility
     let shouldSendAlert = false;
     let newCount = 0;
     let shouldCompleteTrip = false;
@@ -147,17 +173,19 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
         });
     } catch (err) {
         console.error(`Transaction failed for ${tripId}:`, err.message);
+        await lockRef.delete();
         return;
     }
 
     if (!shouldSendAlert) {
         console.log(`Updated alert skipped for ${tripId} — max alerts reached or initial not sent`);
+        await lockRef.delete();
         return;
     }
 
-    // Read latest data from Firebase to ensure we send the most recent location
-    // This handles the case where 40 uploads arrive simultaneously — we always
-    // send the newest location regardless of which trigger won the transaction
+    // MARK: Step 3 — Read latest data and send
+    // Always read latest Firebase data before sending to ensure
+    // emergency contacts receive the most recent location.
     const latestDoc = await tripRef.get();
     const latestTrip = latestDoc.data();
 
@@ -183,6 +211,9 @@ exports.onLocationUpdatedAfterOverdue = onDocumentUpdated("trips/{tripId}", asyn
             console.log(`Updated alert #${newCount} sent for ${tripId}`);
         }
     }
+
+    // MARK: Step 4 — Release lock
+    await lockRef.delete();
 });
 
 // MARK: - Send Alert Helper
