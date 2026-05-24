@@ -74,7 +74,7 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
     func scheduleTripNotifications(tripId: String, returnTime: Date) {
         guard returnTime > Date() else { return }
 
-        // Return time reminder — fires exactly at return time
+        // Return time notification — fires exactly at return time
         scheduleNotification(
             identifier: "returnTime_\(tripId)",
             title: "notification_return_time_title".localized,
@@ -82,16 +82,16 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
             date:  returnTime
         )
 
-        // Overdue reminder — fires 30 minutes after return time
-        let overdueDate = returnTime.addingTimeInterval(30 * 60)
+        // Reassurance reminder — fires 10 minutes after return time
+        let reassuranceDate = returnTime.addingTimeInterval(10 * 60)
         scheduleNotification(
-            identifier: "overdue_\(tripId)",
-            title: "notification_overdue_title".localized,
-            body:  "notification_overdue_body".localized,
-            date:  overdueDate
+            identifier: "reassurance_\(tripId)",
+            title: "notification_reassurance_title".localized,
+            body:  "notification_reassurance_body".localized,
+            date:  reassuranceDate
         )
 
-        print("NotificationsManager: trip notifications scheduled — returnTime: \(returnTime), overdue: \(overdueDate)")
+        print("NotificationsManager: trip notifications scheduled — returnTime: \(returnTime), overdue: \(reassuranceDate)")
     }
 
     // MARK: - Cancel Overdue Notification Only
@@ -100,10 +100,10 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
     ///
     /// Called when Firebase upload succeeds after return time has passed —
     /// the user is fine and moving, so the overdue reminder is no longer needed.
-    func cancelOverdueNotification(tripId: String) {
+    func cancelReassuranceNotification(tripId: String) {
         UNUserNotificationCenter.current()
-            .removePendingNotificationRequests(withIdentifiers: ["overdue_\(tripId)"])
-        print("NotificationsManager: overdue notification cancelled — \(tripId)")
+            .removePendingNotificationRequests(withIdentifiers: ["reassurance_\(tripId)"])
+        print("NotificationsManager: reassurance notification cancelled — \(tripId)")
     }
 
     // MARK: - Cancel All Notifications

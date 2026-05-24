@@ -124,8 +124,8 @@
 /* Local Notifications */
 "notification_return_time_title" = "حان وقت رجعتك";
 "notification_return_time_body" = "إذا كنت بأمان ورجعت، أنهِ رحلتك الحين عشان ما نرسل تنبيه بالغلط لجهات الطوارئ.";
-"notification_overdue_title" = "لاحظنا إنك ما رجعت";
-"notification_overdue_body" = "أرسلنا لأهلك بآخر موقع لك. ابقَ في مكانك ولا تبتعد عن سيارتك.";
+"notification_reassurance_title" = "لاحظنا إنك ما رجعت";
+"notification_reassurance_body" = "أرسلنا لأهلك بآخر موقع لك. ابقَ في مكانك ولا تبتعد عن سيارتك.";
 
 "car_model_required" = "موديل السيارة مطلوب";
 "car_color_required" = "لون السيارة مطلوب";

@@ -124,8 +124,8 @@
 /* Local Notifications */
 "notification_return_time_title" = "Your Return Time Has Arrived";
 "notification_return_time_body" = "If you're safe and back, please end your trip now so we don't send a false alert to your emergency contacts.";
-"notification_overdue_title" = "We Noticed You Haven't Returned";
-"notification_overdue_body" = "We've shared your last known location with your emergency contacts. Stay where you are and don't move away from your vehicle.";
+"notification_reassurance_title" = "We Noticed You Haven't Returned";
+"notification_reassurance_body" = "We've shared your last known location with your emergency contacts. Stay where you are and don't move away from your vehicle.";
 
 "car_model_required" = "Car model is required";
 "car_color_required" = "Car color is required";

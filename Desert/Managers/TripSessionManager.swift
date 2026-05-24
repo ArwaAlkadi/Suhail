@@ -331,7 +331,7 @@ extension TripSessionManager: LocationManagerDelegate {
                 if trip.isOverdue {
                     // Upload succeeded after return time — user is fine and moving
                     // Cancel the overdue notification only; return time reminder already fired
-                    self.notifications.cancelOverdueNotification(tripId: trip.tripId)
+                    self.notifications.cancelReassuranceNotification(tripId: trip.tripId)
                 }
                 // Before return time — notifications are scheduled for future, leave them
 
