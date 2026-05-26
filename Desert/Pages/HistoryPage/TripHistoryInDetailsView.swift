@@ -91,16 +91,16 @@ struct TripHistoryInDetailsView: View {
                         .padding(.horizontal)
 
                     VStack(spacing: 0) {
-                        SummaryRow(label: "start_time", value: formatDate(trip.startTime))
+                        SummaryRowA(label: "start_time", value: formatDate(trip.startTime))
                         Divider()
 
-                        SummaryRow(label: "return_time", value: formatDate(trip.returnTime))
+                        SummaryRowA(label: "return_time", value: formatDate(trip.returnTime))
                         Divider()
 
-                        SummaryRow(label: "destination", value: trip.destination)
+                        SummaryRowA(label: "destination", value: trip.destination)
                         Divider()
 
-                        SummaryRow(
+                        SummaryRowA(
                             label: "individuals",
                             value: trip.hasGroup
                             ? String(format: "people_count".localized, trip.groupSize)
@@ -108,19 +108,19 @@ struct TripHistoryInDetailsView: View {
                         )
                         Divider()
 
-                        SummaryRow(
+                        SummaryRowA(
                             label: "car_details",
                             value: "\(trip.carColor) \(trip.carName)"
                         )
                         Divider()
 
-                        SummaryRow(
+                        SummaryRowA(
                             label: "plate_number",
                             value: "\(trip.plateNumbers) | \(trip.plateLetters)"
                         )
                         Divider()
 
-                        SummaryRow(
+                        SummaryRowA(
                             label: "distance",
                             value: "\(trip.gpsTrack.count * 250 / 1000) KM"
                         )
@@ -252,7 +252,7 @@ struct TripHistoryInDetailsView: View {
 
             VStack(spacing: 0) {
                 ForEach(contacts, id: \.name) { contact in
-                    ContactRow(contact: contact)
+                    ContactRowA(contact: contact)
 
                     if contact.name != contacts.last?.name {
                         Divider()

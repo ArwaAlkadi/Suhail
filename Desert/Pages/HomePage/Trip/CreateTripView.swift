@@ -175,19 +175,19 @@ struct CreateTripView: View {
             }
         }
         .sheet(isPresented: $vm.showDestinationPicker) {
-            DestinationPickerView(
+            DestinationPickerViewA(
                 destination: $vm.destination,
                 lat: $vm.destinationLat,
                 lng: $vm.destinationLng
             )
         }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
-            ContactPickerSheet {
+            ContactPickerSheetA {
                 vm.importEmergencyContact($0)
             }
         }
         .sheet(isPresented: $vm.showGroupContactPicker) {
-            ContactPickerSheet {
+            ContactPickerSheetA {
                 vm.importGroupContact($0)
             }
         }
@@ -233,14 +233,14 @@ extension CreateTripView {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
 
-                FieldSection(title: "trip_name") {
+                FieldSectionA(title: "trip_name") {
                     TextField(defaultTripName(), text: $vm.tripName)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(12)
                 }
 
-                FieldSection(title: "destination") {
+                FieldSectionA(title: "destination") {
                     Button(action: { vm.showDestinationPicker = true }) {
                         HStack {
                             Text(vm.destination.isEmpty
@@ -265,7 +265,7 @@ extension CreateTripView {
                     }
                 }
 
-                FieldSection(title: "time") {
+                FieldSectionA(title: "time") {
                     HStack(spacing: 12) {
                         // Start time — read-only, auto-filled with current time
                         VStack(alignment: .leading, spacing: 4) {
@@ -302,7 +302,7 @@ extension CreateTripView {
                     }
                 }
 
-                FieldSection(title: "group") {
+                FieldSectionA(title: "group") {
                     HStack {
                         Text("group_question".localized).font(.subheadline)
                         Spacer()
@@ -312,15 +312,15 @@ extension CreateTripView {
                     .background(Color(.systemGray6))
                     .cornerRadius(12)
 
-                    if vm.hasGroup {
-                        Stepper(
-                            String(format: "group_size".localized, vm.groupSize),
-                            value: $vm.groupSize, in: 2...20
-                        )
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
-                    }
+//                    if vm.hasGroup {
+//                        Stepper(
+//                            String(format: "group_size".localized, vm.groupSize),
+//                            value: $vm.groupSize, in: 2...20
+//                        )
+//                        .padding()
+//                        .background(Color(.systemGray6))
+//                        .cornerRadius(12)
+//                    }
                 }
             }
             .padding()
@@ -332,7 +332,7 @@ extension CreateTripView {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
 
-                FieldSection(title: "name") {
+                FieldSectionA(title: "name") {
                     TextField("full_name_placeholder".localized, text: $vm.userName)
                         .padding()
                         .background(Color(.systemGray6))
@@ -343,7 +343,7 @@ extension CreateTripView {
                     }
                 }
 
-                FieldSection(title: "phone_number") {
+                FieldSectionA(title: "phone_number") {
 
                     TextField("phone_placeholder".localized, text: $vm.phoneNumber)
                         .keyboardType(.phonePad)
@@ -363,14 +363,14 @@ extension CreateTripView {
                     }
                 }
                 
-                FieldSection(title: "emergency_contacts") {
+                FieldSectionA(title: "emergency_contacts") {
                     VStack(spacing: 8) {
                         ForEach(vm.emergencyContacts, id: \.name) { contact in
-                            ContactRow(contact: contact)
+                            ContactRowA(contact: contact)
                         }
 
                         if vm.emergencyContacts.count < 3 {
-                            AddContactButton { vm.showEmergencyContactPicker = true }
+                            AddContactButtonA { vm.showEmergencyContactPicker = true }
                         }
 
                         if vm.showContactError {
@@ -394,12 +394,12 @@ extension CreateTripView {
                 }
 
                 if vm.hasGroup {
-                    FieldSection(title: "group_contacts_optional") {
+                    FieldSectionA(title: "group_contacts_optional") {
                         VStack(spacing: 8) {
                             ForEach(vm.groupContacts, id: \.name) { contact in
-                                ContactRow(contact: contact)
+                                ContactRowA(contact: contact)
                             }
-                            AddContactButton { vm.showGroupContactPicker = true }
+                            AddContactButtonA { vm.showGroupContactPicker = true }
                         }
                     }
                 }
@@ -413,7 +413,7 @@ extension CreateTripView {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
 
-                FieldSection(title: "car_model") {
+                FieldSectionA(title: "car_model") {
                     TextField("car_model_placeholder".localized, text: $vm.carName)
                         .padding()
                         .background(Color(.systemGray6))
@@ -427,7 +427,7 @@ extension CreateTripView {
                 }
                 
 
-                FieldSection(title: "car_color") {
+                FieldSectionA(title: "car_color") {
                     TextField("car_color_placeholder".localized, text: $vm.carColor)
                         .padding()
                         .background(Color(.systemGray6))
@@ -440,7 +440,7 @@ extension CreateTripView {
                     }
                 }
 
-                FieldSection(title: "4wd") {
+                FieldSectionA(title: "4wd") {
                     HStack {
                         Text("4wd_question".localized).font(.subheadline)
                         Spacer()
@@ -451,12 +451,12 @@ extension CreateTripView {
                     .cornerRadius(12)
                 }
 
-                FieldSection(title: "plate_info") {
+                FieldSectionA(title: "plate_info") {
                     VStack(spacing: 10) {
 
                         HStack(spacing: 8) {
                             ForEach(0..<3, id: \.self) { index in
-                                PlateLetterPicker(
+                                PlateLetterPickerA(
                                     selectedLetters: $vm.plateLetters,
                                     index: index,
                                     letters: vm.saudiPlateLetters,
@@ -467,7 +467,7 @@ extension CreateTripView {
 
                         HStack(spacing: 8) {
                             ForEach(0..<4, id: \.self) { index in
-                                PlateNumberInput(
+                                PlateNumberInputA(
                                     numbers: $vm.plateNumbers,
                                     index: index,
                                     focusedIndex: $focusedPlateNumber

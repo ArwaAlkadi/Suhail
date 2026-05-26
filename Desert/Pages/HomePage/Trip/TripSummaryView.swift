@@ -41,7 +41,7 @@ struct TripSummaryView: View {
                 }
 
                 VStack(spacing: 0) {
-                    SummaryRow(
+                    SummaryRowA(
                         label: "trip_name",
                         value: vm.tripName.isEmpty ? formatDefaultName() : vm.tripName
                     )
@@ -69,35 +69,35 @@ struct TripSummaryView: View {
                         Divider().padding(.leading)
 
                     } else {
-                        SummaryRow(label: "start_time", value: formatDate(Date()))
+                        SummaryRowA(label: "start_time", value: formatDate(Date()))
                         Divider().padding(.leading)
 
-                        SummaryRow(label: "return_time", value: formatDate(vm.returnTime))
+                        SummaryRowA(label: "return_time", value: formatDate(vm.returnTime))
                         Divider().padding(.leading)
                     }
 
-                    SummaryRow(
+                    SummaryRowA(
                         label: "destination",
                         value: vm.destination.isEmpty ? "—" : vm.destination
                     )
 
                     Divider().padding(.leading)
 
-                    SummaryRow(
+                    SummaryRowA(
                         label: "car_details",
                         value: vm.carName.isEmpty ? "—" : "\(vm.carColor) \(vm.carName)"
                     )
 
                     Divider().padding(.leading)
 
-                    SummaryRow(
+                    SummaryRowA(
                         label: "plate_number",
                         value: vm.plateLetters.isEmpty ? "—" : "\(vm.plateNumbers) | \(vm.plateLetters)"
                     )
 
                     Divider().padding(.leading)
 
-                    SummaryRow(
+                    SummaryRowA(
                         label: "individuals",
                         value: vm.hasGroup
                             ? String(format: "people_count".localized, vm.groupSize)
@@ -212,7 +212,7 @@ struct TripSummaryView: View {
 
             VStack(spacing: 0) {
                 ForEach(contacts, id: \.name) { contact in
-                    ContactRow(contact: contact)
+                    ContactRowA(contact: contact)
 
                     if contact.name != contacts.last?.name {
                         Divider().padding(.leading, 60)
@@ -329,11 +329,11 @@ struct RepeatTripSummaryView: View {
 
                 Divider().padding(.horizontal)
 
-                SummarySection(title: "destination_group") {
-                    SummaryRow(label: "destination", value: trip.destination)
+                SummarySectionA(title: "destination_group") {
+                    SummaryRowA(label: "destination", value: trip.destination)
                     Divider()
 
-                    SummaryRow(
+                    SummaryRowA(
                         label: "group",
                         value: trip.hasGroup
                             ? String(format: "people_count".localized, trip.groupSize)
@@ -341,24 +341,24 @@ struct RepeatTripSummaryView: View {
                     )
                 }
 
-                SummarySection(title: "car") {
-                    SummaryRow(label: "car", value: "\(trip.carName) · \(trip.carColor)")
+                SummarySectionA(title: "car") {
+                    SummaryRowA(label: "car", value: "\(trip.carName) · \(trip.carColor)")
                     Divider()
 
-                    SummaryRow(label: "4wd", value: trip.is4WD ? "yes".localized : "no".localized)
+                    SummaryRowA(label: "4wd", value: trip.is4WD ? "yes".localized : "no".localized)
                     Divider()
 
-                    SummaryRow(label: "plate", value: "\(trip.plateLetters) \(trip.plateNumbers)")
+                    SummaryRowA(label: "plate", value: "\(trip.plateLetters) \(trip.plateNumbers)")
                 }
 
-                SummarySection(
+                SummarySectionA(
                     title: String(
                         format: "emergency_contacts_count".localized,
                         trip.emergencyContacts.count
                     )
                 ) {
                     ForEach(trip.emergencyContacts, id: \.name) { contact in
-                        SummaryRow(label: contact.name, value: contact.phone)
+                        SummaryRowA(label: contact.name, value: contact.phone)
 
                         if contact.name != trip.emergencyContacts.last?.name {
                             Divider()

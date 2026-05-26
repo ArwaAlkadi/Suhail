@@ -31,7 +31,7 @@ import ContactsUI
 // MARK: - Field Section
 // Labeled container for a form field. Used in all CreateTripView steps.
 
-struct FieldSection<Content: View>: View {
+struct FieldSectionA<Content: View>: View {
     var title: String
     @ViewBuilder var content: () -> Content
 
@@ -48,7 +48,7 @@ struct FieldSection<Content: View>: View {
 // MARK: - Summary Row
 // Single label-value row. Used in TripSummaryView and TripHistoryInDetailsView.
 
-struct SummaryRow: View {
+struct SummaryRowA: View {
     var label: String
     var value: String
 
@@ -69,7 +69,7 @@ struct SummaryRow: View {
 // MARK: - Contact Row
 // Displays a contact avatar, name, and phone. Used in CreateTripView and TripSummaryView.
 
-struct ContactRow: View {
+struct ContactRowA: View {
     var contact: Contact
 
     var body: some View {
@@ -98,7 +98,7 @@ struct ContactRow: View {
 // MARK: - Add Contact Button
 // Button to open the contact picker. Used in CreateTripView step 2.
 
-struct AddContactButton: View {
+struct AddContactButtonA: View {
     var action: () -> Void
 
     var body: some View {
@@ -121,7 +121,7 @@ struct AddContactButton: View {
 // MARK: - Stat Item
 // Icon + value + label stat block. Used in TripHistoryInDetailsView.
 
-struct StatItem: View {
+struct StatItemA: View {
     var icon: String
     var value: String
     var label: String
@@ -141,7 +141,7 @@ struct StatItem: View {
 // MARK: - Letter Picker
 // Single plate letter picker with up/down chevrons. Used in CreateTripView step 3.
 
-struct LetterPicker: View {
+struct LetterPickerA: View {
     var body: some View {
         VStack(spacing: 4) {
             Image(systemName: "chevron.up").font(.caption2).foregroundColor(.secondary)
@@ -158,7 +158,7 @@ struct LetterPicker: View {
 // MARK: - Number Box
 // Single plate digit box. Used in CreateTripView step 3.
 
-struct NumberBox: View {
+struct NumberBoxA: View {
     var body: some View {
         Text("0")
             .font(.subheadline)
@@ -173,7 +173,7 @@ struct NumberBox: View {
 // MARK: - Summary Section
 // Titled card container with styled border. Used in TripSummaryView and RepeatTripSummaryView.
 
-struct SummarySection<Content: View>: View {
+struct SummarySectionA<Content: View>: View {
     var title: String
     @ViewBuilder var content: () -> Content
 
@@ -197,7 +197,7 @@ struct SummarySection<Content: View>: View {
 // MARK: - Custom Tab Bar
 // Capsule-style tab bar with Map and History tabs. Used in HomeView and TripHistoryView.
 
-struct CustomTabBar: View {
+struct CustomTabBarA: View {
 
     @Binding var currentPage: AppPage
 
@@ -238,7 +238,7 @@ struct CustomTabBar: View {
 // Wraps CNContactPickerViewController for native contact selection.
 // Used in CreateTripView for emergency and group contacts.
 
-struct ContactPickerSheet: UIViewControllerRepresentable {
+struct ContactPickerSheetA: UIViewControllerRepresentable {
 
     var onSelect: (CNContact) -> Void
 
@@ -265,7 +265,7 @@ struct ContactPickerSheet: UIViewControllerRepresentable {
 // Full-screen map sheet for selecting a trip destination by tapping or searching.
 // Used in CreateTripView step 1.
 
-struct DestinationPickerView: View {
+struct DestinationPickerViewA: View {
 
     @Environment(\.dismiss) private var dismiss
     @Binding var destination: String
@@ -284,7 +284,7 @@ struct DestinationPickerView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                TappableMapView(
+                TappableMapViewA(
                     region: $region,
                     pinCoordinate: $pinCoordinate,
                     onTap: { coordinate in
@@ -295,7 +295,7 @@ struct DestinationPickerView: View {
                 .ignoresSafeArea(edges: .bottom)
 
                 VStack {
-                    SearchBar(text: $searchText, onSearch: search).padding()
+                    SearchBarA(text: $searchText, onSearch: search).padding()
 
                     if !searchResults.isEmpty {
                         List(searchResults, id: \.self) { item in
@@ -380,7 +380,7 @@ struct DestinationPickerView: View {
 // UIViewRepresentable wrapping MKMapView with tap gesture and draggable pin.
 // Used inside DestinationPickerView.
 
-struct TappableMapView: UIViewRepresentable {
+struct TappableMapViewA: UIViewRepresentable {
 
     @Binding var region: MKCoordinateRegion
     @Binding var pinCoordinate: CLLocationCoordinate2D?
@@ -463,7 +463,7 @@ struct TappableMapView: UIViewRepresentable {
 // MARK: - Search Bar
 // Simple search input with clear button. Used in DestinationPickerView.
 
-struct SearchBar: View {
+struct SearchBarA: View {
     @Binding var text: String
     var onSearch: () -> Void
 
@@ -487,7 +487,7 @@ struct SearchBar: View {
 
 // MARK: - Delete Swipe Action
 
-struct DeleteSwipeAction: View {
+struct DeleteSwipeActionA: View {
 
     var action: () -> Void
 
@@ -502,7 +502,7 @@ struct DeleteSwipeAction: View {
 }
 
 // MARK: - Trip History Row
-struct TripHistoryRow: View {
+struct TripHistoryRowA: View {
 
     var trip: Trip
     var dateRange: String
@@ -601,7 +601,7 @@ struct TripHistoryRow: View {
 
 // MARK: - Toast Notification
 
-struct ToastNotification: View {
+struct ToastNotificationA: View {
 
     var message: String
     var icon: String = "wifi.slash"
@@ -629,7 +629,7 @@ struct ToastNotification: View {
 
 // MARK: - Plate Number Input
 
-struct PlateNumberInput: View {
+struct PlateNumberInputA: View {
 
     @Binding var numbers: String
     let index: Int
@@ -676,7 +676,7 @@ struct PlateNumberInput: View {
 
 // MARK: - Plate Letter Input
 
-struct PlateLetterPicker: View {
+struct PlateLetterPickerA: View {
 
     @Binding var selectedLetters: String
 

@@ -68,7 +68,7 @@ struct TripHistoryView: View {
                 }
             }
 
-            CustomTabBar(currentPage: $currentPage)
+            CustomTabBarA(currentPage: $currentPage)
                 .padding(.horizontal, 20)
                 .padding(.bottom, 32)
         }
@@ -101,7 +101,7 @@ struct TripHistoryView: View {
     var tripList: some View {
         List {
             ForEach(trips, id: \.tripId) { trip in
-                TripHistoryRow(
+                TripHistoryRowA(
                     trip: trip,
                     dateRange: vm.formatDateRange(trip.startTime, trip.returnTime),
                     duration: vm.tripDuration(trip),
@@ -120,7 +120,7 @@ struct TripHistoryView: View {
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    DeleteSwipeAction {
+                    DeleteSwipeActionA {
                         vm.selectedTrips = [trip.tripId]
                         vm.showDeleteAlert = true
                     }
