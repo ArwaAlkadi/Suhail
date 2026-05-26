@@ -7,6 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */; };
+		EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */; };
+		EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */; };
+		EC1FBE8B2FC52FAA00CA755B /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5B2FC52FAA00CA755B /* Divider.swift */; };
+		EC1FBE8C2FC52FAA00CA755B /* PlateLetterPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5C2FC52FAA00CA755B /* PlateLetterPicker.swift */; };
+		EC1FBE8D2FC52FAA00CA755B /* PlateNumberField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5D2FC52FAA00CA755B /* PlateNumberField.swift */; };
+		EC1FBE8E2FC52FAA00CA755B /* progress.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5E2FC52FAA00CA755B /* progress.swift */; };
+		EC1FBE8F2FC52FAA00CA755B /* ProgressSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5F2FC52FAA00CA755B /* ProgressSegment.swift */; };
+		EC1FBE902FC52FAA00CA755B /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE602FC52FAA00CA755B /* StatusBadge.swift */; };
+		EC1FBE912FC52FAA00CA755B /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE612FC52FAA00CA755B /* Stepper.swift */; };
+		EC1FBE922FC52FAA00CA755B /* Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE622FC52FAA00CA755B /* Toggle.swift */; };
+		EC1FBE932FC52FAA00CA755B /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE642FC52FAA00CA755B /* BackButton.swift */; };
+		EC1FBE942FC52FAA00CA755B /* CTAButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE652FC52FAA00CA755B /* CTAButton.swift */; };
+		EC1FBE952FC52FAA00CA755B /* FABButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE662FC52FAA00CA755B /* FABButton.swift */; };
+		EC1FBE962FC52FAA00CA755B /* RepeatTripButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE672FC52FAA00CA755B /* RepeatTripButton.swift */; };
+		EC1FBE972FC52FAA00CA755B /* AddContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE692FC52FAA00CA755B /* AddContactRow.swift */; };
+		EC1FBE982FC52FAA00CA755B /* ColorPickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6A2FC52FAA00CA755B /* ColorPickerRow.swift */; };
+		EC1FBE992FC52FAA00CA755B /* ContactRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6B2FC52FAA00CA755B /* ContactRow.swift */; };
+		EC1FBE9A2FC52FAA00CA755B /* DateRangeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6C2FC52FAA00CA755B /* DateRangeRow.swift */; };
+		EC1FBE9B2FC52FAA00CA755B /* DestinationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6D2FC52FAA00CA755B /* DestinationRow.swift */; };
+		EC1FBE9C2FC52FAA00CA755B /* ErrorMessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6E2FC52FAA00CA755B /* ErrorMessageRow.swift */; };
+		EC1FBE9D2FC52FAA00CA755B /* GroupNumberRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE6F2FC52FAA00CA755B /* GroupNumberRow.swift */; };
+		EC1FBE9E2FC52FAA00CA755B /* InquiryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE702FC52FAA00CA755B /* InquiryRow.swift */; };
+		EC1FBE9F2FC52FAA00CA755B /* PlateInfoRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE712FC52FAA00CA755B /* PlateInfoRow.swift */; };
+		EC1FBEA02FC52FAA00CA755B /* TextFieldState.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE722FC52FAA00CA755B /* TextFieldState.swift */; };
+		EC1FBEA12FC52FAA00CA755B /* ValidatedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE732FC52FAA00CA755B /* ValidatedTextField.swift */; };
+		EC1FBEA22FC52FAA00CA755B /* GroupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE752FC52FAA00CA755B /* GroupSection.swift */; };
+		EC1FBEA32FC52FAA00CA755B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE762FC52FAA00CA755B /* HeaderView.swift */; };
+		EC1FBEA42FC52FAA00CA755B /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE772FC52FAA00CA755B /* ProgressBar.swift */; };
+		EC1FBEA52FC52FAA00CA755B /* PersonalDetailsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE792FC52FAA00CA755B /* PersonalDetailsTemp.swift */; };
+		EC1FBEA62FC52FAA00CA755B /* TripDetailsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE7A2FC52FAA00CA755B /* TripDetailsTemplate.swift */; };
+		EC1FBEA72FC52FAA00CA755B /* VehicleDetailsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */; };
+		EC1FBEA82FC52FAA00CA755B /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE7E2FC52FAA00CA755B /* AppColors.swift */; };
+		EC1FBEA92FC52FAA00CA755B /* AppRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE802FC52FAA00CA755B /* AppRadius.swift */; };
+		EC1FBEAA2FC52FAA00CA755B /* AppSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE822FC52FAA00CA755B /* AppSpacing.swift */; };
+		EC1FBEAB2FC52FAA00CA755B /* AppTypography.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE842FC52FAA00CA755B /* AppTypography.swift */; };
 		EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F712F8C1042003E343E /* FirebaseAnalytics */; };
 		EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F732F8C1042003E343E /* FirebaseFirestore */; };
 		EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F752F8C1042003E343E /* FirebaseFunctions */; };
@@ -48,6 +84,42 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircle.swift; sourceTree = "<group>"; };
+		EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityIcon.swift; sourceTree = "<group>"; };
+		EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterButton.swift; sourceTree = "<group>"; };
+		EC1FBE5B2FC52FAA00CA755B /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
+		EC1FBE5C2FC52FAA00CA755B /* PlateLetterPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateLetterPicker.swift; sourceTree = "<group>"; };
+		EC1FBE5D2FC52FAA00CA755B /* PlateNumberField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateNumberField.swift; sourceTree = "<group>"; };
+		EC1FBE5E2FC52FAA00CA755B /* progress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = progress.swift; sourceTree = "<group>"; };
+		EC1FBE5F2FC52FAA00CA755B /* ProgressSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSegment.swift; sourceTree = "<group>"; };
+		EC1FBE602FC52FAA00CA755B /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		EC1FBE612FC52FAA00CA755B /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
+		EC1FBE622FC52FAA00CA755B /* Toggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toggle.swift; sourceTree = "<group>"; };
+		EC1FBE642FC52FAA00CA755B /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		EC1FBE652FC52FAA00CA755B /* CTAButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CTAButton.swift; sourceTree = "<group>"; };
+		EC1FBE662FC52FAA00CA755B /* FABButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FABButton.swift; sourceTree = "<group>"; };
+		EC1FBE672FC52FAA00CA755B /* RepeatTripButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatTripButton.swift; sourceTree = "<group>"; };
+		EC1FBE692FC52FAA00CA755B /* AddContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactRow.swift; sourceTree = "<group>"; };
+		EC1FBE6A2FC52FAA00CA755B /* ColorPickerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerRow.swift; sourceTree = "<group>"; };
+		EC1FBE6B2FC52FAA00CA755B /* ContactRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactRow.swift; sourceTree = "<group>"; };
+		EC1FBE6C2FC52FAA00CA755B /* DateRangeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeRow.swift; sourceTree = "<group>"; };
+		EC1FBE6D2FC52FAA00CA755B /* DestinationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationRow.swift; sourceTree = "<group>"; };
+		EC1FBE6E2FC52FAA00CA755B /* ErrorMessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessageRow.swift; sourceTree = "<group>"; };
+		EC1FBE6F2FC52FAA00CA755B /* GroupNumberRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNumberRow.swift; sourceTree = "<group>"; };
+		EC1FBE702FC52FAA00CA755B /* InquiryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InquiryRow.swift; sourceTree = "<group>"; };
+		EC1FBE712FC52FAA00CA755B /* PlateInfoRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateInfoRow.swift; sourceTree = "<group>"; };
+		EC1FBE722FC52FAA00CA755B /* TextFieldState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldState.swift; sourceTree = "<group>"; };
+		EC1FBE732FC52FAA00CA755B /* ValidatedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatedTextField.swift; sourceTree = "<group>"; };
+		EC1FBE752FC52FAA00CA755B /* GroupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSection.swift; sourceTree = "<group>"; };
+		EC1FBE762FC52FAA00CA755B /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		EC1FBE772FC52FAA00CA755B /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		EC1FBE792FC52FAA00CA755B /* PersonalDetailsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsTemp.swift; sourceTree = "<group>"; };
+		EC1FBE7A2FC52FAA00CA755B /* TripDetailsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsTemplate.swift; sourceTree = "<group>"; };
+		EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDetailsTemplate.swift; sourceTree = "<group>"; };
+		EC1FBE7E2FC52FAA00CA755B /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
+		EC1FBE802FC52FAA00CA755B /* AppRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRadius.swift; sourceTree = "<group>"; };
+		EC1FBE822FC52FAA00CA755B /* AppSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSpacing.swift; sourceTree = "<group>"; };
+		EC1FBE842FC52FAA00CA755B /* AppTypography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTypography.swift; sourceTree = "<group>"; };
 		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
@@ -89,9 +161,9 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */ = {
+		EC1FBDAA2FC52BBC00CA755B /* Font */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "thmanyah font";
+			path = Font;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -111,6 +183,137 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EC1FBE632FC52FAA00CA755B /* Atoms */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */,
+				EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */,
+				EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */,
+				EC1FBE5B2FC52FAA00CA755B /* Divider.swift */,
+				EC1FBE5C2FC52FAA00CA755B /* PlateLetterPicker.swift */,
+				EC1FBE5D2FC52FAA00CA755B /* PlateNumberField.swift */,
+				EC1FBE5E2FC52FAA00CA755B /* progress.swift */,
+				EC1FBE5F2FC52FAA00CA755B /* ProgressSegment.swift */,
+				EC1FBE602FC52FAA00CA755B /* StatusBadge.swift */,
+				EC1FBE612FC52FAA00CA755B /* Stepper.swift */,
+				EC1FBE622FC52FAA00CA755B /* Toggle.swift */,
+			);
+			path = Atoms;
+			sourceTree = "<group>";
+		};
+		EC1FBE682FC52FAA00CA755B /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE642FC52FAA00CA755B /* BackButton.swift */,
+				EC1FBE652FC52FAA00CA755B /* CTAButton.swift */,
+				EC1FBE662FC52FAA00CA755B /* FABButton.swift */,
+				EC1FBE672FC52FAA00CA755B /* RepeatTripButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		EC1FBE742FC52FAA00CA755B /* Molecules */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE692FC52FAA00CA755B /* AddContactRow.swift */,
+				EC1FBE6A2FC52FAA00CA755B /* ColorPickerRow.swift */,
+				EC1FBE6B2FC52FAA00CA755B /* ContactRow.swift */,
+				EC1FBE6C2FC52FAA00CA755B /* DateRangeRow.swift */,
+				EC1FBE6D2FC52FAA00CA755B /* DestinationRow.swift */,
+				EC1FBE6E2FC52FAA00CA755B /* ErrorMessageRow.swift */,
+				EC1FBE6F2FC52FAA00CA755B /* GroupNumberRow.swift */,
+				EC1FBE702FC52FAA00CA755B /* InquiryRow.swift */,
+				EC1FBE712FC52FAA00CA755B /* PlateInfoRow.swift */,
+				EC1FBE722FC52FAA00CA755B /* TextFieldState.swift */,
+				EC1FBE732FC52FAA00CA755B /* ValidatedTextField.swift */,
+			);
+			path = Molecules;
+			sourceTree = "<group>";
+		};
+		EC1FBE782FC52FAA00CA755B /* Organisms */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE752FC52FAA00CA755B /* GroupSection.swift */,
+				EC1FBE762FC52FAA00CA755B /* HeaderView.swift */,
+				EC1FBE772FC52FAA00CA755B /* ProgressBar.swift */,
+			);
+			path = Organisms;
+			sourceTree = "<group>";
+		};
+		EC1FBE7C2FC52FAA00CA755B /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE792FC52FAA00CA755B /* PersonalDetailsTemp.swift */,
+				EC1FBE7A2FC52FAA00CA755B /* TripDetailsTemplate.swift */,
+				EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */,
+			);
+			path = Template;
+			sourceTree = "<group>";
+		};
+		EC1FBE7D2FC52FAA00CA755B /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE632FC52FAA00CA755B /* Atoms */,
+				EC1FBE682FC52FAA00CA755B /* Buttons */,
+				EC1FBE742FC52FAA00CA755B /* Molecules */,
+				EC1FBE782FC52FAA00CA755B /* Organisms */,
+				EC1FBE7C2FC52FAA00CA755B /* Template */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		EC1FBE7F2FC52FAA00CA755B /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE7E2FC52FAA00CA755B /* AppColors.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		EC1FBE812FC52FAA00CA755B /* Radius */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE802FC52FAA00CA755B /* AppRadius.swift */,
+			);
+			path = Radius;
+			sourceTree = "<group>";
+		};
+		EC1FBE832FC52FAA00CA755B /* Spacing */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE822FC52FAA00CA755B /* AppSpacing.swift */,
+			);
+			path = Spacing;
+			sourceTree = "<group>";
+		};
+		EC1FBE852FC52FAA00CA755B /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE842FC52FAA00CA755B /* AppTypography.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
+		EC1FBE862FC52FAA00CA755B /* Foundations */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE7F2FC52FAA00CA755B /* Colors */,
+				EC1FBE812FC52FAA00CA755B /* Radius */,
+				EC1FBE832FC52FAA00CA755B /* Spacing */,
+				EC1FBE852FC52FAA00CA755B /* Typography */,
+			);
+			path = Foundations;
+			sourceTree = "<group>";
+		};
+		EC1FBE872FC52FAA00CA755B /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				EC1FBE7D2FC52FAA00CA755B /* Components */,
+				EC1FBE862FC52FAA00CA755B /* Foundations */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		EC309F572F8C0EB3003E343E = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +333,7 @@
 		EC309F7B2F8C1058003E343E /* Desert */ = {
 			isa = PBXGroup;
 			children = (
+				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
 				EC309F902F97FAFF003E343E /* App */,
 				EC309FEC2FABDC58003E343E /* Managers */,
 				EC309F8F2F97FAFD003E343E /* Models */,
@@ -213,8 +417,8 @@
 		EC309F9A2F97FD07003E343E /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				EC1FBDAA2FC52BBC00CA755B /* Font */,
 				EC309F772F8C1058003E343E /* Assets.xcassets */,
-				ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */,
 				ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */,
 				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
 				EC309FE42FABCB93003E343E /* Documentation.docc */,
@@ -282,7 +486,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				ECCD9FDF2FB8A35D00E2B5B9 /* thmanyah font */,
+				EC1FBDAA2FC52BBC00CA755B /* Font */,
 			);
 			name = Desert;
 			packageProductDependencies = (
@@ -381,6 +585,42 @@
 				ECCD9EAD2FB67FC600E2B5B9 /* WelcomeView.swift in Sources */,
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
+				EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */,
+				EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */,
+				EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */,
+				EC1FBE8B2FC52FAA00CA755B /* Divider.swift in Sources */,
+				EC1FBE8C2FC52FAA00CA755B /* PlateLetterPicker.swift in Sources */,
+				EC1FBE8D2FC52FAA00CA755B /* PlateNumberField.swift in Sources */,
+				EC1FBE8E2FC52FAA00CA755B /* progress.swift in Sources */,
+				EC1FBE8F2FC52FAA00CA755B /* ProgressSegment.swift in Sources */,
+				EC1FBE902FC52FAA00CA755B /* StatusBadge.swift in Sources */,
+				EC1FBE912FC52FAA00CA755B /* Stepper.swift in Sources */,
+				EC1FBE922FC52FAA00CA755B /* Toggle.swift in Sources */,
+				EC1FBE932FC52FAA00CA755B /* BackButton.swift in Sources */,
+				EC1FBE942FC52FAA00CA755B /* CTAButton.swift in Sources */,
+				EC1FBE952FC52FAA00CA755B /* FABButton.swift in Sources */,
+				EC1FBE962FC52FAA00CA755B /* RepeatTripButton.swift in Sources */,
+				EC1FBE972FC52FAA00CA755B /* AddContactRow.swift in Sources */,
+				EC1FBE982FC52FAA00CA755B /* ColorPickerRow.swift in Sources */,
+				EC1FBE992FC52FAA00CA755B /* ContactRow.swift in Sources */,
+				EC1FBE9A2FC52FAA00CA755B /* DateRangeRow.swift in Sources */,
+				EC1FBE9B2FC52FAA00CA755B /* DestinationRow.swift in Sources */,
+				EC1FBE9C2FC52FAA00CA755B /* ErrorMessageRow.swift in Sources */,
+				EC1FBE9D2FC52FAA00CA755B /* GroupNumberRow.swift in Sources */,
+				EC1FBE9E2FC52FAA00CA755B /* InquiryRow.swift in Sources */,
+				EC1FBE9F2FC52FAA00CA755B /* PlateInfoRow.swift in Sources */,
+				EC1FBEA02FC52FAA00CA755B /* TextFieldState.swift in Sources */,
+				EC1FBEA12FC52FAA00CA755B /* ValidatedTextField.swift in Sources */,
+				EC1FBEA22FC52FAA00CA755B /* GroupSection.swift in Sources */,
+				EC1FBEA32FC52FAA00CA755B /* HeaderView.swift in Sources */,
+				EC1FBEA42FC52FAA00CA755B /* ProgressBar.swift in Sources */,
+				EC1FBEA52FC52FAA00CA755B /* PersonalDetailsTemp.swift in Sources */,
+				EC1FBEA62FC52FAA00CA755B /* TripDetailsTemplate.swift in Sources */,
+				EC1FBEA72FC52FAA00CA755B /* VehicleDetailsTemplate.swift in Sources */,
+				EC1FBEA82FC52FAA00CA755B /* AppColors.swift in Sources */,
+				EC1FBEA92FC52FAA00CA755B /* AppRadius.swift in Sources */,
+				EC1FBEAA2FC52FAA00CA755B /* AppSpacing.swift in Sources */,
+				EC1FBEAB2FC52FAA00CA755B /* AppTypography.swift in Sources */,
 				EC309F9E2F97FDA3003E343E /* SplashViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
