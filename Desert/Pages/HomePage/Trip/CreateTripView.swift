@@ -78,42 +78,14 @@ struct CreateTripView: View {
             
             Group {
                 switch currentStep {
-
                 case 0:
-                    PersonalDetailsTemplate(
-                        fullName: $vm.fullName,
-                        phoneNumber: $vm.phoneNumber,
-                        emergencyContacts: $vm.emergencyContacts,
-                        showErrors: vm.showStep0Errors,
-                        onAddContact: { vm.showEmergencyContactPicker = true }
-                    )
-                   
+                    PersonalDetailsView(vm: vm)
 
                 case 1:
-                    VehicleDetailsTemplate(
-                        carModel: $vm.carModel,
-                        selectedColor: $vm.selectedColor,
-                        isFourWheelDrive: $vm.isFourWheelDrive,
-                        firstPlateLetter: $vm.firstPlateLetter,
-                        secondPlateLetter: $vm.secondPlateLetter,
-                        thirdPlateLetter: $vm.thirdPlateLetter,
-                        plateDigits: $vm.plateDigits,
-                        showErrors: vm.showStep1Errors
-                    )
+                    VehicleDetailsView(vm: vm)
 
                 case 2:
-                    TripDetailsTemplate(
-                        tripName: $vm.tripName,
-                        destination: $vm.destination,
-                        returnTime: $vm.returnTime,
-                        isGroup: $vm.isGroup,
-                        groupCount: $vm.groupCount,
-                        groupContacts: $vm.groupContacts,
-                        showErrors: vm.showStep2Errors,
-                        onSelectDestination: { vm.showDestinationPicker = true },
-                        onAddGroupContact: { vm.showGroupContactPicker = true }
-                    )
-
+                    TripDetailsView(vm: vm)
                 default:
                     EmptyView()
                 }
@@ -254,4 +226,68 @@ struct CreateTripView: View {
         SavedContact.self,
         Trip.self
     ], inMemory: true)
+}
+
+
+
+
+
+
+
+struct PersonalDetailsView: View {
+
+    @ObservedObject var vm: TripsViewModel
+
+    var body: some View {
+        PersonalDetailsTemplate(
+            fullName: $vm.fullName,
+            phoneNumber: $vm.phoneNumber,
+            emergencyContacts: $vm.emergencyContacts,
+            showErrors: vm.showStep0Errors,
+            onAddContact: { vm.showEmergencyContactPicker = true }
+        )
+    }
+}
+
+
+
+
+
+struct VehicleDetailsView: View {
+
+    @ObservedObject var vm: TripsViewModel
+
+    var body: some View {
+        VehicleDetailsTemplate(
+            carModel: $vm.carModel,
+            selectedColor: $vm.selectedColor,
+            isFourWheelDrive: $vm.isFourWheelDrive,
+            firstPlateLetter: $vm.firstPlateLetter,
+            secondPlateLetter: $vm.secondPlateLetter,
+            thirdPlateLetter: $vm.thirdPlateLetter,
+            plateDigits: $vm.plateDigits,
+            showErrors: vm.showStep1Errors
+        )
+    }
+}
+
+
+
+struct TripDetailsView: View {
+
+    @ObservedObject var vm: TripsViewModel
+
+    var body: some View {
+        TripDetailsTemplate(
+            tripName: $vm.tripName,
+            destination: $vm.destination,
+            returnTime: $vm.returnTime,
+            isGroup: $vm.isGroup,
+            groupCount: $vm.groupCount,
+            groupContacts: $vm.groupContacts,
+            showErrors: vm.showStep2Errors,
+            onSelectDestination: { vm.showDestinationPicker = true },
+            onAddGroupContact: { vm.showGroupContactPicker = true }
+        )
+    }
 }
