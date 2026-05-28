@@ -42,6 +42,7 @@ struct HeaderView: View {
                 .foregroundStyle(Color.Primary)
                 .lineLimit(1)
         }
+        .padding(.horizontal, AppSpacing.lg) 
     }
 }
 
@@ -75,6 +76,5 @@ private extension HeaderView {
             leadingButton: .close
         )
     }
-    .padding()
 }
 

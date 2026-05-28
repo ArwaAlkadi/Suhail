@@ -53,7 +53,13 @@ struct RootView: View {
         } message: {
             Text(updateMessage)
         }
+        .simultaneousGesture(
+            TapGesture().onEnded {
+                hideKeyboard()
+            }
+        )
     }
+    
 
     // MARK: - Maintenance Check
 

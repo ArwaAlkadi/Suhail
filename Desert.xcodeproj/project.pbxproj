@@ -51,6 +51,7 @@
 		EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */; };
 		EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */; };
 		EC2F63022FC7B0C3007FF45C /* HomeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */; };
+		EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */; };
 		EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F712F8C1042003E343E /* FirebaseAnalytics */; };
 		EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F732F8C1042003E343E /* FirebaseFirestore */; };
 		EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F752F8C1042003E343E /* FirebaseFunctions */; };
@@ -136,6 +137,7 @@
 		EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " NetworkStatusBanner.swift"; sourceTree = "<group>"; };
 		EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " HistoryTripCard.swift"; sourceTree = "<group>"; };
 		EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplate.swift; sourceTree = "<group>"; };
+		EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelpers.swift; sourceTree = "<group>"; };
 		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
@@ -498,6 +500,7 @@
 				ECCD9FF12FB8AA5900E2B5B9 /* LocalizationHelper.swift */,
 				ECCD9FF32FB8AA8E00E2B5B9 /* NavigationHelper.swift */,
 				ECCD9FF52FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift */,
+				EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				EC1FBE8F2FC52FAA00CA755B /* ProgressSegment.swift in Sources */,
 				EC1FBE902FC52FAA00CA755B /* StatusBadge.swift in Sources */,
 				EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */,
+				EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */,
 				EC1FBE912FC52FAA00CA755B /* Stepper.swift in Sources */,
 				EC1FBE922FC52FAA00CA755B /* Toggle.swift in Sources */,
 				EC1FBE932FC52FAA00CA755B /* ToolbarButton.swift in Sources */,

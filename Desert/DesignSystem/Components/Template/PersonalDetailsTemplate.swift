@@ -77,6 +77,7 @@ private extension PersonalDetailsTemplate {
                 text: $phoneNumber,
                 state: showErrors && !phoneNumberIsValid ? .error : .normal
             )
+            .keyboardType(.numberPad)
             .frame(maxWidth: .infinity)
             .frame(height: 52)
             .background(Color.white)
@@ -99,9 +100,15 @@ private extension PersonalDetailsTemplate {
     
    
     var phoneNumberIsValid: Bool {
-            let digits = phoneNumber.filter { $0.isNumber }
-            return digits.hasPrefix("9665") && digits.count == 12
-        }
+        let digits = phoneNumber.filter(\.isNumber)
+
+        let pattern = #"^(05\d{8}|9665\d{8})$"#
+
+        return digits.range(
+            of: pattern,
+            options: .regularExpression
+        ) != nil
+    }
 }
 
 #Preview {

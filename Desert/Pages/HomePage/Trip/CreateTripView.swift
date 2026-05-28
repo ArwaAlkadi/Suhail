@@ -5,24 +5,20 @@
 //  Multi-step form for creating a new trip or repeating an existing one.
 //
 //  Steps:
-//  1. Trip Details   — name, destination, time, group
-//  2. Personal Info  — name, phone, emergency contacts
-//  3. Vehicle Info   — car model, color, 4WD, plate
+//  1. Personal Info  — name, phone, emergency contacts
+//  2. Vehicle Info   — car model, color, 4WD, plate
+//  3. Trip Details   — name, destination, time, group
 //
 //  Navigation rules:
 //  - Progress bar taps only navigate backward (to completed steps).
 //  - Next button validates the current step before advancing.
-//  - Repeat trip: form is pre-filled and opens directly on Summary.
+//  - Repeat trip: opens directly on Trip Details (step 2) to update return time.
 //  - Back button shows a discard confirmation alert.
 //
 //  Permission alert:
 //  - Triggered when the user taps Start Trip without Always Allow permission.
 //  - Directs the user to Settings.
 //
-//  Layout direction:
-//  - All HStack elements respect the system language direction automatically (LTR/RTL).
-//
-
 
 import SwiftUI
 import SwiftData
@@ -44,12 +40,11 @@ struct CreateTripView: View {
 
     @State private var currentStep = 0
     @State private var showSummary = false
-    @State private var initialSummaryShown = false
     @State private var showExitAlert = false
-
-    @FocusState private var focusedPlateNumber: Int?
     
+    @FocusState private var isInputFocused: Bool
     private let totalSteps = 3
+
     var stepTitles: [String] {
         [
             "step_personal_details".localized,
@@ -58,12 +53,15 @@ struct CreateTripView: View {
         ]
     }
 
+    // MARK: - Body
 
     var body: some View {
         VStack(spacing: 0) {
-            
-            HeaderView(titleKey: stepTitles[currentStep]) {
 
+            HeaderView(
+                titleKey: stepTitles[currentStep],
+                leadingButton: currentStep == 0 ? .close : .back
+            ) {
                 if currentStep == 0 {
                     showExitAlert = true
                 } else {
@@ -72,55 +70,52 @@ struct CreateTripView: View {
             }
             .padding(.top, AppSpacing.sm)
             .padding(.bottom, AppSpacing.md)
+            .padding(.horizontal, AppSpacing.lg)
 
             ProgressBar(currentStep: currentStep + 1)
                 .padding(.bottom, AppSpacing.xl)
-            
+                .padding(.horizontal, AppSpacing.lg)
+
+
             Group {
                 switch currentStep {
-                case 0:
-                    PersonalDetailsView(vm: vm)
-
-                case 1:
-                    VehicleDetailsView(vm: vm)
-
-                case 2:
-                    TripDetailsView(vm: vm)
-                default:
-                    EmptyView()
+                case 0: personalDetailsView
+                case 1: vehicleDetailsView
+                case 2: tripDetailsView
+                default: EmptyView()
                 }
             }
             .animation(.easeInOut, value: currentStep)
+            
         }
+        .safeAreaInset(edge: .bottom) {
+            if !isInputFocused {
+                CTAButton(
+                    title: currentStep == totalSteps - 1
+                        ? "review".localized
+                        : "common.next".localized
+                ) {
+                    if canProceedFromStep(currentStep) {
+                        if currentStep == totalSteps - 1 {
+                            showSummary = true
+                        } else {
+                            currentStep += 1
+                        }
+                    }
+                }
+                .padding(.horizontal, AppSpacing.lg)
+                .padding(.top, AppSpacing.md)
+                .padding(.bottom, AppSpacing.sm)
+            }
+        }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .padding(.horizontal, AppSpacing.lg)
         .background(Color.Background)
-        .safeAreaInset(edge: .bottom) {
-            CTAButton(
-                title: currentStep == totalSteps - 1
-                    ? "review".localized
-                    : "common.next".localized
-            ) {
-                if canProceedFromStep(currentStep) {
-                    if currentStep == totalSteps - 1 {
-                        showSummary = true
-                    } else {
-                        currentStep += 1
-                    }
-                } else {
-                    vm.showErrors = true
-                }
-            }
-            .padding(.horizontal, AppSpacing.lg)
-            .padding(.top, AppSpacing.lg)
-            .padding(.bottom, AppSpacing.sm)
-            .background(Color.Background)
-        }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
         .alert("discard_changes_title".localized, isPresented: $showExitAlert) {
             Button("cancel".localized, role: .cancel) { }
-
             Button("discard".localized, role: .destructive) {
                 if let onCancel {
                     onCancel()
@@ -135,7 +130,6 @@ struct CreateTripView: View {
         .navigationDestination(isPresented: $showSummary) {
             TripSummaryView(
                 vm: vm,
-                isRepeat: tripToRepeat != nil,
                 onTripStarted: {
                     showParentSheet = false
                     onTripStarted?()
@@ -145,13 +139,7 @@ struct CreateTripView: View {
         .onAppear {
             if let trip = tripToRepeat {
                 vm.loadTripData(from: trip)
-
-                if !initialSummaryShown {
-                    initialSummaryShown = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        showSummary = true
-                    }
-                }
+                currentStep = 2
             } else {
                 vm.loadSavedInfo(savedInfo.first)
             }
@@ -177,15 +165,60 @@ struct CreateTripView: View {
             Button("open_settings".localized) {
                 vm.openAppSettings()
             }
-
             Button("cancel".localized, role: .cancel) { }
         } message: {
             Text(vm.locationAlertMessage)
         }
     }
+
+    // MARK: - Step Views
+
+    var personalDetailsView: some View {
+        PersonalDetailsTemplate(
+            fullName: $vm.fullName,
+            phoneNumber: $vm.phoneNumber,
+            emergencyContacts: $vm.emergencyContacts,
+            showErrors: vm.showStep0Errors,
+            onAddContact: { vm.showEmergencyContactPicker = true }
+        )
+        .padding(.horizontal, AppSpacing.lg)
+
+    }
+
+    var vehicleDetailsView: some View {
+        VehicleDetailsTemplate(
+            carModel: $vm.carModel,
+            selectedColor: $vm.selectedColor,
+            isFourWheelDrive: $vm.isFourWheelDrive,
+            firstPlateLetter: $vm.firstPlateLetter,
+            secondPlateLetter: $vm.secondPlateLetter,
+            thirdPlateLetter: $vm.thirdPlateLetter,
+            plateDigits: $vm.plateDigits,
+            showErrors: vm.showStep1Errors
+        )
+        .padding(.horizontal, AppSpacing.lg)
+    }
+
+    var tripDetailsView: some View {
+        TripDetailsTemplate(
+            tripName: $vm.tripName,
+            destination: $vm.destination,
+            returnTime: $vm.returnTime,
+            isGroup: $vm.isGroup,
+            groupCount: $vm.groupCount,
+            groupContacts: $vm.groupContacts,
+            showErrors: vm.showStep2Errors,
+            onSelectDestination: { vm.showDestinationPicker = true },
+            onAddGroupContact: { vm.showGroupContactPicker = true }
+        )
+        .padding(.horizontal, AppSpacing.lg)
+
+    }
+
+    // MARK: - Validation
+
     func canProceedFromStep(_ step: Int) -> Bool {
         switch step {
-
         case 0:
             if vm.fullNameIsValid && vm.phoneNumberIsValid && vm.emergencyContactsIsValid {
                 return true
@@ -193,7 +226,7 @@ struct CreateTripView: View {
                 vm.showStep0Errors = true
                 return false
             }
-
+            
         case 1:
             vm.updatePlateInfoFromTemplate()
             if vm.carModelIsValid && vm.selectedColorIsValid && vm.plateLettersIsValid && vm.plateNumbersIsValid {
@@ -202,15 +235,16 @@ struct CreateTripView: View {
                 vm.showStep1Errors = true
                 return false
             }
-
+            
         case 2:
+
             if vm.destinationIsValid && vm.returnTimeIsValid && vm.tripNameIsValid {
                 return true
             } else {
                 vm.showStep2Errors = true
                 return false
             }
-
+            
         default:
             return true
         }
@@ -226,68 +260,4 @@ struct CreateTripView: View {
         SavedContact.self,
         Trip.self
     ], inMemory: true)
-}
-
-
-
-
-
-
-
-struct PersonalDetailsView: View {
-
-    @ObservedObject var vm: TripsViewModel
-
-    var body: some View {
-        PersonalDetailsTemplate(
-            fullName: $vm.fullName,
-            phoneNumber: $vm.phoneNumber,
-            emergencyContacts: $vm.emergencyContacts,
-            showErrors: vm.showStep0Errors,
-            onAddContact: { vm.showEmergencyContactPicker = true }
-        )
-    }
-}
-
-
-
-
-
-struct VehicleDetailsView: View {
-
-    @ObservedObject var vm: TripsViewModel
-
-    var body: some View {
-        VehicleDetailsTemplate(
-            carModel: $vm.carModel,
-            selectedColor: $vm.selectedColor,
-            isFourWheelDrive: $vm.isFourWheelDrive,
-            firstPlateLetter: $vm.firstPlateLetter,
-            secondPlateLetter: $vm.secondPlateLetter,
-            thirdPlateLetter: $vm.thirdPlateLetter,
-            plateDigits: $vm.plateDigits,
-            showErrors: vm.showStep1Errors
-        )
-    }
-}
-
-
-
-struct TripDetailsView: View {
-
-    @ObservedObject var vm: TripsViewModel
-
-    var body: some View {
-        TripDetailsTemplate(
-            tripName: $vm.tripName,
-            destination: $vm.destination,
-            returnTime: $vm.returnTime,
-            isGroup: $vm.isGroup,
-            groupCount: $vm.groupCount,
-            groupContacts: $vm.groupContacts,
-            showErrors: vm.showStep2Errors,
-            onSelectDestination: { vm.showDestinationPicker = true },
-            onAddGroupContact: { vm.showGroupContactPicker = true }
-        )
-    }
 }
