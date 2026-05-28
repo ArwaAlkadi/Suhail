@@ -2,48 +2,11 @@
 //  Components.swift
 //  Desert
 //
-//  All shared UI components used across the app.
-//
-//  Component usage map:
-//  - FieldSection:           CreateTripView (all steps)
-//  - SummaryRow:             TripSummaryView, TripHistoryInDetailsView, RepeatTripSummaryView
-//  - ContactRow:             CreateTripView (step 2), TripSummaryView
-//  - AddContactButton:       CreateTripView (step 2)
-//  - StatItem:               TripHistoryInDetailsView
-//  - LetterPicker:           CreateTripView (step 3 — plate letters)
-//  - NumberBox:              CreateTripView (step 3 — plate numbers)
-//  - SummarySection:         TripSummaryView, RepeatTripSummaryView
-//  - CustomTabBar:           HomeView, TripHistoryView
-//  - ContactPickerSheet:     CreateTripView (emergency + group contacts)
-//  - DestinationPickerView:  CreateTripView (step 1)
-//  - TappableMapView:        DestinationPickerView
-//  - SearchBar:              DestinationPickerView
-//
-//  Layout direction:
-//  - All HStack elements respect system language direction automatically (LTR/RTL).
-//  - Use .leading / .trailing instead of .left / .right throughout.
-//
+
 
 import SwiftUI
 import MapKit
 import ContactsUI
-
-// MARK: - Field Section
-// Labeled container for a form field. Used in all CreateTripView steps.
-
-struct FieldSectionA<Content: View>: View {
-    var title: String
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title.localized)
-                .font(.subheadline)
-                .fontWeight(.semibold)
-            content()
-        }
-    }
-}
 
 // MARK: - Summary Row
 // Single label-value row. Used in TripSummaryView and TripHistoryInDetailsView.
@@ -95,28 +58,6 @@ struct ContactRowA: View {
     }
 }
 
-// MARK: - Add Contact Button
-// Button to open the contact picker. Used in CreateTripView step 2.
-
-struct AddContactButtonA: View {
-    var action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack(spacing: 10) {
-                Image(systemName: "plus.circle.fill")
-                    .foregroundColor(.primary)
-                    .font(.title3)
-                Text("add_contact".localized)
-                    .foregroundColor(.secondary)
-                Spacer()
-            }
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(12)
-        }
-    }
-}
 
 // MARK: - Stat Item
 // Icon + value + label stat block. Used in TripHistoryInDetailsView.
@@ -135,62 +76,6 @@ struct StatItemA: View {
             Text(label.localized).font(.caption2).foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
-    }
-}
-
-// MARK: - Letter Picker
-// Single plate letter picker with up/down chevrons. Used in CreateTripView step 3.
-
-struct LetterPickerA: View {
-    var body: some View {
-        VStack(spacing: 4) {
-            Image(systemName: "chevron.up").font(.caption2).foregroundColor(.secondary)
-            Text("A").font(.subheadline).fontWeight(.medium)
-            Image(systemName: "chevron.down").font(.caption2).foregroundColor(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(8)
-    }
-}
-
-// MARK: - Number Box
-// Single plate digit box. Used in CreateTripView step 3.
-
-struct NumberBoxA: View {
-    var body: some View {
-        Text("0")
-            .font(.subheadline)
-            .fontWeight(.medium)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(Color(UIColor.systemBackground))
-            .cornerRadius(8)
-    }
-}
-
-// MARK: - Summary Section
-// Titled card container with styled border. Used in TripSummaryView and RepeatTripSummaryView.
-
-struct SummarySectionA<Content: View>: View {
-    var title: String
-    @ViewBuilder var content: () -> Content
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Text(title.localized)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .foregroundColor(.secondary)
-                .padding(.horizontal)
-                .padding(.bottom, 6)
-            VStack(spacing: 0) { content() }
-                .background(Color(UIColor.systemBackground))
-                .cornerRadius(12)
-                .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(.systemGray5), lineWidth: 0.5))
-        }
-        .padding(.horizontal)
     }
 }
 
@@ -625,152 +510,5 @@ struct TripHistoryRowA: View {
         }
         .font(.subheadline)
         .frame(maxWidth: .infinity)
-    }
-}
-
-// MARK: - Toast Notification
-
-struct ToastNotificationA: View {
-
-    var message: String
-    var icon: String = "wifi.slash"
-
-    var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: icon)
-                .font(.subheadline)
-
-            Text(message)
-                .font(.subheadline)
-                .fontWeight(.medium)
-
-            Spacer()
-        }
-        .foregroundColor(.primary)
-        .padding()
-        .background(Color(UIColor.systemBackground))
-        .cornerRadius(14)
-        .shadow(radius: 6)
-        .padding(.horizontal)
-    }
-}
-
-
-// MARK: - Plate Number Input
-
-struct PlateNumberInputA: View {
-
-    @Binding var numbers: String
-    let index: Int
-    var focusedIndex: FocusState<Int?>.Binding
-
-    var body: some View {
-        TextField("", text: digitBinding)
-            .keyboardType(.numberPad)
-            .multilineTextAlignment(.center)
-            .font(.title3)
-            .frame(width: 40, height: 40)
-            .background(Color(.systemBackground))
-            .cornerRadius(16)
-            .focused(focusedIndex, equals: index)
-    }
-
-    private var digitBinding: Binding<String> {
-        Binding(
-            get: {
-                let chars = Array(numbers)
-                return index < chars.count ? String(chars[index]) : ""
-            },
-            set: { newValue in
-                let digit = newValue.filter { $0.isNumber }.prefix(1)
-                guard let first = digit.first else { return }
-
-                var chars = Array(numbers)
-                while chars.count < 4 {
-                    chars.append(" ")
-                }
-
-                chars[index] = first
-                numbers = String(chars).replacingOccurrences(of: " ", with: "")
-
-                if index < 3 {
-                    focusedIndex.wrappedValue = index + 1
-                } else {
-                    focusedIndex.wrappedValue = nil
-                }
-            }
-        )
-    }
-}
-
-// MARK: - Plate Letter Input
-
-struct PlateLetterPickerA: View {
-
-    @Binding var selectedLetters: String
-
-    let index: Int
-    let letters: [(ar: String, en: String)]
-    let isArabic: Bool
-
-    var body: some View {
-
-        Menu {
-
-            ForEach(letters, id: \.ar) { letter in
-
-                Button {
-
-                    updateLetter(
-                        isArabic ? letter.ar : letter.en
-                    )
-
-                } label: {
-
-                    Text(
-                        isArabic
-                        ? "\(letter.ar) - \(letter.en)"
-                        : "\(letter.en) - \(letter.ar)"
-                    )
-                }
-            }
-
-        } label: {
-
-            ZStack {
-
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color(.systemBackground))
-
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color(.systemGray4))
-
-                Text(currentLetter)
-                    .font(.title3)
-                    .foregroundColor(.primary)
-            }
-            .frame(width: 90, height: 40)
-        }
-    }
-
-    private var currentLetter: String {
-
-        guard selectedLetters.count > index else { return "-" }
-
-        return String(Array(selectedLetters)[index])
-    }
-
-    private func updateLetter(_ value: String) {
-
-        var chars = Array(selectedLetters)
-
-        while chars.count < 3 {
-            chars.append(" ")
-        }
-
-        chars[index] = Character(value)
-
-        selectedLetters = String(chars)
-            .replacingOccurrences(of: " ", with: "")
     }
 }

@@ -2,23 +2,6 @@
 //  CreateTripView.swift
 //  Desert
 //
-//  Multi-step form for creating a new trip or repeating an existing one.
-//
-//  Steps:
-//  1. Personal Info  — name, phone, emergency contacts
-//  2. Vehicle Info   — car model, color, 4WD, plate
-//  3. Trip Details   — name, destination, time, group
-//
-//  Navigation rules:
-//  - Progress bar taps only navigate backward (to completed steps).
-//  - Next button validates the current step before advancing.
-//  - Repeat trip: opens directly on Trip Details (step 2) to update return time.
-//  - Back button shows a discard confirmation alert.
-//
-//  Permission alert:
-//  - Triggered when the user taps Start Trip without Always Allow permission.
-//  - Directs the user to Settings.
-//
 
 import SwiftUI
 import SwiftData
@@ -41,8 +24,9 @@ struct CreateTripView: View {
     @State private var currentStep = 0
     @State private var showSummary = false
     @State private var showExitAlert = false
-    
+
     @FocusState private var isInputFocused: Bool
+
     private let totalSteps = 3
 
     var stepTitles: [String] {
@@ -62,11 +46,7 @@ struct CreateTripView: View {
                 titleKey: stepTitles[currentStep],
                 leadingButton: currentStep == 0 ? .close : .back
             ) {
-                if currentStep == 0 {
-                    showExitAlert = true
-                } else {
-                    currentStep -= 1
-                }
+                handleBackAction()
             }
             .padding(.top, AppSpacing.sm)
             .padding(.bottom, AppSpacing.md)
@@ -76,17 +56,19 @@ struct CreateTripView: View {
                 .padding(.bottom, AppSpacing.xl)
                 .padding(.horizontal, AppSpacing.lg)
 
-
             Group {
                 switch currentStep {
-                case 0: personalDetailsView
-                case 1: vehicleDetailsView
-                case 2: tripDetailsView
-                default: EmptyView()
+                case 0:
+                    personalDetailsView
+                case 1:
+                    vehicleDetailsView
+                case 2:
+                    tripDetailsView
+                default:
+                    EmptyView()
                 }
             }
             .animation(.easeInOut, value: currentStep)
-            
         }
         .safeAreaInset(edge: .bottom) {
             if !isInputFocused {
@@ -95,13 +77,7 @@ struct CreateTripView: View {
                         ? "review".localized
                         : "common.next".localized
                 ) {
-                    if canProceedFromStep(currentStep) {
-                        if currentStep == totalSteps - 1 {
-                            showSummary = true
-                        } else {
-                            currentStep += 1
-                        }
-                    }
+                    handleNextAction()
                 }
                 .padding(.horizontal, AppSpacing.lg)
                 .padding(.top, AppSpacing.md)
@@ -116,13 +92,9 @@ struct CreateTripView: View {
         .toolbar(.hidden, for: .navigationBar)
         .alert("discard_changes_title".localized, isPresented: $showExitAlert) {
             Button("cancel".localized, role: .cancel) { }
+
             Button("discard".localized, role: .destructive) {
-                if let onCancel {
-                    onCancel()
-                } else {
-                    showParentSheet = false
-                    dismiss()
-                }
+                closeView()
             }
         } message: {
             Text("discard_changes_message".localized)
@@ -158,13 +130,16 @@ struct CreateTripView: View {
         }
         .sheet(isPresented: $vm.showGroupContactPicker) {
             ContactPickerSheetB { contacts in
-                contacts.forEach { vm.importGroupContact($0) }
+                contacts.forEach {
+                    vm.importGroupContact($0)
+                }
             }
         }
         .alert("location_permission_required".localized, isPresented: $vm.showLocationAlert) {
             Button("open_settings".localized) {
                 vm.openAppSettings()
             }
+
             Button("cancel".localized, role: .cancel) { }
         } message: {
             Text(vm.locationAlertMessage)
@@ -185,7 +160,6 @@ struct CreateTripView: View {
             }
         )
         .padding(.horizontal, AppSpacing.lg)
-
     }
 
     var vehicleDetailsView: some View {
@@ -212,45 +186,46 @@ struct CreateTripView: View {
             groupContacts: $vm.groupContacts,
             contactErrorMessage: vm.groupContactErrorMessage,
             showErrors: vm.showStep2Errors,
-            onSelectDestination: { vm.showDestinationPicker = true },
-            onAddGroupContact: { vm.showGroupContactPicker = true }
+            onSelectDestination: {
+                vm.showDestinationPicker = true
+            },
+            onAddGroupContact: {
+                vm.showGroupContactPicker = true
+            }
         )
         .padding(.horizontal, AppSpacing.lg)
-
     }
 
-    // MARK: - Validation
+    // MARK: - Actions
 
-    func canProceedFromStep(_ step: Int) -> Bool {
-        switch step {
-        case 0:
-            if vm.fullNameIsValid && vm.phoneNumberIsValid && vm.emergencyContactsIsValid {
-                return true
+    private func handleBackAction() {
+        if currentStep == 0 {
+            if vm.hasUserEnteredData {
+                showExitAlert = true
             } else {
-                vm.showStep0Errors = true
-                return false
+                closeView()
             }
-            
-        case 1:
-            vm.updatePlateInfoFromTemplate()
-            if vm.carModelIsValid && vm.selectedColorIsValid && vm.plateLettersIsValid && vm.plateNumbersIsValid {
-                return true
-            } else {
-                vm.showStep1Errors = true
-                return false
-            }
-            
-        case 2:
+        } else {
+            currentStep -= 1
+        }
+    }
 
-            if vm.destinationIsValid && vm.returnTimeIsValid && vm.tripNameIsValid {
-                return true
+    private func handleNextAction() {
+        if vm.canProceedFromStep(currentStep) {
+            if currentStep == totalSteps - 1 {
+                showSummary = true
             } else {
-                vm.showStep2Errors = true
-                return false
+                currentStep += 1
             }
-            
-        default:
-            return true
+        }
+    }
+
+    private func closeView() {
+        if let onCancel {
+            onCancel()
+        } else {
+            showParentSheet = false
+            dismiss()
         }
     }
 }

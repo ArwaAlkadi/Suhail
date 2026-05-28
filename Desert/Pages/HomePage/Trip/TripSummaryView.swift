@@ -13,11 +13,11 @@ struct TripSummaryView: View {
 
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
+
     @StateObject private var networkMonitor = NetworkMonitorHelper()
-    @State private var goHome = false
 
     var isConnected: Bool {
-        !networkMonitor.showOfflineToast
+        networkMonitor.isConnected
     }
 
     var body: some View {
@@ -33,23 +33,26 @@ struct TripSummaryView: View {
             emergencyContacts: vm.emergencyContacts,
             groupContacts: vm.groupContacts,
             isConnected: isConnected,
-            onBack: { dismiss() },
+            onBack: {
+                dismiss()
+            },
             onStartTrip: {
                 guard !TripSessionManager.shared.hasActiveTrip else { return }
+
                 let started = vm.startTrip(context: context)
+
                 if started {
-                    goHome = true
                     onTripStarted()
                 }
             }
         )
-        .navigationDestination(isPresented: $goHome) {
-            HomeView()
-        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .navigationBar)
         .alert(vm.locationAlertTitle, isPresented: $vm.showLocationAlert) {
-            Button("open_settings".localized) { vm.openAppSettings() }
+            Button("open_settings".localized) {
+                vm.openAppSettings()
+            }
+
             Button("cancel".localized, role: .cancel) { }
         } message: {
             Text(vm.locationAlertMessage)

@@ -19,7 +19,7 @@ struct ConnectivityIcon: View {
     var body: some View {
 
         Image(systemName: iconName)
-            .font(.system(size: 28, weight: .semibold))
+            .font(.system(size: 22, weight: .semibold))
             .foregroundStyle(Color.Secondary02)
     }
 }

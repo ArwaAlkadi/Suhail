@@ -23,8 +23,8 @@ class TripsViewModel: ObservableObject {
     @Published var destinationLat: Double = 0
     @Published var destinationLng: Double = 0
 
-    @Published var returnTime: Date = Date() 
-    
+    @Published var returnTime: Date = Date()
+
     @Published var isGroup: Bool = false
     @Published var groupCount: Int = 1
 
@@ -55,32 +55,66 @@ class TripsViewModel: ObservableObject {
     @Published var showLocationAlert = false
     @Published var locationAlertTitle = ""
     @Published var locationAlertMessage = ""
+
     @Published var showErrors = false
     @Published var showStep0Errors = false
     @Published var showStep1Errors = false
     @Published var showStep2Errors = false
+
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
-    
+
     // MARK: - Validation
 
     var destinationIsValid: Bool { !destination.isEmpty }
     var fullNameIsValid: Bool { !fullName.isEmpty }
+
     var phoneNumberIsValid: Bool {
-        let digits = phoneNumber.filter { $0.isNumber }
-        return digits.hasPrefix("9665") && digits.count == 12
+        formatSaudiPhone(phoneNumber) != nil
     }
+
     var returnTimeIsValid: Bool { returnTime > Date() }
     var emergencyContactsIsValid: Bool { !emergencyContacts.isEmpty }
     var carModelIsValid: Bool { !carModel.isEmpty }
+
     var selectedColorIsValid: Bool {
         !selectedColor.isEmpty && selectedColor != "vehicle.color.placeholder"
     }
+
     var plateLettersIsValid: Bool { plateLetters.count == 3 }
     var tripNameIsValid: Bool { !tripName.isEmpty }
+
     var plateNumbersIsValid: Bool {
         let digits = plateNumbers.filter { $0.isNumber }
         return digits.count >= 1 && digits.count <= 4
+    }
+
+    var formIsValid: Bool {
+        destinationIsValid &&
+        fullNameIsValid &&
+        phoneNumberIsValid &&
+        returnTimeIsValid &&
+        emergencyContactsIsValid &&
+        carModelIsValid &&
+        selectedColorIsValid &&
+        plateLettersIsValid &&
+        plateNumbersIsValid
+    }
+
+    var hasUserEnteredData: Bool {
+        !fullName.isEmpty ||
+        !phoneNumber.isEmpty ||
+        !emergencyContacts.isEmpty ||
+        !carModel.isEmpty ||
+        !selectedColor.isEmpty ||
+        isFourWheelDrive ||
+        !firstPlateLetter.isEmpty ||
+        !secondPlateLetter.isEmpty ||
+        !thirdPlateLetter.isEmpty ||
+        plateDigits.contains { !$0.isEmpty } ||
+        !destination.isEmpty ||
+        isGroup ||
+        !groupContacts.isEmpty
     }
 
     var plateNumbersDisplay: String {
@@ -88,11 +122,50 @@ class TripsViewModel: ObservableObject {
         return digits + String(repeating: "-", count: max(0, 4 - digits.count))
     }
 
+    func canProceedFromStep(_ step: Int) -> Bool {
+        switch step {
+
+        case 0:
+            if fullNameIsValid && phoneNumberIsValid && emergencyContactsIsValid {
+                return true
+            } else {
+                showStep0Errors = true
+                return false
+            }
+
+        case 1:
+            updatePlateInfoFromTemplate()
+
+            if carModelIsValid &&
+                selectedColorIsValid &&
+                plateLettersIsValid &&
+                plateNumbersIsValid {
+                return true
+            } else {
+                showStep1Errors = true
+                return false
+            }
+
+        case 2:
+            if destinationIsValid &&
+                returnTimeIsValid &&
+                tripNameIsValid {
+                return true
+            } else {
+                showStep2Errors = true
+                return false
+            }
+
+        default:
+            return true
+        }
+    }
+
     func updatePlateInfoFromTemplate() {
         plateLetters = firstPlateLetter + secondPlateLetter + thirdPlateLetter
         plateNumbers = plateDigits.joined()
     }
-    
+
     func loadPlateInfoToTemplate() {
         let letters = Array(plateLetters)
 
@@ -108,22 +181,8 @@ class TripsViewModel: ObservableObject {
             index < numbers.count ? String(numbers[index]) : ""
         }
     }
-    
-   
-    var formIsValid: Bool {
-        destinationIsValid &&
-        fullNameIsValid &&
-        phoneNumberIsValid &&
-        returnTimeIsValid &&
-        emergencyContactsIsValid &&
-        carModelIsValid &&
-        selectedColorIsValid &&
-        plateLettersIsValid &&
-        plateNumbersIsValid
-    }
-    
-    func formatUserPhoneInput(_ value: String) {
 
+    func formatUserPhoneInput(_ value: String) {
         let digits = value.filter { $0.isNumber }
 
         var localNumber = digits
@@ -203,7 +262,7 @@ extension TripsViewModel {
 // MARK: - Contacts
 
 extension TripsViewModel {
-    
+
     func importEmergencyContact(_ contact: CNContact) {
 
         guard emergencyContacts.count < 3 else {
@@ -237,15 +296,6 @@ extension TripsViewModel {
         )
     }
 
-    private func showTemporaryEmergencyError(_ message: String) {
-        emergencyContactErrorMessage = message
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-            guard self?.emergencyContactErrorMessage == message else { return }
-            self?.emergencyContactErrorMessage = ""
-        }
-    }
-
     func importGroupContact(_ contact: CNContact) {
 
         let rawPhone = contact.phoneNumbers.first?.value.stringValue ?? ""
@@ -274,6 +324,15 @@ extension TripsViewModel {
         )
     }
 
+    private func showTemporaryEmergencyError(_ message: String) {
+        emergencyContactErrorMessage = message
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            guard self?.emergencyContactErrorMessage == message else { return }
+            self?.emergencyContactErrorMessage = ""
+        }
+    }
+
     private func showTemporaryGroupError(_ message: String) {
         groupContactErrorMessage = message
 
@@ -282,7 +341,7 @@ extension TripsViewModel {
             self?.groupContactErrorMessage = ""
         }
     }
-    
+
     private func formatSaudiPhone(_ rawPhone: String?) -> String? {
         guard let rawPhone, !rawPhone.isEmpty else { return nil }
 
@@ -337,7 +396,6 @@ extension TripsViewModel {
             return false
         }
 
-        
         updatePlateInfoFromTemplate()
 
         guard formIsValid else {

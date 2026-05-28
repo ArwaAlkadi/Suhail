@@ -10,6 +10,8 @@ import UIKit
 
 struct RootView: View {
 
+    @StateObject private var networkMonitor = NetworkMonitorHelper()
+    
     @Query var settings: [AppSettings]
 
     @State private var showSplash = true
@@ -41,6 +43,23 @@ struct RootView: View {
             } else {
                 HomeView()
             }
+        }
+        .overlay(alignment: .top) {
+            if networkMonitor.showOfflineToast {
+                NetworkStatusBanner(status: .disconnected)
+                    .padding(.horizontal, AppSpacing.md)
+            }
+
+            if networkMonitor.showOnlineToast {
+                NetworkStatusBanner(status: .connected)
+                    .padding(.horizontal, AppSpacing.md)
+            }
+        }
+        .onAppear {
+            networkMonitor.startMonitoring()
+        }
+        .onDisappear {
+            networkMonitor.stopMonitoring()
         }
         .task {
             await checkMaintenance()
