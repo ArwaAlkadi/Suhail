@@ -73,7 +73,9 @@ class TripsViewModel: ObservableObject {
         formatSaudiPhone(phoneNumber) != nil
     }
 
-    var returnTimeIsValid: Bool { returnTime > Date() }
+    var returnTimeIsValid: Bool {
+        returnTime >= Date().addingTimeInterval(60 * 60)
+    }
     var emergencyContactsIsValid: Bool { !emergencyContacts.isEmpty }
     var carModelIsValid: Bool { !carModel.isEmpty }
 
@@ -436,6 +438,11 @@ extension TripsViewModel {
         }
     }
 
+    func loadTripForRepeat(_ trip: Trip) {
+        loadTripData(from: trip)
+        returnTime = Date()
+    }
+    
     private func defaultTripName() -> String {
         let f = DateFormatter()
         f.dateFormat = "d MMM"

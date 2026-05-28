@@ -110,7 +110,7 @@ struct CreateTripView: View {
         }
         .onAppear {
             if let trip = tripToRepeat {
-                vm.loadTripData(from: trip)
+                vm.loadTripForRepeat(trip)
                 currentStep = 2
             } else {
                 vm.loadSavedInfo(savedInfo.first)
@@ -199,27 +199,29 @@ struct CreateTripView: View {
     // MARK: - Actions
 
     private func handleBackAction() {
-        if currentStep == 0 {
-            if vm.hasUserEnteredData {
-                showExitAlert = true
-            } else {
-                closeView()
-            }
-        } else {
+
+        guard currentStep == 0 else {
             currentStep -= 1
+            return
+        }
+
+        if vm.hasUserEnteredData {
+            showExitAlert = true
+        } else {
+            closeView()
         }
     }
 
     private func handleNextAction() {
-        if vm.canProceedFromStep(currentStep) {
-            if currentStep == totalSteps - 1 {
-                showSummary = true
-            } else {
-                currentStep += 1
-            }
+        guard vm.canProceedFromStep(currentStep) else { return }
+
+        if currentStep == totalSteps - 1 {
+            showSummary = true
+        } else {
+            currentStep += 1
         }
     }
-
+    
     private func closeView() {
         if let onCancel {
             onCancel()

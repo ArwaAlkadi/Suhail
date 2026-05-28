@@ -115,7 +115,7 @@ private extension TripDetailsTemplate {
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
 
-            if showErrors && returnTime <= Date() {
+            if showErrors && returnTime < Date().addingTimeInterval(60 * 60) {
                 ErrorMessageRow(messageKey: "return_time_invalid")
             }
         }

@@ -27,7 +27,7 @@
 "start_time" = "Start time";
 "end_time" = "End time *";
 "return_time" = "Return Time";
-"return_time_invalid" = "Return time must be in the future";
+"return_time_invalid" = "Return time must be at least one hour from now.";
 "return_time_updated" = "Return time updated";
 "update_return_time" = "Update Return Time";
 "update_return_time_warning" = "Please update your return time before starting";

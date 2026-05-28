@@ -27,7 +27,7 @@
 "start_time" = "وقت البداية";
 "end_time" = "وقت العودة *";
 "return_time" = "وقت العودة";
-"return_time_invalid" = "يجب أن يكون وقت العودة في المستقبل";
+"return_time_invalid" = "يجب أن يكون وقت العودة بعد ساعة على الأقل من الآن.";
 "return_time_updated" = "تم تحديث وقت العودة";
 "update_return_time" = "تحديث وقت العودة";
 "update_return_time_warning" = "يرجى تحديث وقت العودة قبل البدء";
