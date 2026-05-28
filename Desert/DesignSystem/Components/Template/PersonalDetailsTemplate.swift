@@ -75,7 +75,7 @@ private extension PersonalDetailsTemplate {
                 text: $phoneNumber,
                 state: showErrors && !phoneNumberIsValid ? .error : .normal
             )
-            .keyboardType(.numberPad)
+            .keyboardType(.phonePad)
             .frame(maxWidth: .infinity)
             .frame(height: 52)
             .background(Color.white)
