@@ -54,6 +54,9 @@ struct RootView: View {
                 if networkMonitor.showOfflineToast {
                     NetworkStatusBanner(status: .disconnected)
                         .padding(.horizontal, AppSpacing.md)
+                        .onTapGesture {
+                            networkMonitor.dismissOfflineToast()
+                        }
                 }
 
                 if networkMonitor.showOnlineToast {

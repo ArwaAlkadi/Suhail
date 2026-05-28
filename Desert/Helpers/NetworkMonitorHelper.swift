@@ -8,7 +8,6 @@ import Network
 import Combine
 import SwiftUI
 
-// MARK: - NetworkMonitor Helper
 class NetworkMonitorHelper: ObservableObject {
 
     @Published var isConnected = true
@@ -25,12 +24,17 @@ class NetworkMonitorHelper: ObservableObject {
                 self?.handleConnectionChange(path.status == .satisfied)
             }
         }
-
         monitor.start(queue: queue)
     }
 
     func stopMonitoring() {
         monitor.cancel()
+    }
+
+    func dismissOfflineToast() {
+        withAnimation {
+            showOfflineToast = false
+        }
     }
 
     private func handleConnectionChange(_ isConnected: Bool) {
@@ -44,9 +48,9 @@ class NetworkMonitorHelper: ObservableObject {
                 showOnlineToast = false
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
                 withAnimation {
-                    self.showOfflineToast = false
+                    self?.showOfflineToast = false
                 }
             }
 
@@ -56,14 +60,13 @@ class NetworkMonitorHelper: ObservableObject {
                 showOnlineToast = true
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 withAnimation {
-                    self.showOnlineToast = false
+                    self?.showOnlineToast = false
                 }
             }
 
             wasOffline = false
         }
     }
-    
 }
