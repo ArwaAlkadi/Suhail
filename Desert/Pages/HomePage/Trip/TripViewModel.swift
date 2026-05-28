@@ -370,7 +370,10 @@ extension TripsViewModel {
 extension TripsViewModel {
 
     @discardableResult
-    func startTrip(context: ModelContext) -> Bool {
+    func startTrip(
+        context: ModelContext,
+        completion: @escaping () -> Void = {}
+    ) -> Bool {
 
         let status = CLLocationManager.authorizationStatus()
 
@@ -427,11 +430,16 @@ extension TripsViewModel {
         trip.groupContacts = groupContacts
 
         saveUserInfo(context: context)
-        TripSessionManager.shared.startTrip(trip: trip, context: context)
+
+        TripSessionManager.shared.startTrip(
+            trip: trip,
+            context: context,
+            completion: completion
+        )
 
         return true
     }
-
+    
     func openAppSettings() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)

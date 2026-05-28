@@ -44,7 +44,7 @@ struct NetworkStatusBanner: View {
         }
         .padding(.horizontal, AppSpacing.lg)
         .frame(maxWidth: .infinity)
-        .frame(height: 75)
+        .frame(height: 67)
         .background(Color.Background)
         .clipShape(Capsule())
         .shadow(

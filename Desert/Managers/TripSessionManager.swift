@@ -95,27 +95,37 @@ class TripSessionManager: NSObject, ObservableObject {
     /// Creates a trip ID, saves locally and to Firebase, and begins GPS tracking.
     /// Schedules both the return time reminder and reassurance notification at trip start —
     /// iOS fires them automatically regardless of app state.
-    func startTrip(trip: Trip, context: ModelContext) {
+    func startTrip(
+        trip: Trip,
+        context: ModelContext,
+        completion: @escaping () -> Void = {}
+    ) {
         UIDevice.current.isBatteryMonitoringEnabled = true
+
         firebase.createTripId { [weak self] tripId in
             guard let self else { return }
 
             trip.tripId = tripId
             context.insert(trip)
+            try? context.save()
+
             firebase.saveTrip(trip, tripId: tripId)
             locationManager.startTrackingForTrip(tripId)
 
-            // Schedule both notifications at trip start — fixed to returnTime
-            // iOS handles firing even if app is sleeping or force-quit
-            notifications.scheduleTripNotifications(tripId: tripId, returnTime: trip.returnTime)
+            notifications.scheduleTripNotifications(
+                tripId: tripId,
+                returnTime: trip.returnTime
+            )
 
             saveActiveTripToSettings(tripId: tripId, context: context)
             startOverdueTimer(context: context)
             startUploadTimer(context: context)
             startTripStatusListener(tripId: tripId, context: context)
 
-            DispatchQueue.main.async { self.hasActiveTrip = true }
-            print("TripSessionManager: trip started — \(tripId)")
+            DispatchQueue.main.async {
+                self.hasActiveTrip = true
+                completion()
+            }
         }
     }
 

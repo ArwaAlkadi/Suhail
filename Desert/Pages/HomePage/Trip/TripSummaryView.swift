@@ -38,10 +38,7 @@ struct TripSummaryView: View {
             },
             onStartTrip: {
                 guard !TripSessionManager.shared.hasActiveTrip else { return }
-
-                let started = vm.startTrip(context: context)
-
-                if started {
+                _ = vm.startTrip(context: context) {
                     onTripStarted()
                 }
             }
