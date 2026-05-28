@@ -131,7 +131,7 @@ struct TripHistoryView: View {
                         durationKey: vm.tripDuration(trip),
                         distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
                         peopleKey: "\(trip.groupSize) people",
-                        dateKey: vm.formatDateRange(trip.startTime, trip.returnTime),
+                        dateKey: vm.formatStartDate(trip.startTime),
                         repeatAction: {
                             guard !TripSessionManager.shared.hasActiveTrip else { return }
                             tripToRepeat = trip

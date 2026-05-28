@@ -124,7 +124,7 @@ class TripSessionManager: NSObject, ObservableObject {
     /// Stops tracking, cancels all notifications, and marks the trip as completed.
     func finishTrip(trip: Trip, context: ModelContext) {
         UIDevice.current.isBatteryMonitoringEnabled = false
-
+        trip.endedAt = Date()
         trip.status = "completed"
         firebase.endTrip(tripId: trip.tripId)
         locationManager.stopTracking()

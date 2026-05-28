@@ -51,6 +51,7 @@ class Trip {
     
     /// Expected return time — used to trigger offline notifications if overdue.
     var returnTime: Date
+    var endedAt: Date?
     
     var hasGroup: Bool
     var groupSize: Int
@@ -101,6 +102,7 @@ class Trip {
         self.destinationLng = destinationLng
         self.startTime = Date()
         self.returnTime = returnTime
+        self.endedAt = nil
         self.hasGroup = hasGroup
         self.groupSize = groupSize
         self.carName = carName

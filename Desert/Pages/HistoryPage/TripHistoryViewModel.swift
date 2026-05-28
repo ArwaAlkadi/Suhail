@@ -63,15 +63,29 @@ class TripHistoryViewModel: ObservableObject {
     // MARK: - Formatting
 
     /// Returns a readable date range string, e.g. "4 May — 5 May".
-    func formatDateRange(_ start: Date, _ end: Date) -> String {
-        let f = DateFormatter()
-        f.dateFormat = "d MMM"
-        return "\(f.string(from: start)) — \(f.string(from: end))"
+    func formatStartDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMMM, hh:mma"
+        return formatter.string(from: date)
     }
 
-    /// Returns a human-readable trip duration, e.g. "2 days".
     func tripDuration(_ trip: Trip) -> String {
-        let days = Calendar.current.dateComponents([.day], from: trip.startTime, to: trip.returnTime).day ?? 0
-        return "\(max(1, days)) days"
+
+        let endDate = trip.endedAt ?? trip.returnTime
+
+        let seconds = endDate.timeIntervalSince(trip.startTime)
+
+        let totalHours = max(0, Int(seconds / 3600))
+
+        let days = totalHours / 24
+        let hours = totalHours % 24
+
+        if days > 0 && hours > 0 {
+            return "\(days)D \(hours)h"
+        } else if days > 0 {
+            return "\(days)D"
+        } else {
+            return "\(hours)h"
+        }
     }
 }
