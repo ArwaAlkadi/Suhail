@@ -39,14 +39,26 @@ struct HistoryTripDetailsTemplate: View {
             }
             .padding(.top, 0)
             .padding(.bottom, AppSpacing.lg)
+            .padding(.horizontal, 75)
+
 
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: AppSpacing.lg) {
                     tripHeaderSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     tripMapSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     tripSummarySection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     emergencyContactsSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     groupContactsSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, AppSpacing.lg)
@@ -63,10 +75,9 @@ struct HistoryTripDetailsTemplate: View {
             ) {
                 onRepeatTrip()
             }
-            .padding(.horizontal, AppSpacing.lg)
+            .padding(.horizontal, AppSpacing.xxl)
             .padding(.top, AppSpacing.lg)
             .padding(.bottom, AppSpacing.sm)
-            .background(Color.Background)
         }
         .alert("history.delete.title".localized, isPresented: $showDeleteAlert) {
             Button("common.cancel".localized, role: .cancel) { }

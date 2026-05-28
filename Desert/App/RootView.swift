@@ -30,8 +30,8 @@ struct RootView: View {
         Group {
             if showSplash {
                 SplashView(showSplash: $showSplash)
-
-            } else if maintenanceEnabled {
+                
+            } else if maintenanceEnabled && !TripSessionManager.shared.hasActiveTrip  {
                 MaintenanceView(
                     title: maintenanceTitle,
                     message: maintenanceMessage
@@ -120,7 +120,7 @@ struct RootView: View {
             if FirebaseManager.isOlderVersion(
                 current: currentVersion,
                 required: config.minimumVersion
-            ) {
+            ) && !TripSessionManager.shared.hasActiveTrip {
                 await MainActor.run {
                     updateMessage = config.message
                     appStoreURL = config.appStoreURL
