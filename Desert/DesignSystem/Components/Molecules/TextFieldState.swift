@@ -89,10 +89,26 @@ private extension AppTextField {
         }
     }
 
+    var resolvedState: AppTextFieldState {
+        if state == .error {
+            return .error
+        }
+        if state == .disabled {
+            return .disabled
+        }
+        if isFocused && !text.isEmpty {
+            return .filled
+        }
+        if isFocused {
+            return .focused
+        }
+        return .normal
+    }
+
     @ViewBuilder
     var trailingIcon: some View {
 
-        switch state {
+        switch resolvedState {
 
         case .filled:
 
