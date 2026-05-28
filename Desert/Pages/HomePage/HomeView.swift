@@ -81,7 +81,7 @@ struct HomeView: View {
     // MARK: - Map Content
 
     var mapContent: some View {
-        ZStack(alignment: .bottom) {
+        ZStack {
 
             TripMapView(
                 localTrack: vm.localTrack(for: activeTrip),
@@ -91,25 +91,13 @@ struct HomeView: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                Spacer()
-
-                if activeTrip == nil {
-                    NoActiveTripsCard {
-                        showCreateTrip = true
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
-                } else {
-                    ActiveTripCardView(trip: activeTrip!)
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 8)
+            HomeTemplate(
+                selectedTab: $currentPage,
+                activeTrip: activeTrip,
+                onStartTrip: {
+                    showCreateTrip = true
                 }
-
-                AppTabBar(selectedTab: $currentPage)
-                    .padding(.bottom, 32)
-
-            }
+            )
         }
         .ignoresSafeArea(edges: .bottom)
     }

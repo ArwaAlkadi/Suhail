@@ -11,46 +11,48 @@
 //// Reconnection toast: auto-dismiss after 2s.
 //// Do not show if initial state is online.
 //
-//
-//import SwiftUI
-//
-//struct HomeTemplate: View {
-//    
-//    @State private var networkStatus: NetworkStatusBanner.Status? = .disconnected
-//    
-//    var body: some View {
-//        
-//        ZStack(alignment: .top) {
-//            Color.white
-//                .ignoresSafeArea()
-//            
-//            if let networkStatus {
-//                NetworkStatusBanner(status: networkStatus)
-//                    .padding(.horizontal, AppSpacing.lg)
-//                    .padding(.top, AppSpacing.lg)
-//            }
-//            
-//            VStack {
-//                
-//                Spacer()
-//                    .frame(height: 200)
-//                
-//                NoActiveTripsCard()
-//                
-//                Spacer()
-//            }
-//        
-//            .padding(.horizontal, AppSpacing.lg)
-//        }
-//        .safeAreaInset(edge: .bottom) {
-//            AppTabBar(selectedTab: $selectedTab)
-//                .padding(.horizontal, AppSpacing.lg)
-//                .padding(.bottom, AppSpacing.sm)
-//                .background(Color.white)
-//        }
-//    }
-//}
-//
-//#Preview {
-//    HomeTemplate()
-//}
+
+import SwiftUI
+
+struct HomeTemplate: View {
+    
+    @Binding var selectedTab: AppPage
+    
+    var activeTrip: Trip?
+    var onStartTrip: () -> Void
+    
+    var body: some View {
+        
+        ZStack(alignment: .top) {
+            
+           
+            VStack(spacing: 0) {
+                Spacer()
+                
+                if let activeTrip {
+                    ActiveTripCardView(trip: activeTrip)
+                        .padding(.horizontal, AppSpacing.lg)
+                        .padding(.bottom, AppSpacing.sm)
+                } else {
+                    NoActiveTripsCard {
+                        onStartTrip()
+                    }
+                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.bottom, AppSpacing.sm)
+                }
+                
+                AppTabBar(selectedTab: $selectedTab)
+                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.bottom, 32)
+            }
+        }
+    }
+}
+
+#Preview {
+    HomeTemplate(
+        selectedTab: .constant(.map),
+        activeTrip: nil,
+        onStartTrip: {}
+    )
+}
