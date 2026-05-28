@@ -71,23 +71,21 @@ struct TripHistoryInDetailsView: View {
             )
         }
         .fullScreenCover(isPresented: $showFullMap) {
-            ZStack(alignment: .topLeading) {
+            ZStack(alignment: .top) {
                 ReplayMapView(
                     localTrack: localTrack,
                     destinationLocation: destinationLocation
                 )
+                .ignoresSafeArea()
 
-                Button {
-                    showFullMap = false
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .padding(12)
-                        .background(Color(UIColor.systemBackground))
-                        .clipShape(Circle())
-                }
-                .padding()
+                HeaderView(
+                    titleKey: "history.tripTrack",
+                    leadingButton: .back,
+                    action: {
+                        showFullMap = false
+                    }
+                )
+                .padding(.horizontal, AppSpacing.lg)
             }
         }
     }

@@ -116,7 +116,7 @@ struct CreateTripView: View {
                 vm.loadSavedInfo(savedInfo.first)
             }
         }
-        .sheet(isPresented: $vm.showDestinationPicker) {
+        .navigationDestination(isPresented: $vm.showDestinationPicker) {
             DestinationPickerViewA(
                 destination: $vm.destination,
                 lat: $vm.destinationLat,

@@ -130,10 +130,23 @@ struct TripHistoryView: View {
                         badgeStyle: trip.alertSent ? .destructive : .positive,
                         durationKey: vm.tripDuration(trip),
                         distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
-                        peopleKey: "\(trip.groupSize) people",
+
+                        peopleIcon: trip.groupSize == 1
+                            ? "person.fill"
+                            : "person.3.fill",
+
+                        peopleKey: trip.groupSize == 1
+                            ? "history.person".localized
+                            : String(
+                                format: "history.peopleCount".localized,
+                                trip.groupSize
+                            ),
+
                         dateKey: vm.formatStartDate(trip.startTime),
+
                         repeatAction: {
                             guard !TripSessionManager.shared.hasActiveTrip else { return }
+
                             tripToRepeat = trip
                             showRepeatTrip = true
                         }
