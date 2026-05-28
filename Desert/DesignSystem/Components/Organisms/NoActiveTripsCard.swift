@@ -8,28 +8,31 @@
 import SwiftUI
 
 struct NoActiveTripsCard: View {
-    
+
+    var onStartTrip: () -> Void
+
     var body: some View {
-        
+
         VStack(spacing: 24) {
-            
+
             Image("noPreviousTrip")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 400, height: 200)
-            
+
             Text("No Active Trips")
                 .font(AppTypography.title3)
                 .foregroundStyle(Color.Primary)
-            
+
             CTAButton(title: "Start new trip") {
-                
+                onStartTrip()
             }
             .padding(.horizontal, 24)
         }
         .frame(width: 370, height: 470)
         .background(Color.Background)
-        .clipShape(RoundedRectangle(cornerRadius: AppRadius.xl))        .shadow(
+        .clipShape(RoundedRectangle(cornerRadius: AppRadius.xl))
+        .shadow(
             color: .black.opacity(0.04),
             radius: 12,
             y: 4
@@ -38,11 +41,13 @@ struct NoActiveTripsCard: View {
 }
 
 #Preview {
-    
+
     ZStack {
-        Color.white
+        Color.black
             .ignoresSafeArea()
-        
-        NoActiveTripsCard()
+
+        NoActiveTripsCard {
+
+        }
     }
 }

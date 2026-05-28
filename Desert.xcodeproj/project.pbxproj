@@ -79,7 +79,6 @@
 		EC309FEE2FABDC58003E343E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEA2FABDC58003E343E /* LocationManager.swift */; };
 		EC309FEF2FABDC58003E343E /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEB2FABDC58003E343E /* NotificationsManager.swift */; };
 		EC7DEA1F2FB5043D008D3938 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EC7DEA1E2FB5043D008D3938 /* FirebaseAuth */; };
-		ECCD9EAD2FB67FC600E2B5B9 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EAC2FB67FC600E2B5B9 /* WelcomeView.swift */; };
 		ECCD9EB02FB7843F00E2B5B9 /* TripSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */; };
 		ECCD9EB62FB7846400E2B5B9 /* CreateTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EB32FB7846400E2B5B9 /* CreateTripView.swift */; };
 		ECCD9EB72FB7846400E2B5B9 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EB42FB7846400E2B5B9 /* TripViewModel.swift */; };
@@ -163,7 +162,6 @@
 		EC309FE92FABDC58003E343E /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		EC309FEA2FABDC58003E343E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EC309FEB2FABDC58003E343E /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
-		ECCD9EAC2FB67FC600E2B5B9 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryView.swift; sourceTree = "<group>"; };
 		ECCD9EB32FB7846400E2B5B9 /* CreateTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripView.swift; sourceTree = "<group>"; };
 		ECCD9EB42FB7846400E2B5B9 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
@@ -394,7 +392,6 @@
 			children = (
 				EC309FA52F97FDF5003E343E /* HomeViewModel.swift */,
 				EC309FA32F97FDDF003E343E /* HomeView.swift */,
-				ECCD9EAC2FB67FC600E2B5B9 /* WelcomeView.swift */,
 				ECCD9EB52FB7846400E2B5B9 /* Trip */,
 			);
 			path = HomePage;
@@ -619,7 +616,6 @@
 				EC309FBA2F97FF69003E343E /* Trip.swift in Sources */,
 				ECCD9F432FB7B79F00E2B5B9 /* MaintenanceView.swift in Sources */,
 				EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */,
-				ECCD9EAD2FB67FC600E2B5B9 /* WelcomeView.swift in Sources */,
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
 				EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */,

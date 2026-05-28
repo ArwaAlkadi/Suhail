@@ -95,9 +95,11 @@ struct HomeView: View {
                 Spacer()
 
                 if activeTrip == nil {
-                    WelcomeCard(onStartTrip: { showCreateTrip = true })
-                        .padding(.horizontal)
-                        .padding(.bottom, 8)
+                    NoActiveTripsCard {
+                        showCreateTrip = true
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
                 } else {
                     ActiveTripCardView(trip: activeTrip!)
                         .padding(.horizontal)
