@@ -30,12 +30,16 @@ struct SummaryTemplate: View {
 
         VStack(spacing: 0) {
 
-            HeaderView(titleKey: "summary.title") {
-                onBack()
-            }
+            HeaderView(
+                titleKey: "summary.title",
+                leadingButton: .back,
+                action: {
+                    onBack()
+                }
+            )
             .padding(.top, 0)
             .padding(.bottom, 28)
-            .padding(.horizontal, AppSpacing.lg)
+            .padding(.horizontal, AppSpacing.xxxl)
 
             ScrollView(showsIndicators: false) {
 
@@ -45,10 +49,10 @@ struct SummaryTemplate: View {
                     groupContactSection
                     warningCard
                 }
+                .padding(.horizontal, AppSpacing.xxl)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, AppSpacing.sm)
                 .padding(.bottom, AppSpacing.xxl)
-                .padding(.horizontal, AppSpacing.xxl)
             }
         }
         .background(Color.Background)
@@ -81,29 +85,19 @@ private extension SummaryTemplate {
     }
 
     var tripSummaryCard: some View {
-        VStack(spacing: 0) {
-            summaryRow(titleKey: "summary.startTime", value: formatDate(startTime))
-            summaryDivider
-            summaryRow(titleKey: "summary.returnTime", value: formatDate(returnTime))
-            summaryDivider
-            summaryRow(titleKey: "summary.destination", value: destination.isEmpty ? "—" : destination)
-            summaryDivider
-            summaryRow(titleKey: "summary.carDetails", value: carDetails.isEmpty ? "—" : carDetails)
-            summaryDivider
-            summaryRow(titleKey: "summary.plateNumber", value: plateNumber.isEmpty ? "—" : plateNumber)
-            summaryDivider
-            summaryRow(
-                titleKey: "summary.numberOfIndividuals",
-                value: isGroup
+        TripSummaryCard(rows: [
+            ("summary.startTime", formatDate(startTime)),
+            ("summary.returnTime", formatDate(returnTime)),
+            ("summary.destination", destination.isEmpty ? "—" : destination),
+            ("summary.carDetails", carDetails.isEmpty ? "—" : carDetails),
+            ("summary.plateNumber", plateNumber.isEmpty ? "—" : plateNumber),
+            (
+                "summary.numberOfIndividuals",
+                isGroup
                     ? String(format: "people_count".localized, groupCount)
                     : "solo".localized
             )
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 14)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 22))
+        ])
     }
 
     var emergencyContactsSection: some View {
@@ -114,26 +108,33 @@ private extension SummaryTemplate {
                 .foregroundStyle(Color.Primary)
 
             VStack(spacing: 0) {
+
                 ForEach(emergencyContacts, id: \.name) { contact in
-                    contactRow(name: contact.name, phone: contact.phone)
+
+                    ContactRow(
+                        initial: String(contact.name.prefix(1)),
+                        titleKey: contact.name,
+                        captionKey: contact.phone,
+                        isEditable: false
+                    )
+                    .frame(height: 70)
 
                     if contact.name != emergencyContacts.last?.name {
-                        summaryDivider
-                            .padding(.leading, 64)
+                        AppDivider()
+                            .padding(.horizontal, AppSpacing.md)
                     }
                 }
             }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .frame(maxWidth: .infinity, alignment: .leading)
             .background(Color.white)
-            .clipShape(RoundedRectangle(cornerRadius: 22))
+            .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
         }
     }
 
     @ViewBuilder
     var groupContactSection: some View {
+
         if isGroup && !groupContacts.isEmpty {
+
             VStack(alignment: .leading, spacing: 10) {
 
                 Text("summary.groupContactOptional".localized)
@@ -141,20 +142,25 @@ private extension SummaryTemplate {
                     .foregroundStyle(Color.Primary)
 
                 VStack(spacing: 0) {
+
                     ForEach(groupContacts, id: \.name) { contact in
-                        contactRow(name: contact.name, phone: contact.phone)
+
+                        ContactRow(
+                            initial: String(contact.name.prefix(1)),
+                            titleKey: contact.name,
+                            captionKey: contact.phone,
+                            isEditable: false
+                        )
+                        .frame(height: 70)
 
                         if contact.name != groupContacts.last?.name {
-                            summaryDivider
-                                .padding(.leading, 64)
+                            AppDivider()
+                                .padding(.horizontal, AppSpacing.md)
                         }
                     }
                 }
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Color.white)
-                .clipShape(RoundedRectangle(cornerRadius: 22))
+                .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
             }
         }
     }
@@ -178,28 +184,6 @@ private extension SummaryTemplate {
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
-    var summaryDivider: some View {
-        Divider()
-            .background(Color.gray.opacity(0.25))
-    }
-
-    func summaryRow(titleKey: String, value: String) -> some View {
-        HStack(spacing: 12) {
-            Text(titleKey.localized)
-                .font(AppTypography.body)
-                .foregroundStyle(Color.Primary)
-                .lineLimit(1)
-
-            Spacer(minLength: 8)
-
-            Text(value)
-                .font(AppTypography.body)
-                .foregroundStyle(Color.lableSec)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
-        }
-        .frame(height: 34)
-    }
 
     func contactRow(name: String, phone: String) -> some View {
         HStack(spacing: 12) {

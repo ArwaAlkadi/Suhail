@@ -52,6 +52,10 @@
 		EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */; };
 		EC2F63022FC7B0C3007FF45C /* HomeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */; };
 		EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */; };
+		EC2F63062FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */; };
+		EC2F63082FC88FC5007FF45C /* TripTrackTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */; };
+		EC2F630A2FC8901D007FF45C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63092FC8901D007FF45C /* SearchBar.swift */; };
+		EC2F630C2FC8903E007FF45C /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */; };
 		EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F712F8C1042003E343E /* FirebaseAnalytics */; };
 		EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F732F8C1042003E343E /* FirebaseFirestore */; };
 		EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F752F8C1042003E343E /* FirebaseFunctions */; };
@@ -137,6 +141,10 @@
 		EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " HistoryTripCard.swift"; sourceTree = "<group>"; };
 		EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplate.swift; sourceTree = "<group>"; };
 		EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelpers.swift; sourceTree = "<group>"; };
+		EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripDetailsTemplate.swift; sourceTree = "<group>"; };
+		EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTrackTemplate.swift; sourceTree = "<group>"; };
+		EC2F63092FC8901D007FF45C /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
 		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
@@ -231,6 +239,8 @@
 		EC1FBE742FC52FAA00CA755B /* Molecules */ = {
 			isa = PBXGroup;
 			children = (
+				EC2F63092FC8901D007FF45C /* SearchBar.swift */,
+				EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */,
 				EC1FBE692FC52FAA00CA755B /* AddContactRow.swift */,
 				EC1FBE6A2FC52FAA00CA755B /* ColorPickerRow.swift */,
 				EC1FBE6B2FC52FAA00CA755B /* ContactRow.swift */,
@@ -264,6 +274,8 @@
 		EC1FBE7C2FC52FAA00CA755B /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */,
+				EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */,
 				EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */,
 				EC1FBEB32FC74FF100CA755B /* PersonalDetailsTemplate.swift */,
 				EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */,
@@ -595,6 +607,7 @@
 				EC309F7F2F8C1058003E343E /* DesertApp.swift in Sources */,
 				EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */,
 				EC309F9C2F97FD87003E343E /* SplashView.swift in Sources */,
+				EC2F630C2FC8903E007FF45C /* TripSummaryCard.swift in Sources */,
 				EC309FC02F9800DE003E343E /* RootView.swift in Sources */,
 				ECCD9EB62FB7846400E2B5B9 /* CreateTripView.swift in Sources */,
 				ECCD9EB72FB7846400E2B5B9 /* TripViewModel.swift in Sources */,
@@ -610,6 +623,7 @@
 				ECCD9FF62FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift in Sources */,
 				ECCD9FF22FB8AA5900E2B5B9 /* LocalizationHelper.swift in Sources */,
 				EC309FCD2FA3874C003E343E /* Components.swift in Sources */,
+				EC2F63062FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift in Sources */,
 				EC309FCB2FA3870C003E343E /* Map.swift in Sources */,
 				EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */,
 				EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */,
@@ -617,6 +631,7 @@
 				ECCD9F432FB7B79F00E2B5B9 /* MaintenanceView.swift in Sources */,
 				EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */,
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
+				EC2F63082FC88FC5007FF45C /* TripTrackTemplate.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
 				EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */,
 				EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */,
@@ -628,6 +643,7 @@
 				EC1FBE8C2FC52FAA00CA755B /* PlateLetterPicker.swift in Sources */,
 				EC1FBE8D2FC52FAA00CA755B /* PlateNumberField.swift in Sources */,
 				EC1FBE8E2FC52FAA00CA755B /* progress.swift in Sources */,
+				EC2F630A2FC8901D007FF45C /* SearchBar.swift in Sources */,
 				EC1FBE8F2FC52FAA00CA755B /* ProgressSegment.swift in Sources */,
 				EC1FBE902FC52FAA00CA755B /* StatusBadge.swift in Sources */,
 				EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */,

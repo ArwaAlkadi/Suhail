@@ -17,6 +17,7 @@ struct ToolbarButton: View {
     enum Icon {
         case back
         case close
+        case trash
     }
     
     var style: Style = .primary
@@ -44,8 +45,12 @@ private extension ToolbarButton {
         switch icon {
         case .back:
             return "chevron.left"
+
         case .close:
             return "xmark"
+
+        case .trash:
+            return "trash"
         }
     }
     
@@ -81,6 +86,10 @@ private extension ToolbarButton {
         ToolbarButton(style: .primary, icon: .back) { }
         ToolbarButton(style: .secondary, icon: .close) { }
         ToolbarButton(style: .disabled, icon: .back) { }
+        ToolbarButton( style: .primary,  icon: .trash) { }
+          
+
+        }
     }
-}
+
 

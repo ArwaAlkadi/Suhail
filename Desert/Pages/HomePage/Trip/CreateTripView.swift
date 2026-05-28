@@ -44,12 +44,13 @@ struct CreateTripView: View {
 
             HeaderView(
                 titleKey: stepTitles[currentStep],
-                leadingButton: currentStep == 0 ? .close : .back
-            ) {
-                handleBackAction()
-            }
+                leadingButton: currentStep == 0 ? .close : .back,
+                action: {
+                    handleBackAction()
+                }
+            )
             .padding(.bottom, AppSpacing.md)
-            .padding(.horizontal, AppSpacing.lg)
+            .padding(.horizontal, AppSpacing.xxl)
 
             ProgressBar(currentStep: currentStep + 1)
                 .padding(.bottom, AppSpacing.xl)
