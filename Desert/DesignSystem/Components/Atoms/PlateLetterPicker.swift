@@ -4,11 +4,6 @@
 //
 //  Created by Samar A on 05/12/1447 AH.
 
-//
-
-// هنا اضفت اللوكاليزيشن العربي
-
-
 import SwiftUI
 
 struct PlateLetterPicker: View {

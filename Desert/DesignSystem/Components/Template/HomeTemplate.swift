@@ -4,13 +4,6 @@
 ////
 ////  Created by Samar A on 10/12/1447 AH.
 ////
-//
-//
-//// TODO: Show only when network status changes.
-//// Offline alert: 3–5s or dismiss on tap.
-//// Reconnection toast: auto-dismiss after 2s.
-//// Do not show if initial state is online.
-//
 
 import SwiftUI
 

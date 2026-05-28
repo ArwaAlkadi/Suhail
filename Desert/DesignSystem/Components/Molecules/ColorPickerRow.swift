@@ -6,8 +6,6 @@
 //
 
 
-// هنا اضفت الالوان بحيث تكون مع الكومبونت مرة وحدة بنفس طريقة لوحة السيارة
-
 import SwiftUI
 
 struct ColorPickerRow: View {

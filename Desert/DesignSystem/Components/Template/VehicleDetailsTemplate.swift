@@ -5,25 +5,21 @@
 //  Created by Samar A on 08/12/1447 AH.
 //
 
-//استبدلت الستيت بالفيو مودلز
-
 import SwiftUI
 
 struct VehicleDetailsTemplate: View {
 
-       @Binding var carModel: String
-       @Binding var selectedColor: String
-       @Binding var isFourWheelDrive: Bool
-       @Binding var firstPlateLetter: String
-       @Binding var secondPlateLetter: String
-       @Binding var thirdPlateLetter: String
-       @Binding var plateDigits: [String]
-       var showErrors: Bool = false
+    @Binding var carModel: String
+    @Binding var selectedColor: String
+    @Binding var isFourWheelDrive: Bool
+    @Binding var firstPlateLetter: String
+    @Binding var secondPlateLetter: String
+    @Binding var thirdPlateLetter: String
+    @Binding var plateDigits: [String]
+    var showErrors: Bool = false
 
     var body: some View {
-
         ScrollView(showsIndicators: false) {
-
             VStack(spacing: AppSpacing.lg) {
                 carModelSection
                 carColorSection
@@ -39,13 +35,18 @@ struct VehicleDetailsTemplate: View {
     }
 }
 
-// MARK: - Sections
+
+
+
+
+
+
+
 
 private extension VehicleDetailsTemplate {
 
     var carModelSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("vehicle.carModel".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -68,7 +69,6 @@ private extension VehicleDetailsTemplate {
 
     var carColorSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("vehicle.carColor".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -97,7 +97,6 @@ private extension VehicleDetailsTemplate {
 
     var plateInfoSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("vehicle.plateInfo".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -133,5 +132,5 @@ private extension VehicleDetailsTemplate {
         secondPlateLetter: .constant("f"),
         thirdPlateLetter: .constant("f"),
         plateDigits: .constant([])
-        )
+    )
 }

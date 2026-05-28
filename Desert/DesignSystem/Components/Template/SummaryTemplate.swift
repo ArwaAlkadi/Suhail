@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SummaryTemplate: View {
 
-    // Trip info — display only, no editing
     var tripName: String
     var startTime: Date
     var returnTime: Date
@@ -20,29 +19,22 @@ struct SummaryTemplate: View {
     var groupCount: Int
     var emergencyContacts: [Contact]
     var groupContacts: [Contact]
-
-    // State
     var isConnected: Bool = true
     var onBack: () -> Void = {}
     var onStartTrip: () -> Void = {}
 
     var body: some View {
-
         VStack(spacing: 0) {
-
             HeaderView(
                 titleKey: "summary.title",
                 leadingButton: .back,
-                action: {
-                    onBack()
-                }
+                action: { onBack() }
             )
             .padding(.top, 0)
             .padding(.bottom, 28)
             .padding(.horizontal, AppSpacing.xxxl)
 
             ScrollView(showsIndicators: false) {
-
                 VStack(alignment: .leading, spacing: 26) {
                     tripNameSection
                     emergencyContactsSection
@@ -71,11 +63,17 @@ struct SummaryTemplate: View {
     }
 }
 
+
+
+
+
+
+
+
 private extension SummaryTemplate {
 
     var tripNameSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-
             Text(tripName)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -102,15 +100,12 @@ private extension SummaryTemplate {
 
     var emergencyContactsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-
             Text("summary.emergencyContacts".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
 
             VStack(spacing: 0) {
-
                 ForEach(emergencyContacts, id: \.name) { contact in
-
                     ContactRow(
                         initial: String(contact.name.prefix(1)),
                         titleKey: contact.name,
@@ -132,19 +127,14 @@ private extension SummaryTemplate {
 
     @ViewBuilder
     var groupContactSection: some View {
-
         if isGroup && !groupContacts.isEmpty {
-
             VStack(alignment: .leading, spacing: 10) {
-
                 Text("summary.groupContactOptional".localized)
                     .font(AppTypography.headline)
                     .foregroundStyle(Color.Primary)
 
                 VStack(spacing: 0) {
-
                     ForEach(groupContacts, id: \.name) { contact in
-
                         ContactRow(
                             initial: String(contact.name.prefix(1)),
                             titleKey: contact.name,
@@ -182,33 +172,6 @@ private extension SummaryTemplate {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.Secondary)
         .clipShape(RoundedRectangle(cornerRadius: 16))
-    }
-
-
-    func contactRow(name: String, phone: String) -> some View {
-        HStack(spacing: 12) {
-            Circle()
-                .fill(Color.Secondary)
-                .frame(width: 48, height: 48)
-                .overlay {
-                    Text(String(name.prefix(1)))
-                        .font(AppTypography.body)
-                        .foregroundStyle(Color.Primary)
-                }
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(name)
-                    .font(AppTypography.body)
-                    .foregroundStyle(Color.Primary)
-
-                Text(phone)
-                    .font(AppTypography.caption)
-                    .foregroundStyle(Color.lableSec)
-            }
-
-            Spacer(minLength: 0)
-        }
-        .frame(height: 58)
     }
 
     func formatDate(_ date: Date) -> String {

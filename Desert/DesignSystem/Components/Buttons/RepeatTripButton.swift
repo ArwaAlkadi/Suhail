@@ -24,21 +24,14 @@ struct RepeatTripButton: View {
                 Text(title)
                     .font(AppTypography.caption2Semibold)
                     .lineLimit(1)
-                    .font(
-                        Font(
-                            UIFont(
-                                name: "thmanyahsans",
-                                size: 17
-                            ) ?? .systemFont(ofSize: 17)
-                        )
-                    )                    //.font(AppTypography.title3)
             }
             .foregroundStyle(.white)
             .padding(.vertical, AppSpacing.sm)
-            .padding(.horizontal, AppSpacing.md)
+            .padding(.horizontal, AppSpacing.lg)
             .background(Color.Secondary02)
-            .cornerRadius(AppRadius.xxl)
+            .clipShape(Capsule())
         }
+        .buttonStyle(.plain)
     }
 }
 

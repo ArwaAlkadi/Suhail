@@ -5,8 +5,6 @@
 //  Created by Samar A on 07/12/1447 AH.
 //
 
-// هنا اضفت حد للسطور
-
 import SwiftUI
 
 struct DestinationRow: View {

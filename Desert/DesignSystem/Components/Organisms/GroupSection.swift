@@ -4,7 +4,6 @@
 //  Created by Samar A on 09/12/1447 AH.
 //
 
-// تعديلات
 
 import SwiftUI
 

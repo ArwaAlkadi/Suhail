@@ -3,8 +3,6 @@
 //  Desert
 //
 
-// اضفته جديد لانه منطقه يختلف عن الطوارئ
-
 import SwiftUI
 
 struct EmergencyContactsSection: View {

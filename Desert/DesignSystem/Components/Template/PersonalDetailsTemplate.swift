@@ -5,37 +5,31 @@
 //  Created by Samar A on 07/12/1447 AH.
 //
 
-//استبدلت الستيت بالفيو مودلز
-
 import SwiftUI
 
 struct PersonalDetailsTemplate: View {
-    
+
     @Binding var fullName: String
     @Binding var phoneNumber: String
     @Binding var emergencyContacts: [Contact]
     var contactErrorMessage: String = ""
     var showErrors: Bool = false
     var onAddContact: () -> Void = {}
-    
+
     var body: some View {
-
-
-            ScrollView(showsIndicators: false) {
-
-                VStack(spacing: AppSpacing.lg) {
-                    fullNameSection
-                    phoneNumberSection
-                    EmergencyContactsSectiona
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.top, AppSpacing.sm)
-                .padding(.bottom, AppSpacing.xxl)
-                .padding(.horizontal, AppSpacing.lg)
+        ScrollView(showsIndicators: false) {
+            VStack(spacing: AppSpacing.lg) {
+                fullNameSection
+                phoneNumberSection
+                emergencyContactsSection
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.top, AppSpacing.sm)
+            .padding(.bottom, AppSpacing.xxl)
+            .padding(.horizontal, AppSpacing.lg)
+        }
         .background(Color.Background)
     }
-    
 }
 
 
@@ -43,14 +37,17 @@ struct PersonalDetailsTemplate: View {
 
 
 
+
+
+
 private extension PersonalDetailsTemplate {
-    
+
     var fullNameSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("trip.fullName".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
-            
+
             AppTextField(
                 placeholderKey: "trip.fullName.placeholder",
                 text: $fullName,
@@ -66,7 +63,7 @@ private extension PersonalDetailsTemplate {
             }
         }
     }
-    
+
     var phoneNumberSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("trip.phone".localized)
@@ -89,9 +86,8 @@ private extension PersonalDetailsTemplate {
             }
         }
     }
-    
-    
-    var EmergencyContactsSectiona : some View {
+
+    var emergencyContactsSection: some View {
         EmergencyContactsSection(
             emergencyContacts: $emergencyContacts,
             showErrors: showErrors,
@@ -99,17 +95,11 @@ private extension PersonalDetailsTemplate {
             onAddContact: onAddContact
         )
     }
-    
-   
+
     var phoneNumberIsValid: Bool {
         let digits = phoneNumber.filter(\.isNumber)
-
         let pattern = #"^(05\d{8}|9665\d{8})$"#
-
-        return digits.range(
-            of: pattern,
-            options: .regularExpression
-        ) != nil
+        return digits.range(of: pattern, options: .regularExpression) != nil
     }
 }
 
@@ -120,4 +110,3 @@ private extension PersonalDetailsTemplate {
         emergencyContacts: .constant([])
     )
 }
-

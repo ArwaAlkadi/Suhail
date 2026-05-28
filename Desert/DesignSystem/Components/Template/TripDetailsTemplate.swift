@@ -5,27 +5,23 @@
 //  Created by Samar A on 08/12/1447 AH.
 //
 
-//استبدلت الستيت بالفيو مودلز
-
 import SwiftUI
 
 struct TripDetailsTemplate: View {
 
-        @Binding var tripName: String
-        @Binding var destination: String
-        @Binding var returnTime: Date
-        @Binding var isGroup: Bool
-        @Binding var groupCount: Int
-        @Binding var groupContacts: [Contact]
-        var contactErrorMessage: String = ""
-        var showErrors: Bool = false
-        var onSelectDestination: () -> Void = {}
-        var onAddGroupContact: () -> Void = {}
-  
+    @Binding var tripName: String
+    @Binding var destination: String
+    @Binding var returnTime: Date
+    @Binding var isGroup: Bool
+    @Binding var groupCount: Int
+    @Binding var groupContacts: [Contact]
+    var contactErrorMessage: String = ""
+    var showErrors: Bool = false
+    var onSelectDestination: () -> Void = {}
+    var onAddGroupContact: () -> Void = {}
+
     var body: some View {
-
         ScrollView(showsIndicators: false) {
-
             VStack(spacing: AppSpacing.lg) {
                 tripNameSection
                 destinationSection
@@ -41,13 +37,17 @@ struct TripDetailsTemplate: View {
     }
 }
 
-// MARK: - Sections
+
+
+
+
+
+
 
 private extension TripDetailsTemplate {
 
     var tripNameSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("trip.name".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -60,17 +60,15 @@ private extension TripDetailsTemplate {
             .frame(height: 52)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
-            
+
             if showErrors && tripName.isEmpty {
-                    ErrorMessageRow(messageKey: "trip_name_required")
-                }
+                ErrorMessageRow(messageKey: "trip_name_required")
+            }
         }
-        
     }
 
     var destinationSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("trip.destination".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -96,7 +94,6 @@ private extension TripDetailsTemplate {
 
     var timeSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-
             Text("trip.time".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)

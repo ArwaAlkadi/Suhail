@@ -5,9 +5,6 @@
 //  Created by Samar A on 07/12/1447 AH.
 //
 
-// هنا غيرت الاسم من اند ديت لرتيرن تايم
-// وعدلت على البداية تكون ماتنضغط
-
 import SwiftUI
 
 struct DateRangeRow: View {
