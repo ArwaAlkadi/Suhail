@@ -123,6 +123,13 @@ struct CreateTripView: View {
                       lng: $vm.destinationLng
                   )
               }
+        .navigationDestination(isPresented: $vm.showDestinationPicker) {
+            DestinationPickerViewA(
+                destination: $vm.destination,
+                lat: $vm.destinationLat,
+                lng: $vm.destinationLng
+            )
+        }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
             ContactPickerSheetA {
                 vm.importEmergencyContact($0)

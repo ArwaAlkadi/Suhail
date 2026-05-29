@@ -14,6 +14,7 @@ struct HistoryTripCard: View {
     var badgeStyle: StatusBadge.Style = .positive
     var durationKey: String
     var distanceKey: String
+    var peopleIcon: String = "person.3.fill"
     var peopleKey: String
     var dateKey: String
     var repeatAction: () -> Void = {}
@@ -85,7 +86,7 @@ private extension HistoryTripCard {
             
             verticalDivider
             
-            infoItem(icon: "person.3.fill", textKey: peopleKey)
+            infoItem(icon: peopleIcon, textKey: peopleKey)
         }
     }
     

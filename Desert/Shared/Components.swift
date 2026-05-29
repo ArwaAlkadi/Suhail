@@ -151,6 +151,7 @@ struct DestinationPickerViewA: View {
         center: CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
+
     @State private var searchText = ""
     @State private var searchResults: [MKMapItem] = []
     @State private var pinCoordinate: CLLocationCoordinate2D?
@@ -208,6 +209,37 @@ struct DestinationPickerViewA: View {
                                     .cornerRadius(12)
                             }
                             .padding()
+        ZStack {
+
+            TappableMapViewA(
+                region: $region,
+                pinCoordinate: $pinCoordinate,
+                onTap: { coordinate in
+                    pinCoordinate = coordinate
+                    reverseGeocode(coordinate)
+                }
+            )
+            .ignoresSafeArea()
+
+            VStack(spacing: 0) {
+
+                SearchBar(
+                    style: .withBackButton,
+                    placeholderKey: "search.destination",
+                    text: $searchText,
+                    backAction: {
+                        dismiss()
+                    },
+                    searchAction: {
+                        search()
+                    }
+                )
+                .padding(.horizontal, AppSpacing.xxxl)
+                
+                if !searchResults.isEmpty {
+                    List(searchResults, id: \.self) { item in
+                        Button(item.name ?? "") {
+                            selectLocation(item)
                         }
                     }
                 }
@@ -218,6 +250,27 @@ struct DestinationPickerViewA: View {
                         Button("cancel".localized) { dismiss() }
                     }
                 }
+                    .frame(maxHeight: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
+                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.top, AppSpacing.sm)
+                }
+
+                Spacer()
+
+                CTAButton(
+                    title: "confirm_destination".localized,
+                    style: pinCoordinate == nil ? .disabled : .primary
+                ) {
+                    guard let pinCoordinate else { return }
+
+                    destination = pinName.isEmpty ? coordinateText() : pinName
+                    lat = pinCoordinate.latitude
+                    lng = pinCoordinate.longitude
+                    dismiss()
+                }
+                .padding(.horizontal, AppSpacing.xxl)
+                .padding(.bottom, AppSpacing.xl)
             }
         }
 
@@ -270,11 +323,15 @@ struct DestinationPickerViewA: View {
 //        .navigationBarBackButtonHidden(true)
 //        .toolbar(.hidden, for: .navigationBar)
 //    }
+        .navigationBarBackButtonHidden(true)
+    }
+    
     
     func search() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = searchText
         request.region = region
+
         MKLocalSearch(request: request).start { response, _ in
             searchResults = response?.mapItems ?? []
         }
@@ -298,10 +355,14 @@ struct DestinationPickerViewA: View {
 
     func coordinateText() -> String {
         guard let pin = pinCoordinate else { return "" }
-        return String(format: "%.4f, %.4f", pin.latitude, pin.longitude)
+
+        return String(
+            format: "%.4f, %.4f",
+            pin.latitude,
+            pin.longitude
+        )
     }
 }
-
 // MARK: - Tappable Map View
 // UIViewRepresentable wrapping MKMapView with tap gesture and draggable pin.
 // Used inside DestinationPickerView.

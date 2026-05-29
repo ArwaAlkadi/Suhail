@@ -2,33 +2,10 @@
 //  HomeView.swift
 //  Desert
 //
-//  Root view after onboarding. Manages navigation between Map and History pages.
-//
-//  Location Permission Behavior:
-//  - No permission: Trip cannot start. User directed to Settings.
-//  - "When In Use" only: Trip cannot start. User directed to Settings to enable Always Allow.
-//  - "Always Allow": Trip starts normally.
-//
-//  Permissions are requested at the following points:
-//  - Location (When In Use): Onboarding
-//  - Notifications: Second app visit (triggered in onAppear)
-//  - Location (Always Allow): When the user taps Start Trip
-//
-//  Firebase Upload Triggers:
-//  - Distance-based: 1km when slow, 3km at normal off-road speed, 5km at high speed.
-//  - Time-based: Every 30 minutes to confirm signal and app activity.
-//
-//  Origin Monitoring:
-//  - CLMonitor creates a 2km radius around the trip's start location.
-//  - Returning to this zone automatically ends the trip.
-//
 
 import SwiftUI
 import MapKit
 import SwiftData
-
-
-// MARK: - HomeView
 
 struct HomeView: View {
 
@@ -39,8 +16,10 @@ struct HomeView: View {
 
     @State private var currentPage: AppPage = .map
     @State private var showCreateTrip = false
+    @State private var mapType: MKMapType = .standard
+    @State private var centerTrigger: Int = 0
+    @State private var resetNorthTrigger: Int = 0
 
-    /// Active or overdue trip — stays visible until the user taps "I'm Back Safely".
     var activeTrip: Trip? { trips.first { $0.isActive || $0.isOverdue } }
 
     var body: some View {
@@ -64,15 +43,10 @@ struct HomeView: View {
             }
         }
         .environment(\.onTripStarted, { goToMap() })
-        .onAppear {
-            vm.onAppear(context: context)
-        }
+        .onAppear { vm.onAppear(context: context) }
         .navigationBarBackButtonHidden()
     }
 
-    // MARK: - Navigation
-
-    /// Dismisses any active sheet and returns the user to the map page.
     func goToMap() {
         showCreateTrip = false
         currentPage = .map
@@ -82,28 +56,68 @@ struct HomeView: View {
 
     var mapContent: some View {
         ZStack {
-
             TripMapView(
                 localTrack: vm.localTrack(for: activeTrip),
                 lastUploadedLocation: vm.lastUploadedLocation(for: activeTrip),
                 destinationLocation: vm.destinationLocation(for: activeTrip),
-                userLocation: locationManager.currentUserLocation
+                userLocation: locationManager.currentUserLocation,
+                mapType: mapType,
+                centerTrigger: centerTrigger,
+                resetNorthTrigger: resetNorthTrigger
             )
             .ignoresSafeArea()
+
+            // FAB Buttons
+            VStack {
+                HStack {
+                    Spacer()
+                    VStack(spacing: AppSpacing.sm) {
+
+                        FABButton(icon: .location) {
+                            centerTrigger += 1
+                        }
+
+                        FABButton(icon: .compass) {
+                            resetNorthTrigger += 1
+                        }
+
+                        Menu {
+                            Button {
+                                mapType = .standard
+                            } label: {
+                                Label("map_type_standard".localized, systemImage: "map")
+                            }
+
+                            Button {
+                                mapType = .satellite
+                            } label: {
+                                Label("map_type_satellite".localized, systemImage: "globe")
+                            }
+
+                            Button {
+                                mapType = .hybrid
+                            } label: {
+                                Label("map_type_hybrid".localized, systemImage: "map.circle")
+                            }
+                        } label: {
+                            FABButton(icon: .map) { }
+                        }
+                    }
+                    .padding(.trailing, AppSpacing.lg)
+                    .padding(.top, AppSpacing.xxl)
+                }
+                Spacer()
+            }
 
             HomeTemplate(
                 selectedTab: $currentPage,
                 activeTrip: activeTrip,
-                onStartTrip: {
-                    showCreateTrip = true
-                }
+                onStartTrip: { showCreateTrip = true }
             )
         }
         .ignoresSafeArea(edges: .bottom)
     }
 }
-
-// MARK: - Preview
 
 #Preview {
     HomeView()
