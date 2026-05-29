@@ -26,7 +26,7 @@ struct TripSummaryView: View {
             startTime: Date(),
             returnTime: vm.returnTime,
             destination: vm.destination,
-            carDetails: vm.carModel.isEmpty ? "—" : "\(vm.selectedColor) \(vm.carModel)",
+            carDetails: vm.carModel.isEmpty ? "—" : "\(vm.selectedColor.localized) \(vm.carModel)",
             plateNumber: vm.plateLetters.isEmpty ? "—" : "\(vm.plateNumbers) | \(vm.plateLetters)",
             isGroup: vm.isGroup,
             groupCount: vm.groupCount,

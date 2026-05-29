@@ -155,71 +155,122 @@ struct DestinationPickerViewA: View {
     @State private var searchResults: [MKMapItem] = []
     @State private var pinCoordinate: CLLocationCoordinate2D?
     @State private var pinName: String = ""
-
+    
+    
     var body: some View {
-        NavigationView {
-            ZStack {
-                TappableMapViewA(
-                    region: $region,
-                    pinCoordinate: $pinCoordinate,
-                    onTap: { coordinate in
-                        pinCoordinate = coordinate
-                        reverseGeocode(coordinate)
-                    }
-                )
-                .ignoresSafeArea(edges: .bottom)
-
-                VStack {
-                    SearchBarA(text: $searchText, onSearch: search).padding()
-
-                    if !searchResults.isEmpty {
-                        List(searchResults, id: \.self) { item in
-                            Button(item.name ?? "") { selectLocation(item) }
+            NavigationView {
+                ZStack {
+                    TappableMapViewA(
+                        region: $region,
+                        pinCoordinate: $pinCoordinate,
+                        onTap: { coordinate in
+                            pinCoordinate = coordinate
+                            reverseGeocode(coordinate)
                         }
-                        .frame(maxHeight: 200)
-                        .background(Color(UIColor.systemBackground))
-                        .cornerRadius(12)
-                        .padding(.horizontal)
-                    }
+                    )
+                    .ignoresSafeArea(edges: .bottom)
 
-                    Spacer()
+                    VStack {
+                        SearchBarA(text: $searchText, onSearch: search).padding()
 
-                    if !pinName.isEmpty {
-                        Text(pinName)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        if !searchResults.isEmpty {
+                            List(searchResults, id: \.self) { item in
+                                Button(item.name ?? "") { selectLocation(item) }
+                            }
+                            .frame(maxHeight: 200)
+                            .background(Color(UIColor.systemBackground))
+                            .cornerRadius(12)
                             .padding(.horizontal)
-                    }
-
-                    if pinCoordinate != nil {
-                        Button(action: {
-                            destination = pinName.isEmpty ? coordinateText() : pinName
-                            lat = pinCoordinate?.latitude ?? 0
-                            lng = pinCoordinate?.longitude ?? 0
-                            dismiss()
-                        }) {
-                            Text("confirm_destination".localized)
-                                .fontWeight(.semibold)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.primary)
-                                .foregroundColor(Color(UIColor.systemBackground))
-                                .cornerRadius(12)
                         }
-                        .padding()
+
+                        Spacer()
+
+                        if !pinName.isEmpty {
+                            Text(pinName)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                        }
+
+                        if pinCoordinate != nil {
+                            Button(action: {
+                                destination = pinName.isEmpty ? coordinateText() : pinName
+                                lat = pinCoordinate?.latitude ?? 0
+                                lng = pinCoordinate?.longitude ?? 0
+                                dismiss()
+                            }) {
+                                Text("confirm_destination".localized)
+                                    .fontWeight(.semibold)
+                                    .frame(maxWidth: .infinity)
+                                    .padding()
+                                    .background(Color.primary)
+                                    .foregroundColor(Color(UIColor.systemBackground))
+                                    .cornerRadius(12)
+                            }
+                            .padding()
+                        }
                     }
                 }
-            }
-            .navigationTitle("select_destination".localized)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("cancel".localized) { dismiss() }
+                .navigationTitle("select_destination".localized)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("cancel".localized) { dismiss() }
+                    }
                 }
             }
         }
-    }
 
+
+//    var body: some View {
+//        ZStack(alignment: .top) {
+//            
+//            TappableMapViewA(
+//                region: $region,
+//                pinCoordinate: $pinCoordinate,
+//                onTap: { coordinate in
+//                    pinCoordinate = coordinate
+//                    reverseGeocode(coordinate)
+//                }
+//            )
+//            .ignoresSafeArea()
+//            
+//            VStack(spacing: 0) {
+//                
+//                SearchBar(
+//                    style: .withBackButton,
+//                    placeholderKey: "search.destination",
+//                    text: $searchText,
+//                    backAction: {
+//                        dismiss()
+//                    },
+//                    searchAction: search
+//                )
+//                .padding(.horizontal, AppSpacing.lg)
+//                .padding(.top, AppSpacing.sm)
+//                
+//                Spacer()
+//            }
+//        }
+//        .safeAreaInset(edge: .bottom) {
+//            CTAButton(
+//                title: "common.select".localized,
+//                style: pinCoordinate == nil ? .disabled : .primary
+//            ) {
+//                guard let pinCoordinate else { return }
+//                
+//                destination = pinName.isEmpty ? coordinateText() : pinName
+//                lat = pinCoordinate.latitude
+//                lng = pinCoordinate.longitude
+//                dismiss()
+//            }
+//            .padding(.horizontal, AppSpacing.lg)
+//            .padding(.bottom, AppSpacing.sm)
+//        }
+//        .navigationBarBackButtonHidden(true)
+//        .toolbar(.hidden, for: .navigationBar)
+//    }
+    
     func search() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = searchText

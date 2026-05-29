@@ -24,7 +24,7 @@ struct SearchBar: View {
     
     var body: some View {
         
-        HStack(spacing: AppSpacing.md) {
+        HStack(spacing: AppSpacing.sm) {
             
             if style == .withBackButton {
                 
@@ -44,19 +44,24 @@ struct SearchBar: View {
                 )
                 .font(AppTypography.body)
                 .foregroundStyle(Color.Primary)
+                .multilineTextAlignment(.leading)
+                .onSubmit {
+                    searchAction()
+                }
                 
                 Button {
                     searchAction()
                 } label: {
                     Image(systemName: "magnifyingglass")
-                        .font(.system(size: 24, weight: .medium))
+                        .font(.system(size: 20, weight: .medium))
                         .foregroundStyle(Color.Primary)
                 }
             }
             .padding(.horizontal, AppSpacing.lg)
-            .frame(height: 56)
+            .frame( width: 310, height: 52)
             .background(Color.white)
             .clipShape(Capsule())
+            
         }
     }
 }

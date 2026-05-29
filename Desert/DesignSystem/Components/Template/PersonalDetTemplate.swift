@@ -33,13 +33,6 @@ struct PersonalDetailsTemplate: View {
 }
 
 
-
-
-
-
-
-
-
 private extension PersonalDetailsTemplate {
 
     var fullNameSection: some View {
@@ -65,28 +58,44 @@ private extension PersonalDetailsTemplate {
     }
 
     var phoneNumberSection: some View {
+
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
+
             Text("trip.phone".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
 
-            AppTextField(
-                placeholderKey: "trip.phone.placeholder",
-                text: $phoneNumber,
-                state: showErrors && !phoneNumberIsValid ? .error : .normal
-            )
-            .keyboardType(.phonePad)
+            HStack(spacing: AppSpacing.sm) {
+
+                Text("+966")
+                    .font(AppTypography.body)
+                    .foregroundStyle(Color.Primary)
+
+                Rectangle()
+                    .fill(Color.Grey100)
+                    .frame(width: 1, height: 24)
+
+                AppTextField(
+                    placeholderKey: "trip.phone.placeholder",
+                    text: $phoneNumber,
+                    state: showErrors && !phoneNumberIsValid ? .error : .normal
+                )
+                .keyboardType(.numberPad)
+            }
+            .padding(.horizontal, AppSpacing.md)
             .frame(maxWidth: .infinity)
             .frame(height: 52)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
 
             if showErrors && !phoneNumberIsValid {
-                ErrorMessageRow(messageKey: "phone_required")
+
+                ErrorMessageRow(
+                    messageKey: "phone_required"
+                )
             }
         }
     }
-
     var emergencyContactsSection: some View {
         EmergencyContactsSection(
             emergencyContacts: $emergencyContacts,

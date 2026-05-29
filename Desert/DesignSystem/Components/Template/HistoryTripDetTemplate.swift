@@ -78,6 +78,7 @@ struct HistoryTripDetailsTemplate: View {
             .padding(.horizontal, AppSpacing.xxl)
             .padding(.top, AppSpacing.lg)
             .padding(.bottom, AppSpacing.sm)
+            .background(Color.Background)
         }
         .alert("history.delete.title".localized, isPresented: $showDeleteAlert) {
             Button("common.cancel".localized, role: .cancel) { }
@@ -197,7 +198,8 @@ private extension HistoryTripDetailsTemplate {
                     ContactRow(
                         initial: contact.initial,
                         titleKey: contact.name,
-                        captionKey: contact.phone
+                        captionKey: contact.phone,
+                        isEditable: false
                     )
                     .frame(height: 70)
 

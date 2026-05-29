@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3354E71A2FC9E5CF0072C1F0 /* HistoryTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354E7192FC9E5CA0072C1F0 /* HistoryTemplate.swift */; };
+		3354E7202FCA01CE0072C1F0 /* ActiveTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354E71F2FCA01CA0072C1F0 /* ActiveTripCard.swift */; };
+		336A69672FC9055800C93DEB /* SelectDesTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336A69662FC9055400C93DEB /* SelectDesTemplate.swift */; };
+		336A696B2FC9BF7100C93DEB /* CreateTripStepTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */; };
 		EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */; };
 		EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */; };
 		EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */; };
@@ -45,14 +49,14 @@
 		EC1FBEAD2FC6541E00CA755B /* EmergencyContactsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEAC2FC6541E00CA755B /* EmergencyContactsSection.swift */; };
 		EC1FBEB02FC74EF300CA755B /* MobileGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEAE2FC74EF300CA755B /* MobileGrid.swift */; };
 		EC1FBEB22FC74FD000CA755B /* SummaryTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEB12FC74FD000CA755B /* SummaryTemplate.swift */; };
-		EC1FBEB42FC74FF100CA755B /* PersonalDetailsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEB32FC74FF100CA755B /* PersonalDetailsTemplate.swift */; };
+		EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */; };
 		EC2F62FA2FC7B079007FF45C /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62F92FC7B079007FF45C /* AppTabBar.swift */; };
 		EC2F62FC2FC7B07E007FF45C /* NoActiveTripsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */; };
 		EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */; };
 		EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */; };
 		EC2F63022FC7B0C3007FF45C /* HomeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */; };
 		EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */; };
-		EC2F63062FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */; };
+		EC2F63062FC88FC2007FF45C /* HistoryTripDetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */; };
 		EC2F63082FC88FC5007FF45C /* TripTrackTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */; };
 		EC2F630A2FC8901D007FF45C /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63092FC8901D007FF45C /* SearchBar.swift */; };
 		EC2F630C2FC8903E007FF45C /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */; };
@@ -96,6 +100,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3354E7192FC9E5CA0072C1F0 /* HistoryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTemplate.swift; sourceTree = "<group>"; };
+		3354E71F2FCA01CA0072C1F0 /* ActiveTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripCard.swift; sourceTree = "<group>"; };
+		336A69662FC9055400C93DEB /* SelectDesTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDesTemplate.swift; sourceTree = "<group>"; };
+		336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripStepTemplate.swift; sourceTree = "<group>"; };
 		EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircle.swift; sourceTree = "<group>"; };
 		EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityIcon.swift; sourceTree = "<group>"; };
 		EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterButton.swift; sourceTree = "<group>"; };
@@ -134,14 +142,14 @@
 		EC1FBEAC2FC6541E00CA755B /* EmergencyContactsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyContactsSection.swift; sourceTree = "<group>"; };
 		EC1FBEAE2FC74EF300CA755B /* MobileGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileGrid.swift; sourceTree = "<group>"; };
 		EC1FBEB12FC74FD000CA755B /* SummaryTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTemplate.swift; sourceTree = "<group>"; };
-		EC1FBEB32FC74FF100CA755B /* PersonalDetailsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetailsTemplate.swift; sourceTree = "<group>"; };
+		EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetTemplate.swift; sourceTree = "<group>"; };
 		EC2F62F92FC7B079007FF45C /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
 		EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActiveTripsCard.swift; sourceTree = "<group>"; };
 		EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " NetworkStatusBanner.swift"; sourceTree = "<group>"; };
 		EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " HistoryTripCard.swift"; sourceTree = "<group>"; };
 		EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplate.swift; sourceTree = "<group>"; };
 		EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelpers.swift; sourceTree = "<group>"; };
-		EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripDetailsTemplate.swift; sourceTree = "<group>"; };
+		EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripDetTemplate.swift; sourceTree = "<group>"; };
 		EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTrackTemplate.swift; sourceTree = "<group>"; };
 		EC2F63092FC8901D007FF45C /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
@@ -259,6 +267,7 @@
 		EC1FBE782FC52FAA00CA755B /* Organisms */ = {
 			isa = PBXGroup;
 			children = (
+				3354E71F2FCA01CA0072C1F0 /* ActiveTripCard.swift */,
 				EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */,
 				EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */,
 				EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */,
@@ -274,10 +283,13 @@
 		EC1FBE7C2FC52FAA00CA755B /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				3354E7192FC9E5CA0072C1F0 /* HistoryTemplate.swift */,
+				336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */,
+				336A69662FC9055400C93DEB /* SelectDesTemplate.swift */,
 				EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */,
-				EC2F63052FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift */,
+				EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */,
 				EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */,
-				EC1FBEB32FC74FF100CA755B /* PersonalDetailsTemplate.swift */,
+				EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */,
 				EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */,
 				EC1FBE7A2FC52FAA00CA755B /* TripDetailsTemplate.swift */,
 				EC1FBEB12FC74FD000CA755B /* SummaryTemplate.swift */,
@@ -623,7 +635,7 @@
 				ECCD9FF62FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift in Sources */,
 				ECCD9FF22FB8AA5900E2B5B9 /* LocalizationHelper.swift in Sources */,
 				EC309FCD2FA3874C003E343E /* Components.swift in Sources */,
-				EC2F63062FC88FC2007FF45C /* HistoryTripDetailsTemplate.swift in Sources */,
+				EC2F63062FC88FC2007FF45C /* HistoryTripDetTemplate.swift in Sources */,
 				EC309FCB2FA3870C003E343E /* Map.swift in Sources */,
 				EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */,
 				EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */,
@@ -637,7 +649,9 @@
 				EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */,
 				EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */,
 				EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */,
-				EC1FBEB42FC74FF100CA755B /* PersonalDetailsTemplate.swift in Sources */,
+				EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */,
+				3354E7202FCA01CE0072C1F0 /* ActiveTripCard.swift in Sources */,
+				3354E71A2FC9E5CF0072C1F0 /* HistoryTemplate.swift in Sources */,
 				EC1FBE8B2FC52FAA00CA755B /* Divider.swift in Sources */,
 				EC1FBEAD2FC6541E00CA755B /* EmergencyContactsSection.swift in Sources */,
 				EC1FBE8C2FC52FAA00CA755B /* PlateLetterPicker.swift in Sources */,
@@ -666,7 +680,9 @@
 				EC1FBE9E2FC52FAA00CA755B /* InquiryRow.swift in Sources */,
 				EC1FBE9F2FC52FAA00CA755B /* PlateInfoRow.swift in Sources */,
 				EC1FBEA02FC52FAA00CA755B /* TextFieldState.swift in Sources */,
+				336A696B2FC9BF7100C93DEB /* CreateTripStepTemplate.swift in Sources */,
 				EC1FBEA12FC52FAA00CA755B /* ValidatedTextField.swift in Sources */,
+				336A69672FC9055800C93DEB /* SelectDesTemplate.swift in Sources */,
 				EC1FBEA22FC52FAA00CA755B /* GroupSection.swift in Sources */,
 				EC1FBEA32FC52FAA00CA755B /* HeaderView.swift in Sources */,
 				EC1FBEA42FC52FAA00CA755B /* ProgressBar.swift in Sources */,
@@ -828,7 +844,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				DEVELOPMENT_TEAM = 59XQH23G26;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -877,7 +893,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				DEVELOPMENT_TEAM = 59XQH23G26;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

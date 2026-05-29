@@ -149,7 +149,7 @@
 "trip.fullName.placeholder" = "Enter your full name";
 
 "trip.phone" = "Phone Number";
-"trip.phone.placeholder" = "+966 5X XXX XXXX";
+"trip.phone.placeholder" = "5X XXX XXXX";
 
 "trip.contacts" = "Emergency Contacts";
 "trip.addContact" = "Add Emergency Contact";
@@ -407,3 +407,35 @@
 "contact_phone_invalid" = "Please select a contact with a valid Saudi phone number.";
 "contact_already_added" = "This contact has already been added.";
 "button.repeatTrip" = "Repeat Trip";
+"common.select" = "Select";
+"search.destination" = "Search for destination";
+"history.tripSummary" = "Trip Summary";
+"history.groupContacts" = "Group Contacts";
+
+
+
+"history.tripsCount" = "%d Trips";
+"history.noPreviousTrips" = "No previous trips";
+"history.noTripsDescription" = "Create your first trip to see it here.";
+"history.startNewTrip" = "Start new trip";
+"history.title" = "History";
+
+
+"activeTrip.active" = "Active";
+"activeTrip.returnTime" = "Return Time";
+"activeTrip.timeUpdated" = "Time updated";
+"activeTrip.emergencyContactsCount" = "Emergency Contacts (%d)";
+"activeTrip.endTrip" = "End trip";
+"activeTrip.updateTime" = "Update time";
+"common.ok" = "OK";
+"activeTrip.uploaded" = "Uploaded";
+"activeTrip.lastUpload" = "Last Upload";
+"activeTrip.emergency" = "Emergency";
+"activeTrip.imBackSafely" = "I'm Back Safely";
+"common.save" = "Save";
+"common.cancel" = "Cancel";
+"activeTrip.uploaded" = "Uploaded";
+"activeTrip.uploading" = "Uploading";
+"common.save" = "Save";
+"common.cancel" = "Cancel";
+"history.tripTrack"="tripTrack";

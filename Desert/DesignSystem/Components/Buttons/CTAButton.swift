@@ -14,10 +14,16 @@ struct CTAButton: View {
         case secondary
         case disabled
     }
+    
+    enum Size {
+        case large
+        case small
+    }
 
     var title: String
 
     var style: Style = .primary
+    var size: Size = .large
 
     var action: () -> Void
 
@@ -28,14 +34,16 @@ struct CTAButton: View {
             Text(title)
                 .font(AppTypography.headline)
                 .foregroundStyle(foregroundColor)
-                .frame(maxWidth: .infinity)
-                .frame(width: 291, height:52)
+                .frame(maxWidth: size == .large ? .infinity : nil)
+                .frame(
+                    width: size == .large ? 291 : 200,
+                    height: size == .large ? 51 : 40
+                )
                 .background(backgroundColor)
                 .cornerRadius(AppRadius.xxl)
         }
         .padding(.vertical, AppSpacing.md)
         .padding(.horizontal, AppSpacing.xxxl)
-        
         .disabled(style == .disabled)
     }
 }
@@ -69,29 +77,41 @@ private extension CTAButton {
         }
     }
 }
+
 #Preview {
 
     VStack(spacing: AppSpacing.md) {
 
         CTAButton(
             title: "button.cta".localized,
-            style: .primary
+            style: .primary,
+            size: .large
         ) {
-            
+
         }
 
         CTAButton(
             title: "button.cta".localized,
-            style: .secondary
+            style: .primary,
+            size: .small
         ) {
-            
+
         }
 
         CTAButton(
             title: "button.cta".localized,
-            style: .disabled
+            style: .secondary,
+            size: .large
         ) {
-            
+
+        }
+
+        CTAButton(
+            title: "button.cta".localized,
+            style: .disabled,
+            size: .large
+        ) {
+
         }
     }
 }

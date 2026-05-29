@@ -22,6 +22,7 @@ struct DateRangeRow: View {
 
     @State private var showDatePicker = false
 
+
     var body: some View {
 
         HStack(alignment: .center) {
@@ -40,9 +41,7 @@ struct DateRangeRow: View {
 
             // End date — tappable
             Button {
-                withAnimation {
-                    showDatePicker.toggle()
-                }
+                showDatePicker = true
             } label: {
                 LabelValueItem(
                     labelKey: endLabelKey,
@@ -67,7 +66,7 @@ struct DateRangeRow: View {
                         DatePicker(
                             endLabelKey.localized,
                             selection: $returnTime,
-                            in: Date().addingTimeInterval(3600)...,
+                            in: Date()...,
                             displayedComponents: displayedComponents
                         )
                         .datePickerStyle(.compact)
@@ -76,7 +75,7 @@ struct DateRangeRow: View {
                         DatePicker(
                             endLabelKey.localized,
                             selection: $returnTime,
-                            in: Date().addingTimeInterval(3600)...,
+                            in: Date()...,
                             displayedComponents: displayedComponents
                         )
                         .datePickerStyle(.graphical)
@@ -108,6 +107,7 @@ struct DateRangeRow: View {
             .presentationDragIndicator(.hidden)
             .environment(\.locale, Locale(identifier: "en"))
         }
+        
     }
 }
 
@@ -164,7 +164,7 @@ private extension Date {
         startLabelKey: "date.start",
         startDate: .constant(Date()),
         endLabelKey: "date.end",
-        returnTime: .constant(Date()),
+        returnTime: .constant(Date().addingTimeInterval(3600)),
         isEndRequired: true
     )
     .padding()

@@ -42,7 +42,7 @@ struct TripHistoryInDetailsView: View {
             destination: trip.destination,
             isGroup: trip.hasGroup,
             groupCount: trip.groupSize,
-            carDetails: "\(trip.carColor) \(trip.carName)",
+            carDetails: "\(trip.carColor.localized) \(trip.carName)",
             plateNumber: "\(trip.plateNumbers) | \(trip.plateLetters)",
             distance: "\(trip.gpsTrack.count * 250 / 1000) KM",
             emergencyContacts: trip.emergencyContacts.map {

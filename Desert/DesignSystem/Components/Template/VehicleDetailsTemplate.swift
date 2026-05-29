@@ -37,12 +37,6 @@ struct VehicleDetailsTemplate: View {
 
 
 
-
-
-
-
-
-
 private extension VehicleDetailsTemplate {
 
     var carModelSection: some View {

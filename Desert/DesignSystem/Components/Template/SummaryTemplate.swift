@@ -32,33 +32,43 @@ struct SummaryTemplate: View {
             )
             .padding(.top, 0)
             .padding(.bottom, 28)
-            .padding(.horizontal, AppSpacing.xxxl)
+            .padding(.horizontal, 75)
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 26) {
+                VStack(alignment: .leading, spacing: AppSpacing.lg) {
                     tripNameSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     emergencyContactsSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     groupContactSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     warningCard
+                        .padding(.horizontal, AppSpacing.xxl)
                 }
-                .padding(.horizontal, AppSpacing.xxl)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, AppSpacing.lg)
                 .padding(.top, AppSpacing.sm)
-                .padding(.bottom, AppSpacing.xxl)
+                .padding(.bottom, 120)
             }
         }
         .background(Color.Background)
         .environment(\.layoutDirection, .leftToRight)
         .safeAreaInset(edge: .bottom) {
-            CTAButton(
-                title: "summary.startNewTrip".localized,
-                style: isConnected ? .primary : .disabled
-            ) {
-                onStartTrip()
+            VStack(spacing: 0) {
+                CTAButton(
+                    title: "summary.startNewTrip".localized,
+                    style: isConnected ? .primary : .disabled
+                ) {
+                    onStartTrip()
+                }
+                .padding(.horizontal, AppSpacing.xxl)
+                .padding(.top, AppSpacing.lg)
+                .padding(.bottom, AppSpacing.sm)
             }
-            .padding(.horizontal, AppSpacing.lg)
-            .padding(.top, AppSpacing.lg)
-            .padding(.bottom, AppSpacing.sm)
+            .background(Color.Background)
         }
     }
 }

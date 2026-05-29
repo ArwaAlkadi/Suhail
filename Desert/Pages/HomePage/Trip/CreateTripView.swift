@@ -56,33 +56,26 @@ struct CreateTripView: View {
                 .padding(.bottom, AppSpacing.xl)
                 .padding(.horizontal, AppSpacing.lg)
 
-            Group {
-                switch currentStep {
-                case 0:
-                    personalDetailsView
-                case 1:
-                    vehicleDetailsView
-                case 2:
-                    tripDetailsView
-                default:
-                    EmptyView()
-                }
-            }
-            .animation(.easeInOut, value: currentStep)
+            stepContent
+                .animation(.easeInOut, value: currentStep)
         }
         .safeAreaInset(edge: .bottom) {
-            if !isInputFocused {
-                CTAButton(
-                    title: currentStep == totalSteps - 1
-                        ? "review".localized
-                        : "common.next".localized
-                ) {
-                    handleNextAction()
+            VStack(spacing: 0) {
+                if !isInputFocused {
+                    CTAButton(
+                        title: currentStep == totalSteps - 1
+                            ? "review".localized
+                            : "common.next".localized
+                    ) {
+                        handleNextAction()
+                    }
+                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.top, AppSpacing.md)
+                    .padding(.bottom, AppSpacing.sm)
                 }
-                .padding(.horizontal, AppSpacing.lg)
-                .padding(.top, AppSpacing.md)
-                .padding(.bottom, AppSpacing.sm)
             }
+            .frame(maxWidth: .infinity)
+            .background(Color.Background.ignoresSafeArea(edges: .bottom))
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .padding(.horizontal, AppSpacing.lg)
@@ -116,13 +109,20 @@ struct CreateTripView: View {
                 vm.loadSavedInfo(savedInfo.first)
             }
         }
+//        .navigationDestination(isPresented: $vm.showDestinationPicker) {
+//            DestinationPickerViewA(
+//                destination: $vm.destination,
+//                lat: $vm.destinationLat,
+//                lng: $vm.destinationLng
+//            )
+//        }
         .sheet(isPresented: $vm.showDestinationPicker) {
-            DestinationPickerViewA(
-                destination: $vm.destination,
-                lat: $vm.destinationLat,
-                lng: $vm.destinationLng
-            )
-        }
+                  DestinationPickerViewA(
+                      destination: $vm.destination,
+                      lat: $vm.destinationLat,
+                      lng: $vm.destinationLng
+                  )
+              }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
             ContactPickerSheetA {
                 vm.importEmergencyContact($0)
@@ -147,6 +147,20 @@ struct CreateTripView: View {
     }
 
     // MARK: - Step Views
+
+    @ViewBuilder
+    var stepContent: some View {
+        switch currentStep {
+        case 0:
+            personalDetailsView
+        case 1:
+            vehicleDetailsView
+        case 2:
+            tripDetailsView
+        default:
+            EmptyView()
+        }
+    }
 
     var personalDetailsView: some View {
         PersonalDetailsTemplate(

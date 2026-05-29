@@ -39,11 +39,6 @@ struct TripDetailsTemplate: View {
 
 
 
-
-
-
-
-
 private extension TripDetailsTemplate {
 
     var tripNameSection: some View {

@@ -18,11 +18,11 @@ struct NoActiveTripsCard: View {
             Image("noPreviousTrip")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 400, height: 200)
+                .frame(maxWidth: 400)
 
             Text("No Active Trips")
                 .font(AppTypography.title3)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.black)
 
             CTAButton(title: "Start new trip") {
                 onStartTrip()
