@@ -35,7 +35,7 @@ struct FABButton: View {
                 .font(.system(size: 18, weight: .semibold))
                 .foregroundStyle(iconColor)
                 .frame(width: 44, height: 44)
-                .background(Color.Primary)
+                .background(Color.white)
                 .clipShape(Circle())
         }
         .disabled(style == .disabled)
@@ -66,7 +66,7 @@ private extension FABButton {
         switch style {
 
         default:
-            return .white
+            return .Primary
         }
     }
 }
