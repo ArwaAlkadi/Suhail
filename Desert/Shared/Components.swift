@@ -3,13 +3,11 @@
 //  Desert
 //
 
-
 import SwiftUI
 import MapKit
 import ContactsUI
 
 // MARK: - Summary Row
-// Single label-value row. Used in TripSummaryView and TripHistoryInDetailsView.
 
 struct SummaryRowA: View {
     var label: String
@@ -30,7 +28,6 @@ struct SummaryRowA: View {
 }
 
 // MARK: - Contact Row
-// Displays a contact avatar, name, and phone. Used in CreateTripView and TripSummaryView.
 
 struct ContactRowA: View {
     var contact: Contact
@@ -48,7 +45,6 @@ struct ContactRowA: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text(contact.name).font(.subheadline)
                 Text(contact.phone).font(.caption).foregroundColor(.secondary)
-                
             }
             Spacer()
         }
@@ -58,9 +54,7 @@ struct ContactRowA: View {
     }
 }
 
-
 // MARK: - Stat Item
-// Icon + value + label stat block. Used in TripHistoryInDetailsView.
 
 struct StatItemA: View {
     var icon: String
@@ -79,10 +73,7 @@ struct StatItemA: View {
     }
 }
 
-
-// MARK: - Contact Picker Sheet
-// Wraps CNContactPickerViewController for native contact selection.
-// Used in CreateTripView for emergency and group contacts.
+// MARK: - Contact Picker Sheet A (single select)
 
 struct ContactPickerSheetA: UIViewControllerRepresentable {
 
@@ -107,6 +98,8 @@ struct ContactPickerSheetA: UIViewControllerRepresentable {
     }
 }
 
+// MARK: - Contact Picker Sheet B (multi select)
+
 struct ContactPickerSheetB: UIViewControllerRepresentable {
 
     var onSelect: ([CNContact]) -> Void
@@ -119,26 +112,18 @@ struct ContactPickerSheetB: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: CNContactPickerViewController, context: Context) {}
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onSelect: onSelect)
-    }
+    func makeCoordinator() -> Coordinator { Coordinator(onSelect: onSelect) }
 
     class Coordinator: NSObject, CNContactPickerDelegate {
-
         var onSelect: ([CNContact]) -> Void
-
-        init(onSelect: @escaping ([CNContact]) -> Void) {
-            self.onSelect = onSelect
-        }
-
+        init(onSelect: @escaping ([CNContact]) -> Void) { self.onSelect = onSelect }
         func contactPicker(_ picker: CNContactPickerViewController, didSelect contacts: [CNContact]) {
             onSelect(contacts)
         }
     }
 }
+
 // MARK: - Destination Picker View
-// Full-screen map sheet for selecting a trip destination by tapping or searching.
-// Used in CreateTripView step 1.
 
 struct DestinationPickerViewA: View {
 
@@ -156,61 +141,9 @@ struct DestinationPickerViewA: View {
     @State private var searchResults: [MKMapItem] = []
     @State private var pinCoordinate: CLLocationCoordinate2D?
     @State private var pinName: String = ""
-    
-    
+
     var body: some View {
-            NavigationView {
-                ZStack {
-                    TappableMapViewA(
-                        region: $region,
-                        pinCoordinate: $pinCoordinate,
-                        onTap: { coordinate in
-                            pinCoordinate = coordinate
-                            reverseGeocode(coordinate)
-                        }
-                    )
-                    .ignoresSafeArea(edges: .bottom)
-
-                    VStack {
-                        SearchBarA(text: $searchText, onSearch: search).padding()
-
-                        if !searchResults.isEmpty {
-                            List(searchResults, id: \.self) { item in
-                                Button(item.name ?? "") { selectLocation(item) }
-                            }
-                            .frame(maxHeight: 200)
-                            .background(Color(UIColor.systemBackground))
-                            .cornerRadius(12)
-                            .padding(.horizontal)
-                        }
-
-                        Spacer()
-
-                        if !pinName.isEmpty {
-                            Text(pinName)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .padding(.horizontal)
-                        }
-
-                        if pinCoordinate != nil {
-                            Button(action: {
-                                destination = pinName.isEmpty ? coordinateText() : pinName
-                                lat = pinCoordinate?.latitude ?? 0
-                                lng = pinCoordinate?.longitude ?? 0
-                                dismiss()
-                            }) {
-                                Text("confirm_destination".localized)
-                                    .fontWeight(.semibold)
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.primary)
-                                    .foregroundColor(Color(UIColor.systemBackground))
-                                    .cornerRadius(12)
-                            }
-                            .padding()
         ZStack {
-
             TappableMapViewA(
                 region: $region,
                 pinCoordinate: $pinCoordinate,
@@ -222,34 +155,22 @@ struct DestinationPickerViewA: View {
             .ignoresSafeArea()
 
             VStack(spacing: 0) {
-
                 SearchBar(
                     style: .withBackButton,
                     placeholderKey: "search.destination",
                     text: $searchText,
-                    backAction: {
-                        dismiss()
-                    },
-                    searchAction: {
-                        search()
-                    }
+                    backAction: { dismiss() },
+                    searchAction: { search() }
                 )
-                .padding(.horizontal, AppSpacing.xxxl)
-                
+                .padding(.horizontal, AppSpacing.lg)
+                .padding(.top, AppSpacing.sm)
+
                 if !searchResults.isEmpty {
                     List(searchResults, id: \.self) { item in
                         Button(item.name ?? "") {
                             selectLocation(item)
                         }
                     }
-                }
-                .navigationTitle("select_destination".localized)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("cancel".localized) { dismiss() }
-                    }
-                }
                     .frame(maxHeight: 200)
                     .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
                     .padding(.horizontal, AppSpacing.lg)
@@ -257,81 +178,30 @@ struct DestinationPickerViewA: View {
                 }
 
                 Spacer()
-
-                CTAButton(
-                    title: "confirm_destination".localized,
-                    style: pinCoordinate == nil ? .disabled : .primary
-                ) {
-                    guard let pinCoordinate else { return }
-
-                    destination = pinName.isEmpty ? coordinateText() : pinName
-                    lat = pinCoordinate.latitude
-                    lng = pinCoordinate.longitude
-                    dismiss()
-                }
-                .padding(.horizontal, AppSpacing.xxl)
-                .padding(.bottom, AppSpacing.xl)
             }
         }
-
-
-//    var body: some View {
-//        ZStack(alignment: .top) {
-//            
-//            TappableMapViewA(
-//                region: $region,
-//                pinCoordinate: $pinCoordinate,
-//                onTap: { coordinate in
-//                    pinCoordinate = coordinate
-//                    reverseGeocode(coordinate)
-//                }
-//            )
-//            .ignoresSafeArea()
-//            
-//            VStack(spacing: 0) {
-//                
-//                SearchBar(
-//                    style: .withBackButton,
-//                    placeholderKey: "search.destination",
-//                    text: $searchText,
-//                    backAction: {
-//                        dismiss()
-//                    },
-//                    searchAction: search
-//                )
-//                .padding(.horizontal, AppSpacing.lg)
-//                .padding(.top, AppSpacing.sm)
-//                
-//                Spacer()
-//            }
-//        }
-//        .safeAreaInset(edge: .bottom) {
-//            CTAButton(
-//                title: "common.select".localized,
-//                style: pinCoordinate == nil ? .disabled : .primary
-//            ) {
-//                guard let pinCoordinate else { return }
-//                
-//                destination = pinName.isEmpty ? coordinateText() : pinName
-//                lat = pinCoordinate.latitude
-//                lng = pinCoordinate.longitude
-//                dismiss()
-//            }
-//            .padding(.horizontal, AppSpacing.lg)
-//            .padding(.bottom, AppSpacing.sm)
-//        }
-//        .navigationBarBackButtonHidden(true)
-//        .toolbar(.hidden, for: .navigationBar)
-//    }
+        .safeAreaInset(edge: .bottom) {
+            CTAButton(
+                title: "confirm_destination".localized,
+                style: pinCoordinate == nil ? .disabled : .primary
+            ) {
+                guard let pinCoordinate else { return }
+                destination = pinName.isEmpty ? coordinateText() : pinName
+                lat = pinCoordinate.latitude
+                lng = pinCoordinate.longitude
+                dismiss()
+            }
+            .padding(.horizontal, AppSpacing.lg)
+            .padding(.bottom, AppSpacing.sm)
+        }
         .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
     }
-    
-    
+
     func search() {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = searchText
         request.region = region
-
         MKLocalSearch(request: request).start { response, _ in
             searchResults = response?.mapItems ?? []
         }
@@ -355,17 +225,11 @@ struct DestinationPickerViewA: View {
 
     func coordinateText() -> String {
         guard let pin = pinCoordinate else { return "" }
-
-        return String(
-            format: "%.4f, %.4f",
-            pin.latitude,
-            pin.longitude
-        )
+        return String(format: "%.4f, %.4f", pin.latitude, pin.longitude)
     }
 }
+
 // MARK: - Tappable Map View
-// UIViewRepresentable wrapping MKMapView with tap gesture and draggable pin.
-// Used inside DestinationPickerView.
 
 struct TappableMapViewA: UIViewRepresentable {
 
@@ -410,9 +274,11 @@ struct TappableMapViewA: UIViewRepresentable {
         @Binding var pinCoordinate: CLLocationCoordinate2D?
         var onTap: (CLLocationCoordinate2D) -> Void
 
-        init(region: Binding<MKCoordinateRegion>,
-             pinCoordinate: Binding<CLLocationCoordinate2D?>,
-             onTap: @escaping (CLLocationCoordinate2D) -> Void) {
+        init(
+            region: Binding<MKCoordinateRegion>,
+            pinCoordinate: Binding<CLLocationCoordinate2D?>,
+            onTap: @escaping (CLLocationCoordinate2D) -> Void
+        ) {
             _region = region
             _pinCoordinate = pinCoordinate
             self.onTap = onTap
@@ -436,9 +302,12 @@ struct TappableMapViewA: UIViewRepresentable {
             return view
         }
 
-        func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,
-                     didChange newState: MKAnnotationView.DragState,
-                     fromOldState oldState: MKAnnotationView.DragState) {
+        func mapView(
+            _ mapView: MKMapView,
+            annotationView view: MKAnnotationView,
+            didChange newState: MKAnnotationView.DragState,
+            fromOldState oldState: MKAnnotationView.DragState
+        ) {
             if newState == .ending, let coordinate = view.annotation?.coordinate {
                 pinCoordinate = coordinate
                 onTap(coordinate)
@@ -447,8 +316,7 @@ struct TappableMapViewA: UIViewRepresentable {
     }
 }
 
-// MARK: - Search Bar
-// Simple search input with clear button. Used in DestinationPickerView.
+// MARK: - Search Bar A
 
 struct SearchBarA: View {
     @Binding var text: String
@@ -460,7 +328,7 @@ struct SearchBarA: View {
             TextField("search".localized, text: $text)
                 .onSubmit { onSearch() }
             if !text.isEmpty {
-                Button(action: { text = "" }) {
+                Button { text = "" } label: {
                     Image(systemName: "xmark.circle.fill").foregroundColor(.secondary)
                 }
             }
@@ -479,9 +347,7 @@ struct DeleteSwipeActionA: View {
     var action: () -> Void
 
     var body: some View {
-        Button {
-            action()
-        } label: {
+        Button { action() } label: {
             Label("delete".localized, systemImage: "trash")
         }
         .tint(.red)
@@ -489,6 +355,7 @@ struct DeleteSwipeActionA: View {
 }
 
 // MARK: - Trip History Row
+
 struct TripHistoryRowA: View {
 
     var trip: Trip
@@ -505,16 +372,10 @@ struct TripHistoryRowA: View {
 
                 HStack(alignment: .top) {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(trip.tripName)
-                            .font(.body.bold())
-
-                        Text(dateRange)
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        Text(trip.tripName).font(.body.bold())
+                        Text(dateRange).font(.subheadline).foregroundColor(.secondary)
                     }
-
                     Spacer()
-
                     Text(alertSent ? "alert_sent".localized : "no_alert".localized)
                         .font(.caption)
                         .fontWeight(.semibold)
@@ -528,18 +389,14 @@ struct TripHistoryRowA: View {
 
                 HStack(spacing: 0) {
                     historyStat(icon: "clock.fill", text: duration)
-
                     Divider().frame(height: 34)
-
                     historyStat(icon: "car.fill", text: distance)
-
                     Divider().frame(height: 34)
-
                     historyStat(
                         icon: "person.3.fill",
                         text: trip.hasGroup
-                        ? String(format: "people_count".localized, trip.groupSize)
-                        : "solo".localized
+                            ? String(format: "people_count".localized, trip.groupSize)
+                            : "solo".localized
                     )
                 }
 
