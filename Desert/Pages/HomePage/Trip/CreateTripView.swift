@@ -38,48 +38,25 @@ struct CreateTripView: View {
     }
 
     // MARK: - Body
-
     var body: some View {
-        VStack(spacing: 0) {
-
-            HeaderView(
-                titleKey: stepTitles[currentStep],
-                leadingButton: currentStep == 0 ? .close : .back,
-                action: {
-                    handleBackAction()
-                }
-            )
-            .padding(.bottom, AppSpacing.md)
-            .padding(.horizontal, AppSpacing.xxl)
-
-            ProgressBar(currentStep: currentStep + 1)
-                .padding(.bottom, AppSpacing.xl)
-                .padding(.horizontal, AppSpacing.lg)
-
+        CreateTripStepTemplate(
+            titleKey: stepTitles[currentStep],
+            currentStep: currentStep + 1,
+            buttonTitleKey: currentStep == totalSteps - 1
+                ? "review"
+                : "common.next",
+            leadingButton: currentStep == 0 ? .close : .back,
+            isInputFocused: isInputFocused,
+            onBack: {
+                handleBackAction()
+            },
+            onNext: {
+                handleNextAction()
+            }
+        ) {
             stepContent
                 .animation(.easeInOut, value: currentStep)
         }
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                if !isInputFocused {
-                    CTAButton(
-                        title: currentStep == totalSteps - 1
-                            ? "review".localized
-                            : "common.next".localized
-                    ) {
-                        handleNextAction()
-                    }
-                    .padding(.horizontal, AppSpacing.lg)
-                    .padding(.top, AppSpacing.md)
-                    .padding(.bottom, AppSpacing.sm)
-                }
-            }
-            .frame(maxWidth: .infinity)
-            .background(Color.Background.ignoresSafeArea(edges: .bottom))
-        }
-        .ignoresSafeArea(.keyboard, edges: .bottom)
-        .padding(.horizontal, AppSpacing.lg)
-        .background(Color.Background)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
@@ -109,20 +86,6 @@ struct CreateTripView: View {
                 vm.loadSavedInfo(savedInfo.first)
             }
         }
-//        .navigationDestination(isPresented: $vm.showDestinationPicker) {
-//            DestinationPickerViewA(
-//                destination: $vm.destination,
-//                lat: $vm.destinationLat,
-//                lng: $vm.destinationLng
-//            )
-//        }
-        .sheet(isPresented: $vm.showDestinationPicker) {
-                  DestinationPickerViewA(
-                      destination: $vm.destination,
-                      lat: $vm.destinationLat,
-                      lng: $vm.destinationLng
-                  )
-              }
         .navigationDestination(isPresented: $vm.showDestinationPicker) {
             DestinationPickerViewA(
                 destination: $vm.destination,
@@ -152,7 +115,7 @@ struct CreateTripView: View {
             Text(vm.locationAlertMessage)
         }
     }
-
+    
     // MARK: - Step Views
 
     @ViewBuilder

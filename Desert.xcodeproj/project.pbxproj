@@ -283,16 +283,16 @@
 		EC1FBE7C2FC52FAA00CA755B /* Template */ = {
 			isa = PBXGroup;
 			children = (
-				3354E7192FC9E5CA0072C1F0 /* HistoryTemplate.swift */,
-				336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */,
-				336A69662FC9055400C93DEB /* SelectDesTemplate.swift */,
-				EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */,
-				EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */,
 				EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */,
+				336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */,
 				EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */,
 				EC1FBE7B2FC52FAA00CA755B /* VehicleDetailsTemplate.swift */,
 				EC1FBE7A2FC52FAA00CA755B /* TripDetailsTemplate.swift */,
+				336A69662FC9055400C93DEB /* SelectDesTemplate.swift */,
 				EC1FBEB12FC74FD000CA755B /* SummaryTemplate.swift */,
+				3354E7192FC9E5CA0072C1F0 /* HistoryTemplate.swift */,
+				EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */,
+				EC2F63072FC88FC5007FF45C /* TripTrackTemplate.swift */,
 			);
 			path = Template;
 			sourceTree = "<group>";
