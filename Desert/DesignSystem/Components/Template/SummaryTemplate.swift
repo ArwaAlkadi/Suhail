@@ -23,6 +23,8 @@ struct SummaryTemplate: View {
     var onBack: () -> Void = {}
     var onStartTrip: () -> Void = {}
 
+    @Binding var isLoading: Bool
+
     var body: some View {
         VStack(spacing: 0) {
             HeaderView(
@@ -59,12 +61,12 @@ struct SummaryTemplate: View {
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 0) {
                 CTAButton(
-                    title: "summary.startNewTrip".localized,
-                    style: isConnected ? .primary : .disabled
+                    title: isLoading ? "Creating...".localized : "summary.startNewTrip".localized,
+                    style: isLoading ? .disabled : (isConnected ? .primary : .disabled)
                 ) {
+                    isLoading = true
                     onStartTrip()
                 }
-                .disabled(true) //موقتا لين نحل المشكلة
                 .padding(.horizontal, AppSpacing.xxl)
                 .padding(.top, AppSpacing.lg)
                 .padding(.bottom, AppSpacing.sm)
@@ -203,6 +205,7 @@ private extension SummaryTemplate {
         isGroup: true,
         groupCount: 3,
         emergencyContacts: [],
-        groupContacts: []
+        groupContacts: [],
+        isLoading: .constant(false)
     )
 }

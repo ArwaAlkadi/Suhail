@@ -15,6 +15,7 @@ struct TripSummaryView: View {
     @Environment(\.dismiss) private var dismiss
 
     @StateObject private var networkMonitor = NetworkMonitorHelper()
+    @State private var isLoading = false
 
     var isConnected: Bool {
         networkMonitor.isConnected
@@ -37,11 +38,15 @@ struct TripSummaryView: View {
                 dismiss()
             },
             onStartTrip: {
-                guard !TripSessionManager.shared.hasActiveTrip else { return }
+                guard !TripSessionManager.shared.hasActiveTrip else {
+                    isLoading = false
+                    return
+                }
                 _ = vm.startTrip(context: context) {
                     onTripStarted()
                 }
-            }
+            },
+            isLoading: $isLoading
         )
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .navigationBar)
@@ -49,10 +54,12 @@ struct TripSummaryView: View {
             Button("open_settings".localized) {
                 vm.openAppSettings()
             }
-
             Button("cancel".localized, role: .cancel) { }
         } message: {
             Text(vm.locationAlertMessage)
+        }
+        .onChange(of: vm.showLocationAlert) { _, isShowing in
+            if isShowing { isLoading = false }
         }
         .onAppear {
             networkMonitor.startMonitoring()
