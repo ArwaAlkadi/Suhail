@@ -188,6 +188,8 @@ private extension ActiveTripCard {
 
     var updateButton: some View {
         Button {
+            guard draftReturnTime > Date() else { return }
+
             selectedReturnTime = draftReturnTime
             onUpdateReturnTime(draftReturnTime)
         } label: {
@@ -196,10 +198,11 @@ private extension ActiveTripCard {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 40)
-                .background(Color.Secondary02)
+                .background(draftReturnTime > Date() ? Color.Secondary02 : Color.Disabled)
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)
+        .disabled(draftReturnTime <= Date())
         .transition(.move(edge: .top).combined(with: .opacity))
     }
     
@@ -228,6 +231,7 @@ private extension ActiveTripCard {
             DatePicker(
                 "",
                 selection: $draftReturnTime,
+                in: Date()...,
                 displayedComponents: [.hourAndMinute]
             )
             .datePickerStyle(.wheel)

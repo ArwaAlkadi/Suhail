@@ -2,7 +2,107 @@
 //  ActiveTripCardViewModel.swift
 //  Desert
 //
-//  Created by Arwa Alkadi on 30/05/2026.
-//
 
 import Foundation
+import SwiftUI
+import SwiftData
+import Network
+import Combine
+
+class ActiveTripCardViewModel: ObservableObject {
+
+    @Published var returnTimeUploadStatus: UploadStatus = .idle
+    @Published var isConnected = true
+
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue(label: "ActiveTripNetworkMonitor")
+
+    enum UploadStatus {
+        case idle
+        case uploading
+        case uploaded
+        case pending
+
+        var label: String {
+            switch self {
+            case .idle: return ""
+            case .uploading: return "uploading".localized
+            case .uploaded: return "uploaded".localized
+            case .pending: return "pending_upload".localized
+            }
+        }
+    }
+
+    func startMonitoring() {
+        monitor.pathUpdateHandler = { [weak self] path in
+            DispatchQueue.main.async {
+                self?.isConnected = path.status == .satisfied
+            }
+        }
+
+        monitor.start(queue: queue)
+    }
+
+    func stopMonitoring() {
+        monitor.cancel()
+    }
+
+    func daysLeftText(for returnTime: Date) -> String {
+        let seconds = returnTime.timeIntervalSince(Date())
+
+        if seconds <= 0 {
+            return "activeTrip.overdue".localized
+        }
+
+        let days = Int(seconds / 86400)
+        let hours = Int(seconds / 3600)
+
+        if days > 0 {
+            return String(format: "activeTrip.daysLeft".localized, days)
+        } else {
+            return String(format: "activeTrip.hoursLeft".localized, hours)
+        }
+    }
+
+    func rescheduleReturnTimeReminder(returnTime: Date) {
+        TripSessionManager.shared.rescheduleReturnTimeReminder(returnTime: returnTime)
+    }
+
+    func endTrip(_ trip: Trip, context: ModelContext) {
+        TripSessionManager.shared.finishTrip(trip: trip, context: context)
+    }
+
+    func saveReturnTime(
+        trip: Trip,
+        editedReturnTime: Date
+    ) {
+        guard editedReturnTime > Date() else { return }
+
+        trip.returnTime = editedReturnTime
+        rescheduleReturnTimeReminder(returnTime: editedReturnTime)
+
+        if isConnected {
+            returnTimeUploadStatus = .uploading
+
+            FirebaseManager.shared.updateReturnTime(
+                tripId: trip.tripId,
+                returnTime: editedReturnTime
+            ) { [weak self] in
+                DispatchQueue.main.async {
+                    self?.returnTimeUploadStatus = .uploaded
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                        self?.returnTimeUploadStatus = .idle
+                    }
+                }
+            } onFailure: { [weak self] in
+                DispatchQueue.main.async {
+                    self?.returnTimeUploadStatus = .pending
+                }
+            }
+
+        } else {
+            returnTimeUploadStatus = .pending
+        }
+    }
+}
