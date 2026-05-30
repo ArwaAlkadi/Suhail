@@ -78,31 +78,19 @@ class ActiveTripCardViewModel: ObservableObject {
     ) {
         guard editedReturnTime > Date() else { return }
 
-        trip.returnTime = editedReturnTime
-        rescheduleReturnTimeReminder(returnTime: editedReturnTime)
+        returnTimeUploadStatus = isConnected ? .uploading : .pending
 
-        if isConnected {
-            returnTimeUploadStatus = .uploading
-
-            FirebaseManager.shared.updateReturnTime(
-                tripId: trip.tripId,
-                returnTime: editedReturnTime
-            ) { [weak self] in
-                DispatchQueue.main.async {
-                    self?.returnTimeUploadStatus = .uploaded
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                        self?.returnTimeUploadStatus = .idle
-                    }
-                }
-            } onFailure: { [weak self] in
-                DispatchQueue.main.async {
-                    self?.returnTimeUploadStatus = .pending
-                }
+        TripSessionManager.shared.updateReturnTime(
+            trip: trip,
+            newReturnTime: editedReturnTime
+        ) { [weak self] in
+            DispatchQueue.main.async {
+                self?.returnTimeUploadStatus = .uploaded
             }
-
-        } else {
-            returnTimeUploadStatus = .pending
+        } onFailure: { [weak self] in
+            DispatchQueue.main.async {
+                self?.returnTimeUploadStatus = .pending
+            }
         }
     }
 }

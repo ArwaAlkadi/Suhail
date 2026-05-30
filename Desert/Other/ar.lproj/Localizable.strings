@@ -406,3 +406,5 @@
 "contact_phone_invalid" = "يرجى اختيار جهة اتصال تحتوي على رقم سعودي صحيح";
 "contact_already_added" = "تمت إضافة جهة الاتصال مسبقًا";
 "button.repeatTrip" = "إعادة الرحلة";
+"activeTrip.daysLeft" = "متبقي %d يوم";
+"activeTrip.hoursLeft" = "متبقي %d ساعة";

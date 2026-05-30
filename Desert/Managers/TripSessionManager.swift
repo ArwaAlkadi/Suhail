@@ -180,6 +180,26 @@ class TripSessionManager: NSObject, ObservableObject {
         notifications.scheduleTripNotifications(tripId: tripId, returnTime: returnTime)
         print("TripSessionManager: notifications rescheduled for new return time — \(returnTime)")
     }
+    
+    func updateReturnTime(
+        trip: Trip,
+        newReturnTime: Date,
+        onSuccess: @escaping () -> Void,
+        onFailure: @escaping () -> Void
+    ) {
+        guard newReturnTime > Date() else { return }
+
+        trip.returnTime = newReturnTime
+
+        rescheduleReturnTimeReminder(returnTime: newReturnTime)
+
+        firebase.updateReturnTime(
+            tripId: trip.tripId,
+            returnTime: newReturnTime,
+            onSuccess: onSuccess,
+            onFailure: onFailure
+        )
+    }
 
     // MARK: - Trip Status Listener
 

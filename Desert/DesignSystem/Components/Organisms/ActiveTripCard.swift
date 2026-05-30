@@ -30,7 +30,8 @@ struct ActiveTripCard: View {
     @State private var selectedReturnTime = Date()
     @State private var draftReturnTime = Date()
     @State private var activePicker: ActivePicker? = nil
-
+    @State private var showUploadStatus = false
+    
     private var hasReturnTimeChanges: Bool {
         abs(draftReturnTime.timeIntervalSince(selectedReturnTime)) > 1
     }
@@ -46,6 +47,10 @@ struct ActiveTripCard: View {
                 .contentShape(Rectangle())
                 .onTapGesture {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        if isExpanded {
+                            showUploadStatus = false
+                        }
+
                         isExpanded.toggle()
                     }
                 }
@@ -90,6 +95,8 @@ private extension ActiveTripCard {
                 Text(daysLeft)
                     .font(AppTypography.title1)
                     .foregroundStyle(Color.Primary)
+                    .lineLimit(1)
+                
             }
             
             Spacer()
@@ -115,10 +122,12 @@ private extension ActiveTripCard {
                 Text("activeTrip.returnTime".localized)
                     .font(AppTypography.caption)
                     .foregroundStyle(Color.lableSec)
-                
+
                 Spacer()
-                
-                uploadStatus
+
+                if showUploadStatus {
+                    uploadStatus
+                }
             }
             
             HStack(spacing: AppSpacing.sm) {
@@ -189,9 +198,9 @@ private extension ActiveTripCard {
     var updateButton: some View {
         Button {
             guard draftReturnTime > Date() else { return }
-
-            selectedReturnTime = draftReturnTime
-            onUpdateReturnTime(draftReturnTime)
+                selectedReturnTime = draftReturnTime
+                showUploadStatus = true
+                onUpdateReturnTime(draftReturnTime)
         } label: {
             Text("activeTrip.updateTime".localized)
                 .font(AppTypography.caption)

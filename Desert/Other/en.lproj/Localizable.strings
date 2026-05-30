@@ -439,3 +439,5 @@
 "common.save" = "Save";
 "common.cancel" = "Cancel";
 "history.tripTrack"="tripTrack";
+"activeTrip.daysLeft" = "%d days left";
+"activeTrip.hoursLeft" = "%d hours left";
