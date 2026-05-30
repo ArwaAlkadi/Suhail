@@ -66,8 +66,6 @@ struct TripHistoryView: View {
                 )
             }
         }
-        .background(Color.Background)
-        .ignoresSafeArea(edges: .bottom)
         .onAppear {
             for trip in trips {
                 vm.syncAlertStatusIfNeeded(for: trip, context: context)
@@ -132,8 +130,7 @@ extension TripHistoryView {
                     }
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.bottom, 120)
+            .padding(.horizontal, AppSpacing.lg)
         }
     }
 }

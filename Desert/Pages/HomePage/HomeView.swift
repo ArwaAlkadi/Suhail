@@ -76,11 +76,7 @@ struct HomeView: View {
                         FABButton(icon: .location) {
                             centerTrigger += 1
                         }
-
-                        FABButton(icon: .compass) {
-                            resetNorthTrigger += 1
-                        }
-
+                        
                         Menu {
                             Button {
                                 mapType = .standard
@@ -103,8 +99,8 @@ struct HomeView: View {
                             FABButton(icon: .map) { }
                         }
                     }
-                    .padding(.trailing, AppSpacing.lg)
-                    .padding(.top, AppSpacing.xxl)
+                    .padding(.trailing, AppSpacing.md)
+                    .padding(.top, 67)
                 }
                 Spacer()
             }

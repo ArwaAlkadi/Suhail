@@ -20,7 +20,7 @@ struct SplashView: View {
                 Image(systemName: "location.fill")
                     .font(.system(size: 60))
                     .foregroundColor(.white)
-                Text("app_name".localized)
+                Text("Suhail")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)

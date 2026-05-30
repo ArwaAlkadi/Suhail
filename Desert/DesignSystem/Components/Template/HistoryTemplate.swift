@@ -37,7 +37,7 @@ struct HistoryTemplate<Content: View>: View {
             VStack(spacing: 0) {
                 
                 AppTabBar(selectedTab: $selectedTab)
-                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.horizontal, AppSpacing.md)
                     .padding(.top, AppSpacing.md)
                     .padding(.bottom, AppSpacing.sm)
             }
