@@ -18,6 +18,7 @@ struct HistoryTripCard: View {
     var peopleKey: String
     var dateKey: String
     var repeatAction: () -> Void = {}
+    var hasActiveTrip: Bool = false
     
     var body: some View {
         
@@ -106,8 +107,11 @@ private extension HistoryTripCard {
             Spacer(minLength: AppSpacing.sm)
             
             RepeatTripButton {
+                guard !hasActiveTrip else { return }
                 repeatAction()
             }
+            .disabled(hasActiveTrip)
+            .opacity(hasActiveTrip ? 0.8 : 1) //هلا سمر حطيت هذا موقتا بس عدلي كومبونت الزر نفسه
         }
     }
     

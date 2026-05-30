@@ -25,6 +25,7 @@ struct HistoryTripDetailsTemplate: View {
     var onDelete: () -> Void = {}
     var onRepeatTrip: () -> Void = {}
     var onExpandMap: () -> Void = {}
+    var hasActiveTrip: Bool
 
     @State private var showDeleteAlert = false
 
@@ -71,7 +72,7 @@ struct HistoryTripDetailsTemplate: View {
         .safeAreaInset(edge: .bottom) {
             CTAButton(
                 title: "history.repeatTrip".localized,
-                style: .secondary
+                style: hasActiveTrip ? .disabled : .secondary
             ) {
                 onRepeatTrip()
             }
@@ -238,6 +239,6 @@ private extension HistoryTripDetailsTemplate {
         ],
         groupContacts: [
             (initial: "F", name: "Faisal", phone: "+966507654321")
-        ]
+        ], hasActiveTrip: true
     )
 }

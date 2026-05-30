@@ -56,8 +56,14 @@ struct TripHistoryInDetailsView: View {
                 vm.deleteTrip(trip, context: context)
                 dismiss()
             },
-            onRepeatTrip: { showRepeatTrip = true },
-            onExpandMap: { showFullMap = true }
+            onRepeatTrip: {
+                guard !vm.hasActiveTrip else { return }
+                showRepeatTrip = true
+            },
+            onExpandMap: {
+                showFullMap = true
+            },
+            hasActiveTrip: vm.hasActiveTrip
         )
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)

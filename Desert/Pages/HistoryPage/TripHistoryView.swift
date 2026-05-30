@@ -114,13 +114,11 @@ extension TripHistoryView {
                             ),
 
                         dateKey: vm.formatStartDate(trip.startTime),
-
                         repeatAction: {
-                            guard !TripSessionManager.shared.hasActiveTrip else { return }
-
                             tripToRepeat = trip
                             showRepeatTrip = true
-                        }
+                        },
+                        hasActiveTrip: vm.hasActiveTrip
                     )
                     .onTapGesture {
                         selectedTrip = trip
