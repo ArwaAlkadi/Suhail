@@ -2,6 +2,17 @@
 //  CreateTripViewModel.swift
 //  Desert
 //
+enum PhoneError {
+    case required
+    case invalid
+
+    var messageKey: String {
+        switch self {
+        case .required: return "phone_required..."
+        case .invalid:  return "phone_invalid"
+        }
+    }
+}
 
 import SwiftUI
 import SwiftData
@@ -64,13 +75,17 @@ class CreateTripViewModel: ObservableObject {
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
 
+    
     // MARK: - Validation
 
     var destinationIsValid: Bool { !destination.isEmpty }
     var fullNameIsValid: Bool { !fullName.isEmpty }
 
     var phoneNumberIsValid: Bool {
-        formatSaudiPhone(phoneNumber) != nil
+        let digits = phoneNumber.filter(\.isNumber)
+        guard digits.hasPrefix("966") else { return false }
+        let local = String(digits.dropFirst(3))
+        return local.hasPrefix("5") && local.count == 9
     }
 
     var returnTimeIsValid: Bool {
@@ -91,6 +106,10 @@ class CreateTripViewModel: ObservableObject {
         return digits.count >= 1 && digits.count <= 4
     }
 
+    var phoneError: PhoneError {
+        phoneNumber.isEmpty ? .required : .invalid
+    }
+    
     var formIsValid: Bool {
         destinationIsValid &&
         fullNameIsValid &&

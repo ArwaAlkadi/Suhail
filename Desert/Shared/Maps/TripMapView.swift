@@ -1,13 +1,24 @@
+
 //
-//  Map.swift
+//  TripMapView.swift
 //  Desert
+//
+//  Live trip map — shown in HomeView during an active trip.
+//
+//  Displays:
+//  - Local GPS track (red polyline, saved every 250m, never uploaded)
+//  - Last uploaded location (blue pin)
+//  - Destination pin (orange pin)
+//  - User's current location dot
+//
+//  Supports:
+//  - Map type switching (standard / satellite / hybrid)
+//  - Center on user (via centerTrigger increment)
+//  - Reset north (via resetNorthTrigger increment)
 //
 
 import SwiftUI
 import MapKit
-import SwiftData
-
-// MARK: - TripMapView
 
 struct TripMapView: UIViewRepresentable {
 
@@ -19,6 +30,8 @@ struct TripMapView: UIViewRepresentable {
     var mapType: MKMapType = .standard
     var centerTrigger: Int = 0
     var resetNorthTrigger: Int = 0
+
+    // MARK: - Make
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
@@ -47,6 +60,8 @@ struct TripMapView: UIViewRepresentable {
 
         return mapView
     }
+
+    // MARK: - Update
 
     func updateUIView(_ mapView: MKMapView, context: Context) {
         context.coordinator.userLocation = userLocation
@@ -82,7 +97,6 @@ struct TripMapView: UIViewRepresentable {
         }
 
         let existingPolylines = mapView.overlays.compactMap { $0 as? MKPolyline }
-
         if localTrack.count > 1 {
             let newPolyline = MKPolyline(coordinates: localTrack, count: localTrack.count)
             newPolyline.title = "Local"
@@ -117,13 +131,11 @@ struct TripMapView: UIViewRepresentable {
         mapView.mapType = mapType
     }
 
+    // MARK: - Fit to Content
+
     private func fitMapToContent(_ mapView: MKMapView) {
         var coordinates = localTrack
-
-        if let dest = destinationLocation {
-            coordinates.append(dest)
-        }
-
+        if let dest = destinationLocation { coordinates.append(dest) }
         guard !coordinates.isEmpty else { return }
 
         var minLat = coordinates[0].latitude
@@ -142,18 +154,16 @@ struct TripMapView: UIViewRepresentable {
             latitude: (minLat + maxLat) / 2,
             longitude: (minLng + maxLng) / 2
         )
-
         let span = MKCoordinateSpan(
             latitudeDelta: max((maxLat - minLat) * 1.4, 0.01),
             longitudeDelta: max((maxLng - minLng) * 1.4, 0.01)
         )
-
         mapView.setRegion(MKCoordinateRegion(center: center, span: span), animated: true)
     }
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
+    // MARK: - Coordinator
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
 
     class Coordinator: NSObject, MKMapViewDelegate {
 
@@ -208,81 +218,4 @@ struct TripMapView: UIViewRepresentable {
     }
 }
 
-// MARK: - ReplayMapView
 
-struct ReplayMapView: View {
-
-    var localTrack: [CLLocationCoordinate2D]
-    var destinationLocation: CLLocationCoordinate2D?
-
-    @State private var replayIndex: Int = 0
-    @State private var isReplaying: Bool = false
-    @State private var replayTimer: Timer?
-
-    var displayTrack: [CLLocationCoordinate2D] {
-        guard !localTrack.isEmpty else { return [] }
-        if isReplaying || replayIndex > 0 {
-            return Array(localTrack.prefix(replayIndex + 1))
-        }
-        return localTrack
-    }
-
-    var body: some View {
-        ZStack(alignment: .bottom) {
-            TripMapView(
-                localTrack: displayTrack,
-                lastUploadedLocation: nil,
-                destinationLocation: destinationLocation,
-                userLocation: nil,
-                showUserLocation: false
-            )
-            .ignoresSafeArea()
-
-            HStack(spacing: 16) {
-                Button {
-                    stopReplay()
-                    replayIndex = 0
-                } label: {
-                    Image(systemName: "backward.end.fill")
-                        .foregroundColor(.primary)
-                        .padding(12)
-                        .background(Color(.systemBackground))
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                }
-
-                Button {
-                    isReplaying ? stopReplay() : startReplay()
-                } label: {
-                    Image(systemName: isReplaying ? "stop.fill" : "play.fill")
-                        .foregroundColor(.white)
-                        .padding(14)
-                        .background(Color.black)
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                }
-            }
-            .padding(.bottom, 40)
-        }
-    }
-
-    func startReplay() {
-        guard !localTrack.isEmpty else { return }
-        if replayIndex >= localTrack.count - 1 { replayIndex = 0 }
-        isReplaying = true
-
-        replayTimer = Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { _ in
-            if replayIndex < localTrack.count - 1 {
-                replayIndex += 1
-            } else {
-                replayTimer?.invalidate()
-                isReplaying = false
-            }
-        }
-    }
-
-    func stopReplay() {
-        replayTimer?.invalidate()
-        isReplaying = false
-    }
-}

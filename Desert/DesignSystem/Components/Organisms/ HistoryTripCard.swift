@@ -6,24 +6,39 @@
 //
 import SwiftUI
 
+// هنا خليت الايكون يتغير على حسب عدد الاشخاص
+// يحتاج تعديل هنا لزر اعادة الرحلة يكون دس ايبل اذا فيه رحلة نشطة
+
 struct HistoryTripCard: View {
     
+    enum HistoryPeopleType {
+        case solo
+        case group
+
+        var icon: String {
+            switch self {
+            case .solo:
+                return "person.fill"
+            case .group:
+                return "person.3.fill"
+            }
+        }
+    }
+
     var titleKey: String
     var destinationKey: String
     var statusKey: String
     var badgeStyle: StatusBadge.Style = .positive
     var durationKey: String
     var distanceKey: String
-    var peopleIcon: String = "person.3.fill"
+    var peopleType: HistoryPeopleType = .group
     var peopleKey: String
     var dateKey: String
     var repeatAction: () -> Void = {}
     var hasActiveTrip: Bool = false
     
     var body: some View {
-        
         VStack(spacing: 0) {
-            
             headerSection
                 .padding(.bottom, 12)
             
@@ -87,7 +102,7 @@ private extension HistoryTripCard {
             
             verticalDivider
             
-            infoItem(icon: peopleIcon, textKey: peopleKey)
+            infoItem(icon: peopleType.icon, textKey: peopleKey)
         }
     }
     

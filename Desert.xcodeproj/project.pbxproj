@@ -83,12 +83,15 @@
 		EC309FC02F9800DE003E343E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBF2F9800DE003E343E /* RootView.swift */; };
 		EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */; };
 		EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */; };
-		EC309FCB2FA3870C003E343E /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FCA2FA3870C003E343E /* Map.swift */; };
-		EC309FCD2FA3874C003E343E /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FCC2FA3874C003E343E /* Components.swift */; };
 		EC309FE52FABCB93003E343E /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = EC309FE42FABCB93003E343E /* Documentation.docc */; };
 		EC309FED2FABDC58003E343E /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FE92FABDC58003E343E /* FirebaseManager.swift */; };
 		EC309FEE2FABDC58003E343E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEA2FABDC58003E343E /* LocationManager.swift */; };
 		EC309FEF2FABDC58003E343E /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEB2FABDC58003E343E /* NotificationsManager.swift */; };
+		EC57B32A2FCB87720024DD4F /* DestinationPickerMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */; };
+		EC57B32B2FCB87720024DD4F /* HistoryMapTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */; };
+		EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3282FCB87720024DD4F /* TripMapView.swift */; };
+		EC57B32E2FCB880E0024DD4F /* MultiContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */; };
+		EC57B3302FCB88200024DD4F /* SingleContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */; };
 		EC7DEA1F2FB5043D008D3938 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EC7DEA1E2FB5043D008D3938 /* FirebaseAuth */; };
 		ECCD9EB02FB7843F00E2B5B9 /* TripSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */; };
 		ECCD9F402FB7A26A00E2B5B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */; };
@@ -176,12 +179,15 @@
 		EC309FBF2F9800DE003E343E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryInDetailsView.swift; sourceTree = "<group>"; };
 		EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripCardView.swift; sourceTree = "<group>"; };
-		EC309FCA2FA3870C003E343E /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
-		EC309FCC2FA3874C003E343E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		EC309FE42FABCB93003E343E /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		EC309FE92FABDC58003E343E /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		EC309FEA2FABDC58003E343E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EC309FEB2FABDC58003E343E /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
+		EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerMapView.swift; sourceTree = "<group>"; };
+		EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMapTrackView.swift; sourceTree = "<group>"; };
+		EC57B3282FCB87720024DD4F /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
+		EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContactPickerSheet.swift; sourceTree = "<group>"; };
+		EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContactPickerSheet.swift; sourceTree = "<group>"; };
 		ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryView.swift; sourceTree = "<group>"; };
 		ECCD9F3F2FB7A26A00E2B5B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECCD9F412FB7A29700E2B5B9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -508,8 +514,8 @@
 		EC309FC92FA386C8003E343E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				EC309FCA2FA3870C003E343E /* Map.swift */,
-				EC309FCC2FA3874C003E343E /* Components.swift */,
+				EC57B3292FCB87720024DD4F /* Maps */,
+				EC57B3242FCB87080024DD4F /* ContactSheets */,
 				ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */,
 			);
 			path = Shared;
@@ -524,6 +530,25 @@
 				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		EC57B3242FCB87080024DD4F /* ContactSheets */ = {
+			isa = PBXGroup;
+			children = (
+				EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */,
+				EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */,
+			);
+			path = ContactSheets;
+			sourceTree = "<group>";
+		};
+		EC57B3292FCB87720024DD4F /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				EC57B3282FCB87720024DD4F /* TripMapView.swift */,
+				EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */,
+				EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */,
+			);
+			path = Maps;
 			sourceTree = "<group>";
 		};
 		ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */ = {
@@ -645,9 +670,8 @@
 				EC309FB02F97FE92003E343E /* TripHistoryView.swift in Sources */,
 				ECCD9FF62FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift in Sources */,
 				ECCD9FF22FB8AA5900E2B5B9 /* LocalizationHelper.swift in Sources */,
-				EC309FCD2FA3874C003E343E /* Components.swift in Sources */,
 				EC2F63062FC88FC2007FF45C /* HistoryTripDetTemplate.swift in Sources */,
-				EC309FCB2FA3870C003E343E /* Map.swift in Sources */,
+				EC57B3302FCB88200024DD4F /* SingleContactPickerSheet.swift in Sources */,
 				EC309FB82F97FF5A003E343E /* SavedInfo.swift in Sources */,
 				EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */,
 				EC309FBA2F97FF69003E343E /* Trip.swift in Sources */,
@@ -656,8 +680,12 @@
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
 				EC2F63082FC88FC5007FF45C /* TripTrackTemplate.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
+				EC57B32E2FCB880E0024DD4F /* MultiContactPickerSheet.swift in Sources */,
 				EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */,
 				EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */,
+				EC57B32A2FCB87720024DD4F /* DestinationPickerMapView.swift in Sources */,
+				EC57B32B2FCB87720024DD4F /* HistoryMapTrackView.swift in Sources */,
+				EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */,
 				EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */,
 				EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */,
 				EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */,

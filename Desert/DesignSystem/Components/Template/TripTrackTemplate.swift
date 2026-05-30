@@ -5,26 +5,62 @@
 //  Created by Samar A on 11/12/1447 AH.
 //
 
-import SwiftUI
+// هنا اضفت زر الفيديو واضفت متغيرات ناقصة .. ازرار الفيديو تحتاج ديزاين
 
-struct TripTrackTemplate: View {
-    
+import SwiftUI
+import MapKit
+
+struct TripTrackTemplate<MapContent: View>: View {
+
+    var isReplaying: Bool
+    var mapContent: () -> MapContent
+
+    var onBack: () -> Void
+    var onReset: () -> Void
+    var onToggleReplay: () -> Void
+
     var body: some View {
-        
-        GeometryReader { proxy in
-            
-            ZStack(alignment: .top) {
-                
-                Image("tripMap")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                    .clipped()
-                    .ignoresSafeArea()
-                
-                HeaderView(titleKey: "history.tripTrack")
-                    .padding(.horizontal, AppSpacing.lg)
-                    .padding(.top, AppSpacing.sm)
+        ZStack(alignment: .top) {
+
+            mapContent()
+                .ignoresSafeArea()
+
+            HeaderView(
+                titleKey: "history.tripTrack",
+                leadingButton: .back,
+                action: onBack
+            )
+            .padding(.horizontal, AppSpacing.lg)
+            .padding(.top, AppSpacing.xxl)
+
+            VStack {
+                Spacer()
+
+                HStack(spacing: 16) {
+
+                    Button {
+                        onReset()
+                    } label: {
+                        Image(systemName: "backward.end.fill")
+                            .foregroundColor(.primary)
+                            .padding(12)
+                            .background(Color(.systemBackground))
+                            .clipShape(Circle())
+                            .shadow(radius: 3)
+                    }
+
+                    Button {
+                        onToggleReplay()
+                    } label: {
+                        Image(systemName: isReplaying ? "stop.fill" : "play.fill")
+                            .foregroundColor(.white)
+                            .padding(14)
+                            .background(Color.black)
+                            .clipShape(Circle())
+                            .shadow(radius: 3)
+                    }
+                }
+                .padding(.bottom, 40)
             }
         }
         .environment(\.layoutDirection, .leftToRight)
@@ -32,5 +68,16 @@ struct TripTrackTemplate: View {
 }
 
 #Preview {
-    TripTrackTemplate()
+    TripTrackTemplate(
+        isReplaying: false,
+        mapContent: {
+            Image("tripMap")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        },
+        onBack: {},
+        onReset: {},
+        onToggleReplay: {}
+    )
 }

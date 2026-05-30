@@ -59,6 +59,7 @@ struct HomeView: View {
 
 
 extension HomeView {
+
     func goToMap() {
         showCreateTrip = false
         currentPage = .map
@@ -79,48 +80,12 @@ extension HomeView {
             )
             .ignoresSafeArea()
 
-            // FAB Buttons
-            VStack {
-                HStack {
-                    Spacer()
-                    VStack(spacing: AppSpacing.sm) {
-
-                        FABButton(icon: .location) {
-                            centerTrigger += 1
-                        }
-                        
-                        Menu {
-                            Button {
-                                mapType = .standard
-                            } label: {
-                                Label("map_type_standard".localized, systemImage: "map")
-                            }
-
-                            Button {
-                                mapType = .satellite
-                            } label: {
-                                Label("map_type_satellite".localized, systemImage: "globe")
-                            }
-
-                            Button {
-                                mapType = .hybrid
-                            } label: {
-                                Label("map_type_hybrid".localized, systemImage: "map.circle")
-                            }
-                        } label: {
-                            FABButton(icon: .map) { }
-                        }
-                    }
-                    .padding(.trailing, AppSpacing.md)
-                    .padding(.top, 67)
-                }
-                Spacer()
-            }
-
             HomeTemplate(
                 selectedTab: $currentPage,
+                mapType: $mapType,
                 activeTrip: activeTrip,
-                onStartTrip: { showCreateTrip = true }
+                onStartTrip: { showCreateTrip = true },
+                onCenterTapped: { centerTrigger += 1 }
             )
         }
         .ignoresSafeArea(edges: .bottom)

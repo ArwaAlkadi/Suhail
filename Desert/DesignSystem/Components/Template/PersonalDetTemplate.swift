@@ -5,6 +5,8 @@
 //  Created by Samar A on 07/12/1447 AH.
 //
 
+// هنا عدلت رسالة الايرور لانه فيه نوعين
+
 import SwiftUI
 
 struct PersonalDetailsTemplate: View {
@@ -15,6 +17,7 @@ struct PersonalDetailsTemplate: View {
     var contactErrorMessage: String = ""
     var showErrors: Bool = false
     var isPhoneNumberValid: Bool = true
+    var phoneError: PhoneError = .required
     var onAddContact: () -> Void = {}
 
     var body: some View {
@@ -90,10 +93,7 @@ private extension PersonalDetailsTemplate {
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
 
             if showErrors && !isPhoneNumberValid {
-
-                ErrorMessageRow(
-                    messageKey: "phone_required"
-                )
+                ErrorMessageRow(messageKey: phoneError.messageKey)
             }
         }
     }

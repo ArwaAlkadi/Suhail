@@ -77,22 +77,12 @@ struct TripHistoryInDetailsView: View {
             )
         }
         .fullScreenCover(isPresented: $showFullMap) {
-            ZStack(alignment: .top) {
-                ReplayMapView(
-                    localTrack: localTrack,
-                    destinationLocation: destinationLocation
-                )
-                .ignoresSafeArea()
-
-                HeaderView(
-                    titleKey: "history.tripTrack",
-                    leadingButton: .back,
-                    action: {
-                        showFullMap = false
-                    }
-                )
-                .padding(.horizontal, AppSpacing.lg)
-            }
+            HistoryMapTrackView(
+                localTrack: localTrack,
+                destinationLocation: destinationLocation,
+                onBack: { showFullMap = false }
+            )
+            .ignoresSafeArea()
         }
     }
 }

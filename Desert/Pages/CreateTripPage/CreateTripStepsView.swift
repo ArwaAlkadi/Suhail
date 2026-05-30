@@ -78,6 +78,29 @@ struct CreateTripStepsView: View {
                 }
             )
         }
+        .navigationDestination(isPresented: $vm.showDestinationPicker) {
+            DestinationPickerView(
+                destination: $vm.destination,
+                lat: $vm.destinationLat,
+                lng: $vm.destinationLng
+            )
+        }
+        .sheet(isPresented: $vm.showEmergencyContactPicker) {
+            SingleContactPickerSheet {
+                vm.importEmergencyContact($0)
+            }
+        }
+        .sheet(isPresented: $vm.showGroupContactPicker) {
+            MultiContactPickerSheet { contacts in
+                contacts.forEach { vm.importGroupContact($0) }
+            }
+        }
+        .alert("location_permission_required".localized, isPresented: $vm.showLocationAlert) {
+            Button("open_settings".localized) { vm.openAppSettings() }
+            Button("cancel".localized, role: .cancel) { }
+        } message: {
+            Text(vm.locationAlertMessage)
+        }
         .onAppear {
             if let trip = tripToRepeat {
                 vm.loadTripForRepeat(trip)
@@ -86,38 +109,10 @@ struct CreateTripStepsView: View {
                 vm.loadSavedInfo(savedInfo.first)
             }
         }
-        .navigationDestination(isPresented: $vm.showDestinationPicker) {
-            DestinationPickerViewA(
-                destination: $vm.destination,
-                lat: $vm.destinationLat,
-                lng: $vm.destinationLng
-            )
-        }
-        .sheet(isPresented: $vm.showEmergencyContactPicker) {
-            ContactPickerSheetA {
-                vm.importEmergencyContact($0)
-            }
-        }
-        .sheet(isPresented: $vm.showGroupContactPicker) {
-            ContactPickerSheetB { contacts in
-                contacts.forEach {
-                    vm.importGroupContact($0)
-                }
-            }
-        }
-        .alert("location_permission_required".localized, isPresented: $vm.showLocationAlert) {
-            Button("open_settings".localized) {
-                vm.openAppSettings()
-            }
-
-            Button("cancel".localized, role: .cancel) { }
-        } message: {
-            Text(vm.locationAlertMessage)
-        }
     }
-    
 }
 
+// MARK: - Preview
 
 #Preview {
     NavigationStack {
@@ -130,21 +125,17 @@ struct CreateTripStepsView: View {
     ], inMemory: true)
 }
 
+// MARK: - Steps
 
 extension CreateTripStepsView {
-    // MARK: - Step Views
 
     @ViewBuilder
     var stepContent: some View {
         switch currentStep {
-        case 0:
-            personalDetailsView
-        case 1:
-            vehicleDetailsView
-        case 2:
-            tripDetailsView
-        default:
-            EmptyView()
+        case 0: personalDetailsView
+        case 1: vehicleDetailsView
+        case 2: tripDetailsView
+        default: EmptyView()
         }
     }
 
@@ -155,9 +146,9 @@ extension CreateTripStepsView {
             emergencyContacts: $vm.emergencyContacts,
             contactErrorMessage: vm.emergencyContactErrorMessage,
             showErrors: vm.showStep0Errors,
-            onAddContact: {
-                vm.showEmergencyContactPicker = true
-            }
+            isPhoneNumberValid: vm.phoneNumberIsValid,
+            phoneError: vm.phoneError,
+            onAddContact: { vm.showEmergencyContactPicker = true }
         )
         .padding(.horizontal, AppSpacing.lg)
     }
@@ -186,12 +177,8 @@ extension CreateTripStepsView {
             groupContacts: $vm.groupContacts,
             contactErrorMessage: vm.groupContactErrorMessage,
             showErrors: vm.showStep2Errors,
-            onSelectDestination: {
-                vm.showDestinationPicker = true
-            },
-            onAddGroupContact: {
-                vm.showGroupContactPicker = true
-            }
+            onSelectDestination: { vm.showDestinationPicker = true },
+            onAddGroupContact: { vm.showGroupContactPicker = true }
         )
         .padding(.horizontal, AppSpacing.lg)
     }
@@ -199,12 +186,10 @@ extension CreateTripStepsView {
     // MARK: - Actions
 
     private func handleBackAction() {
-
         guard currentStep == 0 else {
             currentStep -= 1
             return
         }
-
         if vm.hasUserEnteredData {
             showExitAlert = true
         } else {
@@ -214,14 +199,13 @@ extension CreateTripStepsView {
 
     private func handleNextAction() {
         guard vm.canProceedFromStep(currentStep) else { return }
-
         if currentStep == totalSteps - 1 {
             showSummary = true
         } else {
             currentStep += 1
         }
     }
-    
+
     private func closeView() {
         if let onCancel {
             onCancel()

@@ -5,6 +5,8 @@
 //  Created by Samar A on 11/12/1447 AH.
 //
 
+//  يحتاج تعديل هنا لزر اعادة الرحلة يكون دس ايبل اذا فيه رحلة نشطة
+
 import SwiftUI
 
 struct HistoryTripDetailsTemplate: View {

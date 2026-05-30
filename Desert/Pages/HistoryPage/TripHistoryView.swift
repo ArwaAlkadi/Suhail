@@ -99,18 +99,10 @@ extension TripHistoryView {
                         badgeStyle: trip.alertSent ? .destructive : .positive,
                         durationKey: vm.tripDuration(trip),
                         distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
-
-                        peopleIcon: trip.groupSize == 1
-                            ? "person.fill"
-                            : "person.3.fill",
-
+                        peopleType: trip.groupSize == 1 ? .solo : .group,
                         peopleKey: trip.groupSize == 1
                             ? "history.person".localized
-                            : String(
-                                format: "history.peopleCount".localized,
-                                trip.groupSize
-                            ),
-
+                            : String(format: "history.peopleCount".localized, trip.groupSize),
                         dateKey: vm.formatStartDate(trip.startTime),
                         repeatAction: {
                             tripToRepeat = trip
@@ -121,12 +113,6 @@ extension TripHistoryView {
                     .onTapGesture {
                         selectedTrip = trip
                         showDetails = true
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        DeleteSwipeActionA {
-                            vm.selectedTrips = [trip.tripId]
-                            vm.showDeleteAlert = true
-                        }
                     }
                 }
             }
