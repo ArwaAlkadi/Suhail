@@ -183,27 +183,37 @@ class CreateTripViewModel: ObservableObject {
             index < numbers.count ? String(numbers[index]) : ""
         }
     }
+    
+    var localPhoneBinding: Binding<String> {
+        Binding(
+            get: {
+                let digits = self.phoneNumber.filter(\.isNumber)
+                if digits.hasPrefix("966") {
+                    return String(digits.dropFirst(3).prefix(9))
+                }
+                if digits.hasPrefix("0") {
+                    return String(digits.dropFirst().prefix(9))
+                }
+                return String(digits.prefix(9))
+            },
+            set: { newValue in
+                self.formatUserPhoneInput(newValue)
+            }
+        )
+    }
 
     func formatUserPhoneInput(_ value: String) {
         let digits = value.filter { $0.isNumber }
+        var local = digits
 
-        var localNumber = digits
-
-        if localNumber.hasPrefix("966") {
-            localNumber = String(localNumber.dropFirst(3))
+        if local.hasPrefix("966") {
+            local = String(local.dropFirst(3))
         }
-
-        if localNumber.hasPrefix("0") {
-            localNumber = String(localNumber.dropFirst())
+        if local.hasPrefix("0") {
+            local = String(local.dropFirst())
         }
-
-        localNumber = String(localNumber.prefix(9))
-
-        if localNumber.isEmpty {
-            phoneNumber = ""
-        } else {
-            phoneNumber = "+966 " + localNumber
-        }
+        local = String(local.prefix(9))
+        phoneNumber = local.isEmpty ? "" : "+966\(local)"
     }
 }
 

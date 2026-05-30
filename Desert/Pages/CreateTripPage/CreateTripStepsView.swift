@@ -139,7 +139,7 @@ extension CreateTripStepsView {
     var personalDetailsView: some View {
         PersonalDetailsTemplate(
             fullName: $vm.fullName,
-            phoneNumber: $vm.phoneNumber,
+            phoneNumber: vm.localPhoneBinding,
             emergencyContacts: $vm.emergencyContacts,
             contactErrorMessage: vm.emergencyContactErrorMessage,
             showErrors: vm.showStep0Errors,

@@ -14,6 +14,7 @@ struct PersonalDetailsTemplate: View {
     @Binding var emergencyContacts: [Contact]
     var contactErrorMessage: String = ""
     var showErrors: Bool = false
+    var isPhoneNumberValid: Bool = true
     var onAddContact: () -> Void = {}
 
     var body: some View {
@@ -78,7 +79,7 @@ private extension PersonalDetailsTemplate {
                 AppTextField(
                     placeholderKey: "trip.phone.placeholder",
                     text: $phoneNumber,
-                    state: showErrors && !phoneNumberIsValid ? .error : .normal
+                    state: showErrors && !isPhoneNumberValid ? .error : .normal
                 )
                 .keyboardType(.numberPad)
             }
@@ -88,7 +89,7 @@ private extension PersonalDetailsTemplate {
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
 
-            if showErrors && !phoneNumberIsValid {
+            if showErrors && !isPhoneNumberValid {
 
                 ErrorMessageRow(
                     messageKey: "phone_required"
@@ -105,11 +106,6 @@ private extension PersonalDetailsTemplate {
         )
     }
 
-    var phoneNumberIsValid: Bool {
-        let digits = phoneNumber.filter(\.isNumber)
-        let pattern = #"^(05\d{8}|9665\d{8})$"#
-        return digits.range(of: pattern, options: .regularExpression) != nil
-    }
 }
 
 #Preview {
