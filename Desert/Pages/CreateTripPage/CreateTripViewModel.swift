@@ -2,6 +2,16 @@
 //  CreateTripViewModel.swift
 //  Desert
 //
+
+import SwiftUI
+import SwiftData
+import CoreLocation
+import Contacts
+import Combine
+import MapKit
+
+// MARK: - Phone Error
+
 enum PhoneError {
     case required
     case invalid
@@ -13,12 +23,6 @@ enum PhoneError {
         }
     }
 }
-
-import SwiftUI
-import SwiftData
-import CoreLocation
-import Contacts
-import Combine
 
 class CreateTripViewModel: ObservableObject {
 
@@ -75,7 +79,17 @@ class CreateTripViewModel: ObservableObject {
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
 
-    
+    // MARK: - Destination Picker State
+
+    @Published var destinationSearchText: String = ""
+    @Published var destinationSearchResults: [MKMapItem] = []
+    @Published var pinCoordinate: CLLocationCoordinate2D? = nil
+    @Published var pinName: String = ""
+    @Published var destinationRegion = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753),
+        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    )
+
     // MARK: - Validation
 
     var destinationIsValid: Bool { !destination.isEmpty }
@@ -86,6 +100,31 @@ class CreateTripViewModel: ObservableObject {
         guard digits.hasPrefix("966") else { return false }
         let local = String(digits.dropFirst(3))
         return local.hasPrefix("5") && local.count == 9
+    }
+
+    var phoneError: PhoneError {
+        phoneNumber.isEmpty ? .required : .invalid
+    }
+
+    var formattedSearchResults: [(item: MKMapItem, subtitle: String?)] {
+        let userLoc: CLLocation? = {
+            guard let coord = LocationManager.shared.currentUserLocation else { return nil }
+            return CLLocation(latitude: coord.latitude, longitude: coord.longitude)
+        }()
+
+        return destinationSearchResults.map { item in
+            var parts: [String] = []
+            if let city = item.placemark.locality { parts.append(city) }
+            if let userLoc {
+                let itemLoc = CLLocation(
+                    latitude: item.placemark.coordinate.latitude,
+                    longitude: item.placemark.coordinate.longitude
+                )
+                let km = Int(userLoc.distance(from: itemLoc) / 1000)
+                if km > 0 { parts.append("\(km) km") }
+            }
+            return (item: item, subtitle: parts.isEmpty ? nil : parts.joined(separator: ", "))
+        }
     }
 
     var returnTimeIsValid: Bool {
@@ -106,10 +145,6 @@ class CreateTripViewModel: ObservableObject {
         return digits.count >= 1 && digits.count <= 4
     }
 
-    var phoneError: PhoneError {
-        phoneNumber.isEmpty ? .required : .invalid
-    }
-    
     var formIsValid: Bool {
         destinationIsValid &&
         fullNameIsValid &&
@@ -530,3 +565,48 @@ extension CreateTripViewModel {
     }
 }
 
+
+// MARK: - Destination Picker
+
+extension CreateTripViewModel {
+
+    func searchDestination() {
+        guard !destinationSearchText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
+
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = destinationSearchText
+        request.region = destinationRegion
+        MKLocalSearch(request: request).start { [weak self] response, _ in
+            self?.destinationSearchResults = response?.mapItems ?? []
+        }
+    }
+
+    func selectDestination(_ item: MKMapItem) {
+        pinCoordinate = item.placemark.coordinate
+        pinName = item.name ?? destinationSearchText
+        destinationRegion.center = item.placemark.coordinate
+        destinationSearchResults = []
+        destinationSearchText = item.name ?? ""
+    }
+
+    func reverseGeocode(_ coordinate: CLLocationCoordinate2D) {
+        CLGeocoder().reverseGeocodeLocation(
+            CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        ) { [weak self] placemarks, _ in
+            guard let self else { return }
+            self.pinName = placemarks?.first?.name ?? self.coordinateText()
+        }
+    }
+
+    func confirmDestination() {
+        guard let coord = pinCoordinate else { return }
+        destination = pinName.isEmpty ? coordinateText() : pinName
+        destinationLat = coord.latitude
+        destinationLng = coord.longitude
+    }
+
+    private func coordinateText() -> String {
+        guard let pin = pinCoordinate else { return "" }
+        return String(format: "%.4f, %.4f", pin.latitude, pin.longitude)
+    }
+}

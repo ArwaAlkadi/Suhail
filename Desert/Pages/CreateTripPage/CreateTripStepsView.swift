@@ -83,11 +83,7 @@ struct CreateTripStepsView: View {
             )
         }
         .navigationDestination(isPresented: $vm.showDestinationPicker) {
-            DestinationPickerView(
-                destination: $vm.destination,
-                lat: $vm.destinationLat,
-                lng: $vm.destinationLng
-            )
+            DestinationPickerView(vm: vm)
         }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
             SingleContactPickerSheet {
