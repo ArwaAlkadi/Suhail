@@ -19,7 +19,8 @@ struct HomeView: View {
     @State private var mapType: MKMapType = .standard
     @State private var centerTrigger: Int = 0
     @State private var resetNorthTrigger: Int = 0
-
+    @State private var navigationResetID = UUID()
+    
     var activeTrip: Trip? { trips.first { $0.isActive || $0.isOverdue } }
 
     var body: some View {
@@ -36,12 +37,12 @@ struct HomeView: View {
                 CreateTripStepsView(
                     showParentSheet: $showCreateTrip,
                     onTripStarted: {
-                        showCreateTrip = false
-                        currentPage = .map
+                        goToMap()
                     }
                 )
             }
         }
+        .id(navigationResetID)
         .environment(\.onTripStarted, { goToMap() })
         .onAppear { vm.onAppear(context: context) }
         .navigationBarBackButtonHidden()
@@ -63,6 +64,7 @@ extension HomeView {
     func goToMap() {
         showCreateTrip = false
         currentPage = .map
+        navigationResetID = UUID()
     }
 
     // MARK: - Map Content

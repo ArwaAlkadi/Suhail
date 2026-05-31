@@ -9,13 +9,15 @@ import SwiftData
 struct TripSummaryView: View {
 
     @ObservedObject var vm: CreateTripViewModel
-    var onTripStarted: () -> Void
-
+    
     @Environment(\.modelContext) private var context
     @Environment(\.dismiss) private var dismiss
-
+    @Environment(\.onTripStarted) private var goToMap
+    
     @StateObject private var networkMonitor = NetworkMonitorHelper()
     @State private var isLoading = false
+
+    var onTripStarted: () -> Void
 
     var isConnected: Bool {
         networkMonitor.isConnected
@@ -44,6 +46,7 @@ struct TripSummaryView: View {
                 }
                 _ = vm.startTrip(context: context) {
                     onTripStarted()
+                    goToMap()
                 }
             },
             isLoading: $isLoading
