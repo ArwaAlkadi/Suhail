@@ -31,3 +31,7 @@ struct SplashView: View {
         }
     }
 }
+
+#Preview {
+    SplashView(showSplash: .constant(true))
+}

@@ -58,3 +58,11 @@ struct OnboardingView: View {
         }
     }
 }
+
+
+#Preview {
+    OnboardingView()
+        .modelContainer(for: [
+            AppSettings.self
+        ], inMemory: true)
+}

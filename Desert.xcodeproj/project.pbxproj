@@ -93,6 +93,7 @@
 		EC57B32E2FCB880E0024DD4F /* MultiContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */; };
 		EC57B3302FCB88200024DD4F /* SingleContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */; };
 		EC57B3322FCCA41B0024DD4F /* DestinationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */; };
+		EC57B3342FCCB3960024DD4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3332FCCB3930024DD4F /* AppDelegate.swift */; };
 		EC7DEA1F2FB5043D008D3938 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EC7DEA1E2FB5043D008D3938 /* FirebaseAuth */; };
 		ECCD9EB02FB7843F00E2B5B9 /* TripSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */; };
 		ECCD9F402FB7A26A00E2B5B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */; };
@@ -190,6 +191,7 @@
 		EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContactPickerSheet.swift; sourceTree = "<group>"; };
 		EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContactPickerSheet.swift; sourceTree = "<group>"; };
 		EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerView.swift; sourceTree = "<group>"; };
+		EC57B3332FCCB3930024DD4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryView.swift; sourceTree = "<group>"; };
 		ECCD9F3F2FB7A26A00E2B5B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECCD9F412FB7A29700E2B5B9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			isa = PBXGroup;
 			children = (
 				EC309F792F8C1058003E343E /* DesertApp.swift */,
+				EC57B3332FCCB3930024DD4F /* AppDelegate.swift */,
 				EC309FBF2F9800DE003E343E /* RootView.swift */,
 			);
 			path = App;
@@ -651,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC57B3342FCCB3960024DD4F /* AppDelegate.swift in Sources */,
 				EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */,
 				EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */,
 				EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */,

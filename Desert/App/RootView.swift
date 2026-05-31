@@ -89,8 +89,10 @@ struct RootView: View {
         )
         
     }
-    
+}
 
+
+extension RootView {
     // MARK: - Maintenance Check
 
     private func checkMaintenance() async {

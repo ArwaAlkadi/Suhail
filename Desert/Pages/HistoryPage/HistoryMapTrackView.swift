@@ -50,3 +50,19 @@ struct HistoryMapTrackView: View {
         )
     }
 }
+
+#Preview {
+    HistoryMapTrackView(
+        localTrack: [
+            CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753),
+            CLLocationCoordinate2D(latitude: 24.7300, longitude: 46.6900),
+            CLLocationCoordinate2D(latitude: 24.7500, longitude: 46.7100),
+            CLLocationCoordinate2D(latitude: 24.7800, longitude: 46.7400)
+        ],
+        destinationLocation: CLLocationCoordinate2D(
+            latitude: 24.8000,
+            longitude: 46.7600
+        ),
+        onBack: {}
+    )
+}

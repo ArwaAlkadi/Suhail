@@ -50,3 +50,14 @@ struct DestinationPickerView: View {
         }
     }
 }
+
+#Preview {
+    let vm = CreateTripViewModel()
+    vm.destination = "Al Thumamah"
+    vm.destinationLat = 24.9
+    vm.destinationLng = 46.7
+
+    return NavigationStack {
+        DestinationPickerView(vm: vm)
+    }
+}
