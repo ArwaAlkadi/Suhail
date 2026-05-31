@@ -31,7 +31,6 @@ struct SummaryTemplate: View {
                 titleKey: "summary.title",
                 leadingButton: .back,
                 action: {
-                    guard !isLoading else { return }
                     onBack()
                 }
             )

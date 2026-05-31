@@ -44,7 +44,6 @@ private extension TripSummaryCard {
                 .font(AppTypography.body)
                 .foregroundStyle(Color.lableSec)
                 .lineLimit(1)
-                .minimumScaleFactor(0.8)
         }
         .frame(height: 34)
     }

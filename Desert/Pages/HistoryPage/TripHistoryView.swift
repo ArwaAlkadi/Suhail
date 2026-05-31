@@ -38,14 +38,20 @@ struct TripHistoryView: View {
         ) {
             tripList
         }
-        .navigationDestination(isPresented: $showCreateTrip) {
-            CreateTripStepsView(
-                showParentSheet: $showCreateTrip,
-                onTripStarted: {
-                    showCreateTrip = false
-                    currentPage = .map
-                }
-            )
+        .navigationDestination(isPresented: $showRepeatTrip) {
+            if let tripToRepeat {
+                CreateTripStepsView(
+                    showParentSheet: $showRepeatTrip,
+                    tripToRepeat: tripToRepeat,
+                    onTripStarted: {
+                        showRepeatTrip = false
+                        currentPage = .map
+                    },
+                    onCancel: {
+                        showRepeatTrip = false
+                    }
+                )
+            }
         }
         .alert(
             String(format: "delete_trips_alert".localized, vm.selectedTrips.count),
