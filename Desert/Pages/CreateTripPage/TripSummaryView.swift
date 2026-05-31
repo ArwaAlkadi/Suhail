@@ -18,7 +18,8 @@ struct TripSummaryView: View {
     @State private var isLoading = false
 
     var onTripStarted: () -> Void
-
+    var onReturnTimeInvalid: () -> Void = {}
+    
     var isConnected: Bool {
         networkMonitor.isConnected
     }
@@ -46,9 +47,18 @@ struct TripSummaryView: View {
                     isLoading = false
                     return
                 }
-                _ = vm.startTrip(context: context) {
+
+                let didStart = vm.startTrip(context: context) {
                     onTripStarted()
                     goToMap()
+                }
+
+                if !didStart {
+                    isLoading = false
+
+                    if !vm.returnTimeIsValid {
+                        onReturnTimeInvalid()
+                    }
                 }
             },
             isLoading: $isLoading

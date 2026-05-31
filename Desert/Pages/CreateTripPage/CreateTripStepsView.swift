@@ -75,6 +75,10 @@ struct CreateTripStepsView: View {
                 onTripStarted: {
                     showParentSheet = false
                     onTripStarted?()
+                },
+                onReturnTimeInvalid: {
+                    showSummary = false
+                    currentStep = 2
                 }
             )
         }
