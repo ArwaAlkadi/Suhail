@@ -26,19 +26,16 @@ struct TripMapView: UIViewRepresentable {
     var lastUploadedLocation: CLLocationCoordinate2D?
     var destinationLocation: CLLocationCoordinate2D?
     var userLocation: CLLocationCoordinate2D?
-    var showUserLocation: Bool = true
     var mapType: MKMapType = .standard
     var centerTrigger: Int = 0
     var resetNorthTrigger: Int = 0
-
-    // MARK: - Make
 
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView()
         mapView.delegate = context.coordinator
         context.coordinator.mapView = mapView
 
-        mapView.showsUserLocation = false
+        mapView.showsUserLocation = true
         mapView.showsCompass = false
         mapView.showsScale = false
 
@@ -60,8 +57,6 @@ struct TripMapView: UIViewRepresentable {
 
         return mapView
     }
-
-    // MARK: - Update
 
     func updateUIView(_ mapView: MKMapView, context: Context) {
         context.coordinator.userLocation = userLocation
@@ -117,21 +112,12 @@ struct TripMapView: UIViewRepresentable {
         if let uploaded = lastUploadedLocation {
             let annotation = MKPointAnnotation()
             annotation.coordinate = uploaded
-            annotation.title = "Uploaded"
-            mapView.addAnnotation(annotation)
-        }
-
-        if showUserLocation, let userLoc = userLocation {
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = userLoc
-            annotation.title = "UserLocation"
+            annotation.title = "Last Shared Location"
             mapView.addAnnotation(annotation)
         }
 
         mapView.mapType = mapType
     }
-
-    // MARK: - Fit to Content
 
     private func fitMapToContent(_ mapView: MKMapView) {
         var coordinates = localTrack
@@ -154,14 +140,14 @@ struct TripMapView: UIViewRepresentable {
             latitude: (minLat + maxLat) / 2,
             longitude: (minLng + maxLng) / 2
         )
+
         let span = MKCoordinateSpan(
             latitudeDelta: max((maxLat - minLat) * 1.4, 0.01),
             longitudeDelta: max((maxLng - minLng) * 1.4, 0.01)
         )
+
         mapView.setRegion(MKCoordinateRegion(center: center, span: span), animated: true)
     }
-
-    // MARK: - Coordinator
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
@@ -174,22 +160,27 @@ struct TripMapView: UIViewRepresentable {
 
         func centerOnUser() {
             guard let mapView, let userLocation else { return }
+
             let region = MKCoordinateRegion(
                 center: userLocation,
                 span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
+
             mapView.setRegion(region, animated: true)
         }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let polyline = overlay as? MKPolyline {
                 let renderer = MKPolylineRenderer(polyline: polyline)
+
                 if polyline.title == "Local" {
                     renderer.strokeColor = .red
                     renderer.lineWidth = 5
                 }
+
                 return renderer
             }
+
             return MKOverlayRenderer(overlay: overlay)
         }
 
@@ -197,25 +188,27 @@ struct TripMapView: UIViewRepresentable {
             guard !(annotation is MKUserLocation) else { return nil }
 
             let reuseId = annotation.title ?? "pin"
-            let view = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            view.canShowCallout = false
 
-            let size: CGFloat = 20
-            let circle = UIView(frame: CGRect(x: 0, y: 0, width: size, height: size))
-            circle.layer.cornerRadius = size / 2
-            circle.layer.borderWidth = 2
-            circle.layer.borderColor = UIColor.white.cgColor
+            let view = MKMarkerAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: reuseId
+            )
+
+            view.canShowCallout = true
 
             switch annotation.title {
-            case "Destination": circle.backgroundColor = .systemOrange
-            default:            circle.backgroundColor = .systemBlue
+            case "Destination":
+                view.markerTintColor = .systemOrange
+
+            case "Last Shared Location":
+                view.markerTintColor = .systemBlue
+
+            default:
+                view.markerTintColor = .systemBlue
+                view.canShowCallout = false
             }
 
-            view.addSubview(circle)
-            view.frame = circle.frame
             return view
         }
     }
 }
-
-

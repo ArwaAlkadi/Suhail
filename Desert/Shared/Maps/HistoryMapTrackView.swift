@@ -42,8 +42,7 @@ struct HistoryMapTrackView: View {
                     localTrack: displayTrack,
                     lastUploadedLocation: nil,
                     destinationLocation: destinationLocation,
-                    userLocation: nil,
-                    showUserLocation: false
+                    userLocation: nil
                 )
             },
             onBack: onBack,
