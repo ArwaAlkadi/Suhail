@@ -174,7 +174,7 @@ struct TripMapView: UIViewRepresentable {
                 let renderer = MKPolylineRenderer(polyline: polyline)
 
                 if polyline.title == "Local" {
-                    renderer.strokeColor = .red
+                    renderer.strokeColor = .primary
                     renderer.lineWidth = 5
                 }
 
@@ -198,10 +198,10 @@ struct TripMapView: UIViewRepresentable {
 
             switch annotation.title {
             case "Destination":
-                view.markerTintColor = .systemOrange
+                view.markerTintColor = .secondary02
 
             case "Last Shared Location":
-                view.markerTintColor = .systemBlue
+                view.markerTintColor = .positive
 
             default:
                 view.markerTintColor = .systemBlue
