@@ -83,7 +83,7 @@ private extension CTAButton {
     VStack(spacing: AppSpacing.md) {
 
         CTAButton(
-            title: "button.cta".localized,
+            title: "summary.startNewTrip".localized,
             style: .primary,
             size: .large
         ) {
@@ -91,7 +91,7 @@ private extension CTAButton {
         }
 
         CTAButton(
-            title: "button.cta".localized,
+            title: "summary.startNewTrip".localized,
             style: .primary,
             size: .small
         ) {
@@ -99,7 +99,7 @@ private extension CTAButton {
         }
 
         CTAButton(
-            title: "button.cta".localized,
+            title: "summary.startNewTrip".localized,
             style: .secondary,
             size: .large
         ) {
@@ -107,7 +107,7 @@ private extension CTAButton {
         }
 
         CTAButton(
-            title: "button.cta".localized,
+            title: "summary.startNewTrip".localized,
             style: .disabled,
             size: .large
         ) {

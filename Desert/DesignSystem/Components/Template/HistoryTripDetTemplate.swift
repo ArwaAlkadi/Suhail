@@ -149,9 +149,15 @@ private extension HistoryTripDetailsTemplate {
                 ("summary.startTime", formatDate(startTime)),
                 ("summary.returnTime", formatDate(returnTime)),
                 ("summary.destination", destination),
-                ("summary.numberOfIndividuals", isGroup
-                    ? String(format: "people_count".localized, groupCount)
-                    : "solo".localized),
+                (
+                    "summary.numberOfIndividuals",
+                    isGroup
+                        ? String.localizedStringWithFormat(
+                            NSLocalizedString("people_count", tableName: "PluralStrings", comment: ""),
+                            groupCount
+                          )
+                        : "solo".localized
+                ),
                 ("summary.carDetails", carDetails),
                 ("summary.plateNumber", plateNumber),
                 ("summary.distance", distance)

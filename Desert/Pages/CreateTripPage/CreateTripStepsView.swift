@@ -83,11 +83,7 @@ struct CreateTripStepsView: View {
             )
         }
         .navigationDestination(isPresented: $vm.showDestinationPicker) {
-            DestinationPickerView(
-                destination: $vm.destination,
-                lat: $vm.destinationLat,
-                lng: $vm.destinationLng
-            )
+            DestinationPickerView(vm: vm)
         }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
             SingleContactPickerSheet {
@@ -106,6 +102,7 @@ struct CreateTripStepsView: View {
             Text(vm.locationAlertMessage)
         }
         .onAppear {
+            guard !vm.hasLoadedInitialData else { return }
             if let trip = tripToRepeat {
                 vm.loadTripForRepeat(trip)
                 currentStep = 2

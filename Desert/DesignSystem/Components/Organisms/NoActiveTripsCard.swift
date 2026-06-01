@@ -20,11 +20,11 @@ struct NoActiveTripsCard: View {
                 .scaledToFit()
                 .frame(maxWidth: 400)
 
-            Text("No Active Trips")
+            Text("noActiveTrips.title".localized)
                 .font(AppTypography.title3)
                 .foregroundStyle(Color.black)
 
-            CTAButton(title: "Start new trip") {
+            CTAButton(title: "noActiveTrips.startTrip".localized) {
                 onStartTrip()
             }
 

@@ -105,14 +105,14 @@ struct TripMapView: UIViewRepresentable {
         if let dest = destinationLocation {
             let annotation = MKPointAnnotation()
             annotation.coordinate = dest
-            annotation.title = "Destination"
+            annotation.title = "map.destination".localized
             mapView.addAnnotation(annotation)
         }
 
         if let uploaded = lastUploadedLocation {
             let annotation = MKPointAnnotation()
             annotation.coordinate = uploaded
-            annotation.title = "Last Shared Location"
+            annotation.title = "map.lastSharedLocation".localized
             mapView.addAnnotation(annotation)
         }
 
@@ -197,10 +197,10 @@ struct TripMapView: UIViewRepresentable {
             view.canShowCallout = true
 
             switch annotation.title {
-            case "Destination":
+            case "map.destination".localized:
                 view.markerTintColor = .secondary02
 
-            case "Last Shared Location":
+            case "map.lastSharedLocation".localized:
                 view.markerTintColor = .positive
 
             default:

@@ -13,6 +13,7 @@ struct HistoryTemplate<Content: View>: View {
     
     var hasTrips: Bool
     var tripsCount: Int
+    var hasActiveTrip: Bool = false
     
     var onStartTrip: () -> Void = {}
     
@@ -52,7 +53,7 @@ private extension HistoryTemplate {
                 .font(AppTypography.title1)
                 .foregroundStyle(Color.black)
             
-            Text(String(format: "history.tripsCount".localized, tripsCount))
+            Text(String.localizedStringWithFormat(NSLocalizedString("history.tripsCount", tableName: "PluralStrings", comment: ""), tripsCount))
                 .font(AppTypography.caption)
                 .foregroundStyle(Color.lableSec)
         }
@@ -83,13 +84,14 @@ private extension HistoryTemplate {
             
             CTAButton(
                 title: "history.startNewTrip".localized,
-                style: .primary,
+                style: hasActiveTrip ? .disabled : .primary,
                 size: .small
             ) {
+                guard !hasActiveTrip else { return }
                 onStartTrip()
             }
             
-            Spacer(minLength: 120)
+            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -102,15 +104,16 @@ private extension HistoryTemplate {
         tripsCount: 2
     ) {
         VStack(spacing: AppSpacing.md) {
+
             HistoryTripCard(
-                titleKey: "Evening Trip",
+                titleKey: "Al Thumamah Trip",
                 destinationKey: "Al Thumamah",
                 statusKey: "No Alert Sent",
                 badgeStyle: .positive,
-                durationKey: "1 Day",
-                distanceKey: "22Km",
-                peopleKey: "2 people",
-                dateKey: "01 June, 7:18PM"
+                durationKey: "4h 25m",
+                distanceKey: "78 km",
+                peopleKey: "3 People",
+                dateKey: "1 Jun 2026"
             )
             
             HistoryTripCard(

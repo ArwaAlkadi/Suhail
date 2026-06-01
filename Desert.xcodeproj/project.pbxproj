@@ -93,6 +93,9 @@
 		EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3282FCB87720024DD4F /* TripMapView.swift */; };
 		EC57B32E2FCB880E0024DD4F /* MultiContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */; };
 		EC57B3302FCB88200024DD4F /* SingleContactPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */; };
+		EC57B3322FCCA41B0024DD4F /* DestinationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */; };
+		EC57B3342FCCB3960024DD4F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3332FCCB3930024DD4F /* AppDelegate.swift */; };
+		EC57B3462FCDE7790024DD4F /* PluralStrings.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = EC57B3452FCDE7790024DD4F /* PluralStrings.xcstrings */; };
 		EC7DEA1F2FB5043D008D3938 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = EC7DEA1E2FB5043D008D3938 /* FirebaseAuth */; };
 		ECCD9EB02FB7843F00E2B5B9 /* TripSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */; };
 		ECCD9F402FB7A26A00E2B5B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */; };
@@ -190,6 +193,9 @@
 		EC57B3282FCB87720024DD4F /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
 		EC57B32D2FCB880E0024DD4F /* MultiContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContactPickerSheet.swift; sourceTree = "<group>"; };
 		EC57B32F2FCB88200024DD4F /* SingleContactPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContactPickerSheet.swift; sourceTree = "<group>"; };
+		EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerView.swift; sourceTree = "<group>"; };
+		EC57B3332FCCB3930024DD4F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EC57B3452FCDE7790024DD4F /* PluralStrings.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = PluralStrings.xcstrings; sourceTree = "<group>"; };
 		ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryView.swift; sourceTree = "<group>"; };
 		ECCD9F3F2FB7A26A00E2B5B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		ECCD9F412FB7A29700E2B5B9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -394,6 +400,7 @@
 			children = (
 				EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */,
 				EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */,
+				EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */,
 				ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */,
 			);
 			path = CreateTripPage;
@@ -425,6 +432,7 @@
 				EC309FC92FA386C8003E343E /* Shared */,
 				ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */,
 				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
+				EC57B3442FCD2F6E0024DD4F /* Localization */,
 				EC309F9A2F97FD07003E343E /* Other */,
 			);
 			path = Desert;
@@ -436,6 +444,7 @@
 				EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */,
 				EC309FAF2F97FE92003E343E /* TripHistoryView.swift */,
 				EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */,
+				EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */,
 			);
 			path = HistoryPage;
 			sourceTree = "<group>";
@@ -495,6 +504,7 @@
 			isa = PBXGroup;
 			children = (
 				EC309F792F8C1058003E343E /* DesertApp.swift */,
+				EC57B3332FCCB3930024DD4F /* AppDelegate.swift */,
 				EC309FBF2F9800DE003E343E /* RootView.swift */,
 			);
 			path = App;
@@ -503,10 +513,8 @@
 		EC309F9A2F97FD07003E343E /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				EC1FBDAA2FC52BBC00CA755B /* Font */,
 				EC309F772F8C1058003E343E /* Assets.xcassets */,
-				ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */,
-				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
+				EC1FBDAA2FC52BBC00CA755B /* Font */,
 				EC309FE42FABCB93003E343E /* Documentation.docc */,
 				EC309F802F91773C003E343E /* Info.plist */,
 				EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */,
@@ -549,9 +557,18 @@
 			children = (
 				EC57B3282FCB87720024DD4F /* TripMapView.swift */,
 				EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */,
-				EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */,
 			);
 			path = Maps;
+			sourceTree = "<group>";
+		};
+		EC57B3442FCD2F6E0024DD4F /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				EC57B3452FCDE7790024DD4F /* PluralStrings.xcstrings */,
+				ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */,
+				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */ = {
@@ -638,6 +655,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECCD9F402FB7A26A00E2B5B9 /* Localizable.strings in Resources */,
+				EC57B3462FCDE7790024DD4F /* PluralStrings.xcstrings in Resources */,
 				ECCD9F832FB7CB0C00E2B5B9 /* InfoPlist.strings in Resources */,
 				EC309F7C2F8C1058003E343E /* Assets.xcassets in Resources */,
 				EC309F7D2F8C1058003E343E /* GoogleService-Info.plist in Resources */,
@@ -651,6 +669,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EC57B3342FCCB3960024DD4F /* AppDelegate.swift in Sources */,
 				EC309FA42F97FDDF003E343E /* HomeView.swift in Sources */,
 				EC309FA22F97FDC9003E343E /* OnboardingViewModel.swift in Sources */,
 				EC309FA62F97FDF5003E343E /* HomeViewModel.swift in Sources */,
@@ -722,6 +741,7 @@
 				EC1FBE9C2FC52FAA00CA755B /* ErrorMessageRow.swift in Sources */,
 				EC1FBE9D2FC52FAA00CA755B /* GroupNumberRow.swift in Sources */,
 				EC1FBE9E2FC52FAA00CA755B /* InquiryRow.swift in Sources */,
+				EC57B3322FCCA41B0024DD4F /* DestinationPickerView.swift in Sources */,
 				EC1FBE9F2FC52FAA00CA755B /* PlateInfoRow.swift in Sources */,
 				EC1FBEA02FC52FAA00CA755B /* TextFieldState.swift in Sources */,
 				336A696B2FC9BF7100C93DEB /* CreateTripStepTemplate.swift in Sources */,
@@ -823,6 +843,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -878,6 +899,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};

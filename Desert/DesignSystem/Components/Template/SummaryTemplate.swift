@@ -26,27 +26,27 @@ struct SummaryTemplate: View {
     @Binding var isLoading: Bool
 
     var body: some View {
-        CreateTripStepTemplate(
-            titleKey: "summary.title",
-            currentStep: 3,
-            buttonTitleKey: isLoading ? "Creating..." : "summary.startNewTrip",
-            leadingButton: .back,
-            showsProgressBar: false,
-            isInputFocused: false,
-            onBack: {
-                onBack()
-            },
-            onNext: {
-                guard isConnected && !isLoading else { return }
-                isLoading = true
-                onStartTrip()
-            }
-        ) {
+        VStack(spacing: 0) {
+            HeaderView(
+                titleKey: "summary.title",
+                leadingButton: .back,
+                action: {
+                    onBack()
+                }
+            )
+            .padding(.top, 0)
+            .padding(.bottom, 28)
+            .padding(.horizontal, 75)
+
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: AppSpacing.lg) {
                     tripNameSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     emergencyContactsSection
                     groupContactSection
+                        .padding(.horizontal, AppSpacing.xxl)
+
                     warningCard
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -60,7 +60,6 @@ struct SummaryTemplate: View {
         .environment(\.layoutDirection, .leftToRight)
         
     }
-    
 }
 
 
@@ -92,7 +91,10 @@ private extension SummaryTemplate {
             (
                 "summary.numberOfIndividuals",
                 isGroup
-                    ? String(format: "people_count".localized, groupCount)
+                    ? String.localizedStringWithFormat(
+                        NSLocalizedString("people_count", tableName: "PluralStrings", comment: ""),
+                        groupCount
+                      )
                     : "solo".localized
             )
         ])
@@ -190,8 +192,8 @@ private extension SummaryTemplate {
         startTime: Date(),
         returnTime: Date().addingTimeInterval(3600 * 8),
         destination: "Al Thumamah",
-        carDetails: "White Toyota Land Cruiser",
-        plateNumber: "1234 | RSX",
+        carDetails: "White Toyota",
+        plateNumber: "ABC 1234",
         isGroup: true,
         groupCount: 3,
         emergencyContacts: [

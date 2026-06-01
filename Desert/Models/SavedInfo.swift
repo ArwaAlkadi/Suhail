@@ -21,9 +21,7 @@ class SavedInfo {
     var plateLetters: String
     var plateNumbers: String
     
-    /// Default group contacts — auto-filled when creating a new trip.
-    var defaultGroupContacts: [SavedContact]
-    
+  
     /// Default emergency contacts — auto-filled when creating a new trip.
     var defaultEmergencyContacts: [SavedContact]
     
@@ -43,7 +41,6 @@ class SavedInfo {
         self.is4WD = is4WD
         self.plateLetters = plateLetters
         self.plateNumbers = plateNumbers
-        self.defaultGroupContacts = []
         self.defaultEmergencyContacts = []
     }
 }

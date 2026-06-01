@@ -75,8 +75,8 @@ struct RootView: View {
             await checkMaintenance()
             await checkVersion()
         }
-        .alert("Update Required", isPresented: $showUpdateAlert) {
-            Button("Update Now") {
+        .alert("update_required.title".localized, isPresented: $showUpdateAlert) {
+            Button("update_required.button".localized) {
                 openAppStore()
             }
         } message: {
@@ -89,8 +89,10 @@ struct RootView: View {
         )
         
     }
-    
+}
 
+
+extension RootView {
     // MARK: - Maintenance Check
 
     private func checkMaintenance() async {
