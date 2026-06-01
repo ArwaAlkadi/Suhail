@@ -98,7 +98,7 @@ struct DestinationPickerMapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard !(annotation is MKUserLocation) else { return nil }
             let view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "pin")
-            view.markerTintColor = .systemOrange
+            view.markerTintColor = .secondary02
             view.isDraggable = true
             view.canShowCallout = false
             return view
