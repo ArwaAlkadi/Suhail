@@ -13,6 +13,7 @@ struct HistoryTemplate<Content: View>: View {
     
     var hasTrips: Bool
     var tripsCount: Int
+    var hasActiveTrip: Bool = false
     
     var onStartTrip: () -> Void = {}
     
@@ -86,9 +87,10 @@ private extension HistoryTemplate {
             
             CTAButton(
                 title: "history.startNewTrip".localized,
-                style: .primary,
+                style: hasActiveTrip ? .disabled : .primary,
                 size: .small
             ) {
+                guard !hasActiveTrip else { return }
                 onStartTrip()
             }
             

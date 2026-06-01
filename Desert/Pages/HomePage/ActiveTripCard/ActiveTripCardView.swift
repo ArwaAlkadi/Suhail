@@ -20,6 +20,7 @@ struct ActiveTripCardView: View {
             isUploaded: vm.returnTimeUploadStatus == .uploaded,
             returnTime: trip.returnTime,
             isOverdue: trip.isOverdue,
+            isConnected: !vm.isConnected,
             emergencyContacts: trip.emergencyContacts,
             onUpdateReturnTime: { newTime in
                 vm.saveReturnTime(

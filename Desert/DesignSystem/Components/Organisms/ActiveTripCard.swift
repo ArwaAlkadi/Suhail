@@ -19,7 +19,7 @@ struct ActiveTripCard: View {
     var isUploaded: Bool = true
     var returnTime: Date = Date()
     var isOverdue: Bool = false
-
+    var isConnected: Bool = false
     
     var emergencyContacts: [Contact] = []
     
@@ -298,9 +298,10 @@ private extension ActiveTripCard {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 51)
-                .background(Color.Primary)
+                .background(isConnected ? Color.Disabled : Color.Primary)
                 .clipShape(RoundedRectangle(cornerRadius: AppRadius.xxl))
         }
+        .disabled(isConnected)
         .buttonStyle(.plain)
     }
     

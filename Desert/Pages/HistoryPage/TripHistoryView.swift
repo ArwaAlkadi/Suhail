@@ -32,6 +32,7 @@ struct TripHistoryView: View {
             selectedTab: $currentPage,
             hasTrips: !trips.isEmpty,
             tripsCount: trips.count,
+            hasActiveTrip: vm.hasActiveTrip,
             onStartTrip: {
                 showCreateTrip = true
             }
