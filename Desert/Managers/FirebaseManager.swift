@@ -170,19 +170,24 @@ class FirebaseManager {
 
             "a-userId": userId ?? "unknown",
 
-            "b-status": trip.status,
+            "b-status": [
+                "status": trip.status,
+                "endedAt": 0,
+                "endedAtReadable": "",
+                "alertSent": false,
+            ],
 
             "c-userInfo": [
                 "userName": trip.userName,
                 "phoneNumber": trip.phoneNumber,
             ],
 
-            "d-emergencyContacts": trip.emergencyContacts.map {[
+            "e-emergencyContacts": trip.emergencyContacts.map {[
                 "name": $0.name,
                 "phone": $0.phone
             ]},
 
-            "e-tripInfo": [
+            "f-tripInfo": [
                 "tripId": tripId,
                 "tripName": trip.tripName,
                 "startTime": trip.startTime.timeIntervalSince1970,
@@ -202,7 +207,7 @@ class FirebaseManager {
                 ],
             ],
 
-            "f-carInfo": [
+            "g-carInfo": [
                 "carName": trip.carName,
                 "carColor": trip.carColor,
                 "is4WD": trip.is4WD,
@@ -257,7 +262,7 @@ class FirebaseManager {
         }
         
         db.collection("trips").document(tripId).updateData([
-            "c-lastKnownLocation": location
+            "d-lastKnownLocation": location
         ]) { error in
             if error == nil {
                 print("location updated")
@@ -285,8 +290,8 @@ class FirebaseManager {
         onFailure: (() -> Void)? = nil
     ) {
         db.collection("trips").document(tripId).updateData([
-            "e-tripInfo.returnTime": returnTime.timeIntervalSince1970,
-            "e-tripInfo.returnTimeReadable": formatDate(returnTime)
+            "f-tripInfo.returnTime": returnTime.timeIntervalSince1970,
+            "f-tripInfo.returnTimeReadable": formatDate(returnTime)
         ]) { error in
             if error == nil {
                 print("return time updated — \(tripId)")
@@ -301,12 +306,14 @@ class FirebaseManager {
     // MARK: - End Trip
     /// Marks a trip as completed in Firestore.
     ///
-    /// Updates `b-status` to `"completed"` only — does not modify any other fields.
+    /// Updates `b-status.status` to `"completed"` and records the end time.
     ///
     /// - Parameter tripId: The Firebase trip ID to mark as completed.
     func endTrip(tripId: String) {
         db.collection("trips").document(tripId).updateData([
-            "b-status": "completed"
+            "b-status.status": "completed",
+            "b-status.endedAt": Date().timeIntervalSince1970,
+            "b-status.endedAtReadable": formatDate(Date())
         ]) { error in
             if error == nil {
                 print("trip ended")
@@ -337,7 +344,8 @@ class FirebaseManager {
             }
 
             guard let data = snapshot?.data() else { return }
-            let status = data["b-status"] as? String ?? ""
+            let statusObj = data["b-status"] as? [String: Any]
+            let status = statusObj?["status"] as? String ?? ""
             onStatusChanged(status)
         }
     }
@@ -375,8 +383,8 @@ class FirebaseManager {
             }
 
             let data = document?.data()
-            let alertStatus = data?["h-alertStatus"] as? [String: Any]
-            let alertSent = alertStatus?["alertSent"] as? Bool ?? false
+            let statusObj = data?["b-status"] as? [String: Any]
+            let alertSent = statusObj?["alertSent"] as? Bool ?? false
 
             completion(alertSent)
         }
@@ -406,15 +414,15 @@ class FirebaseManager {
     /// - Returns: A compass direction string, e.g. "North", "Southeast".
     private func readableDirection(from course: Double) -> String {
         switch course {
-        case 0..<22.5, 337.5...360: return "North"
-        case 22.5..<67.5:           return "Northeast"
-        case 67.5..<112.5:          return "East"
-        case 112.5..<157.5:         return "Southeast"
-        case 157.5..<202.5:         return "South"
-        case 202.5..<247.5:         return "Southwest"
-        case 247.5..<292.5:         return "West"
-        case 292.5..<337.5:         return "Northwest"
-        default:                    return "Unknown"
+        case 0..<22.5, 337.5...360: return "شمال"
+        case 22.5..<67.5:           return "شمال شرقي"
+        case 67.5..<112.5:          return "شرق"
+        case 112.5..<157.5:         return "جنوب شرقي"
+        case 157.5..<202.5:         return "جنوب"
+        case 202.5..<247.5:         return "جنوب غربي"
+        case 247.5..<292.5:         return "غرب"
+        case 292.5..<337.5:         return "شمال غربي"
+        default:                    return "غير معروف"
         }
     }
 
