@@ -23,7 +23,7 @@
 "discard_changes_title" = "Discard Changes?";
 "discard_changes_message" = "Are you sure you want to leave? Your changes will be lost.";
 "open_settings" = "Open Settings";
-"Creating..." = "Creating...";
+"creating..." = "Creating...";
 "review" = "Review";
 "back" = "Back";
 "save" = "Save";
