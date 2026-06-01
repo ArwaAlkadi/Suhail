@@ -102,6 +102,7 @@ struct CreateTripStepsView: View {
             Text(vm.locationAlertMessage)
         }
         .onAppear {
+            guard !vm.hasLoadedInitialData else { return }
             if let trip = tripToRepeat {
                 vm.loadTripForRepeat(trip)
                 currentStep = 2

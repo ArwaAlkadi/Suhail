@@ -79,6 +79,11 @@ class CreateTripViewModel: ObservableObject {
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
 
+    // MARK: - Load Guard
+
+    /// Prevents re-loading saved info on every `onAppear` (e.g. back navigation).
+    private(set) var hasLoadedInitialData: Bool = false
+
     // MARK: - Destination Picker State
 
     @Published var destinationSearchText: String = ""
@@ -290,11 +295,8 @@ extension CreateTripViewModel {
             Contact(name: $0.name, phone: $0.phone)
         }
 
-        groupContacts = saved.defaultGroupContacts.map {
-            Contact(name: $0.name, phone: $0.phone)
-        }
-
         loadPlateInfoToTemplate()
+        hasLoadedInitialData = true
     }
 
     func loadTripData(from trip: Trip) {
@@ -513,6 +515,7 @@ extension CreateTripViewModel {
     func loadTripForRepeat(_ trip: Trip) {
         loadTripData(from: trip)
         returnTime = Date()
+        hasLoadedInitialData = true
     }
     
     private func defaultTripName() -> String {
@@ -537,9 +540,7 @@ extension CreateTripViewModel {
                 SavedContact(name: $0.name, phone: $0.phone, contactType: "emergency")
             }
 
-            existing.defaultGroupContacts = groupContacts.map {
-                SavedContact(name: $0.name, phone: $0.phone, contactType: "group")
-            }
+          
 
         } else {
             let saved = SavedInfo(
@@ -556,10 +557,7 @@ extension CreateTripViewModel {
                 SavedContact(name: $0.name, phone: $0.phone, contactType: "emergency")
             }
 
-            saved.defaultGroupContacts = groupContacts.map {
-                SavedContact(name: $0.name, phone: $0.phone, contactType: "group")
-            }
-
+           
             context.insert(saved)
         }
     }
