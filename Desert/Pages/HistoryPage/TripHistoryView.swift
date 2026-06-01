@@ -38,6 +38,18 @@ struct TripHistoryView: View {
         ) {
             tripList
         }
+        .navigationDestination(isPresented: $showCreateTrip) {
+            CreateTripStepsView(
+                showParentSheet: $showCreateTrip,
+                onTripStarted: {
+                    showCreateTrip = false
+                    currentPage = .map
+                },
+                onCancel: {
+                    showCreateTrip = false
+                }
+            )
+        }
         .navigationDestination(isPresented: $showRepeatTrip) {
             if let tripToRepeat {
                 CreateTripStepsView(
@@ -116,9 +128,10 @@ extension TripHistoryView {
                         durationKey: vm.tripDuration(trip),
                         distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
                         peopleType: trip.groupSize == 1 ? .solo : .group,
-                        peopleKey: trip.groupSize == 1
-                            ? "history.person".localized
-                            : String(format: "history.peopleCount".localized, trip.groupSize),
+                        peopleKey: String.localizedStringWithFormat(
+                            NSLocalizedString("history.peopleCount", tableName: "PluralStrings", comment: ""),
+                            trip.groupSize
+                        ),
                         dateKey: vm.formatStartDate(trip.startTime),
                         repeatAction: {
                             tripToRepeat = trip

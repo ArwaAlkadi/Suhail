@@ -63,7 +63,7 @@ struct SummaryTemplate: View {
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 0) {
                 CTAButton(
-                    title: isLoading ? "Creating...".localized : "summary.startNewTrip".localized,
+                    title: isLoading ? "creating...".localized : "summary.startNewTrip".localized,
                     style: isLoading ? .disabled : (isConnected ? .primary : .disabled)
                 ) {
                     isLoading = true
@@ -107,7 +107,10 @@ private extension SummaryTemplate {
             (
                 "summary.numberOfIndividuals",
                 isGroup
-                    ? String(format: "people_count".localized, groupCount)
+                    ? String.localizedStringWithFormat(
+                        NSLocalizedString("people_count", tableName: "PluralStrings", comment: ""),
+                        groupCount
+                      )
                     : "solo".localized
             )
         ])

@@ -71,7 +71,7 @@ private extension PersonalDetailsTemplate {
 
             HStack(spacing: AppSpacing.sm) {
 
-                Text("+966")
+                Text("trip.phone.countryCode".localized)
                     .font(AppTypography.body)
                     .foregroundStyle(Color.Primary)
 

@@ -1,0 +1,211 @@
+/* MARK: - App */
+"app_name" = "سهيل";
+"onboarding_subtitle" = "رفيقك في رحلات البر";
+"get_started" = "ابدأ الآن";
+
+
+/* MARK: - Steps */
+"step_trip_details" = "تفاصيل الرحلة";
+"step_personal_details" = "البيانات الشخصية";
+"step_vehicle_details" = "بيانات السيارة";
+
+
+/* MARK: - Common */
+"common.next" = "التالي";
+"common.cancel" = "إلغاء";
+"common.delete" = "حذف";
+"common.select" = "اختر";
+"common.ok" = "موافق";
+"common.save" = "حفظ";
+"cancel" = "إلغاء";
+"delete" = "حذف";
+"discard" = "تجاهل";
+"discard_changes_title" = "تجاهل التغييرات؟";
+"discard_changes_message" = ".هل أنت متأكد أنك تريد المغادرة؟ ستُفقد تغييراتك";
+"open_settings" = "فتح الإعدادات";
+"Creating..." = "جارٍ الإنشاء...";
+"review" = "مراجعة";
+"back" = "رجوع";
+"save" = "حفظ";
+
+
+/* MARK: - Trip Details */
+"destination.title" = "الوجهة";
+"trip.details" = "تفاصيل الرحلة";
+"trip.name" = "اسم الرحلة";
+"trip.name.placeholder" = "أدخل اسم الرحلة";
+"trip.destination" = "الوجهة";
+"trip.destination.placeholder" = "اختر الوجهة";
+"trip.time" = "الوقت";
+"trip.startTime" = "وقت البدء";
+"trip.endTime" = "وقت الانتهاء";
+"trip.group" = "المجموعة";
+"trip.group.question" = "هل أنت مع مجموعة؟";
+"trip.groupContact.optional" = "جهة اتصال المجموعة (اختياري)";
+"trip.groupContact.select" = "اختر جهة اتصال المجموعة";
+
+
+/* MARK: - Personal Details */
+"trip.personalDetails" = "البيانات الشخصية";
+"trip.fullName" = "الاسم الكامل";
+"trip.fullName.placeholder" = "أدخل اسمك الكامل";
+"trip.phone" = "رقم الجوال";
+"trip.phone.placeholder" = "5X XXX XXXX";
+"trip.phone.countryCode" = "+966";
+"trip.contacts" = "جهات الطوارئ";
+"trip.addContact" = "إضافة جهة طوارئ";
+"contact.add" = "إضافة جهة اتصال";
+"trip.contactsLimit" = "الحد الأقصى 3 جهات اتصال";
+
+
+/* MARK: - Vehicle Details */
+"vehicle.details" = "بيانات السيارة";
+"vehicle.carModel" = "موديل السيارة";
+"vehicle.carModel.placeholder" = "أدخل موديل السيارة";
+"vehicle.carColor" = "لون السيارة";
+"vehicle.color.placeholder" = "اختر لون السيارة";
+"vehicle.color.black" = "أسود";
+"vehicle.color.white" = "أبيض";
+"vehicle.color.grey" = "رمادي";
+"vehicle.color.red" = "أحمر";
+"vehicle.color.orange" = "برتقالي";
+"vehicle.color.yellow" = "أصفر";
+"vehicle.color.blue" = "أزرق";
+"vehicle.color.green" = "أخضر";
+"vehicle.isFourWheelDrive" = "دفع رباعي";
+"vehicle.plateInfo" = "معلومات اللوحة";
+
+
+/* MARK: - Plate Letters */
+"plate.letter.A" = "أ";
+"plate.letter.B" = "ب";
+"plate.letter.J" = "ح";
+"plate.letter.D" = "د";
+"plate.letter.R" = "ر";
+"plate.letter.S" = "س";
+"plate.letter.X" = "ص";
+"plate.letter.T" = "ط";
+"plate.letter.E" = "ع";
+"plate.letter.G" = "ق";
+"plate.letter.K" = "ك";
+"plate.letter.L" = "ل";
+"plate.letter.Z" = "م";
+"plate.letter.N" = "ن";
+"plate.letter.H" = "هـ";
+"plate.letter.U" = "و";
+"plate.letter.V" = "ي";
+
+
+/* MARK: - Summary */
+"summary.title" = "الملخص";
+"summary.startNewTrip" = "بدء رحلة جديدة";
+"summary.startTime" = "وقت البدء";
+"summary.returnTime" = "وقت العودة";
+"summary.destination" = "الوجهة";
+"summary.carDetails" = "تفاصيل السيارة";
+"summary.plateNumber" = "رقم اللوحة";
+"summary.numberOfIndividuals" = "عدد الأفراد";
+"summary.emergencyContacts" = "جهات الطوارئ";
+"summary.groupContactOptional" = "جهة اتصال المجموعة (اختياري)";
+"summary.tripName" = "اسم الرحلة";
+"summary.warningMessage" = "تأكد من صحة المعلومات قبل المتابعة. في حال تجاوزت وقت العودة ولم يصلنا تحديث لموقعك، سيتم إبلاغ جهات الطوارئ.";
+"solo" = "منفرد";
+"group.numberOfIndividuals" = "عدد الأفراد";
+
+
+/* MARK: - Active Trip */
+"activeTrip.active" = "نشطة";
+"activeTrip.overdue" = "متأخرة";
+"activeTrip.returnTime" = "وقت العودة";
+"activeTrip.updateTime" = "تحديث وقت العودة";
+"activeTrip.emergencyContactsCount" = "جهات الطوارئ (%d)";
+"activeTrip.endTrip" = "إنهاء الرحلة";
+"activeTrip.uploaded" = "تم الرفع";
+"activeTrip.uploading" = "جارٍ الرفع";
+"uploaded" = "تم الرفع";
+"uploading" = "جارٍ الرفع";
+"pending_upload" = "في الانتظار";
+
+
+/* MARK: - History */
+"history.title" = "السجل";
+"history.noPreviousTrips" = "لا توجد رحلات سابقة";
+"history.noTripsDescription" = "أنشئ رحلتك الأولى لتظهر هنا";
+"history.startNewTrip" = "بدء رحلة جديدة";
+"history.repeatTrip" = "تكرار الرحلة";
+"history.tripSummary" = "ملخص الرحلة";
+"history.groupContacts" = "جهات المجموعة";
+"history.tripTrack" = "مسار الرحلة";
+"history.delete.title" = "حذف الرحلة؟";
+"history.status.noAlert" = "لم يُرسل تنبيه";
+"history.status.alertSent" = "تم إرسال تنبيه";
+"history.status.alert" = "تم إرسال تنبيه";
+"delete_trips_alert" = "حذف %d رحلة؟";
+"delete_trips_message" = "لا يمكن التراجع عن هذا الإجراء";
+"button.repeatTrip" = "تكرار الرحلة";
+
+
+/* MARK: - Map */
+"map_standard" = "عادي";
+"map_satellite" = "قمر صناعي";
+"map_hybrid" = "مدمج";
+"search.destination" = "ابحث عن وجهة";
+"map.destination" = "الوجهة";
+"map.lastSharedLocation" = "آخر موقع تمت مشاركته";
+
+
+/* MARK: - Tab Bar */
+"tab.map" = "الخريطة";
+"tab.history" = "السجل";
+
+
+/* MARK: - Network Status */
+"network.disconnected.title" = "لا يوجد اتصال بالإنترنت";
+"network.disconnected.message" = "تحقق من بيانات الجوال أو الواي فاي";
+"network.connected.title" = "عاد الاتصال";
+
+
+/* MARK: - Location Permission */
+"location_permission_required" = "مطلوب إذن الموقع";
+"location_permission_message" = "يرجى تفعيل إذن الموقع \"السماح دائماً\" من الإعدادات لبدء الرحلة";
+
+
+/* MARK: - Notifications */
+"notification_return_time_title" = "حان وقت عودتك";
+"notification_return_time_body" = "إذا كنت بأمان وعدت، يرجى إنهاء رحلتك الآن حتى لا نرسل تنبيهاً خاطئاً لجهات الطوارئ";
+"notification_reassurance_title" = "لاحظنا أنك لم تعد بعد";
+"notification_reassurance_body" = "لقد شاركنا آخر موقع معروف لك مع جهات الطوارئ. ابقَ في مكانك ولا تبتعد عن سيارتك";
+
+
+/* MARK: - No Active Trips */
+"noActiveTrips.title" = "لا توجد رحلات نشطة";
+"noActiveTrips.startTrip" = "بدء رحلة جديدة";
+
+
+/* MARK: - Update Required */
+"update_required.title" = "يلزم التحديث";
+"update_required.button" = "تحديث الآن";
+
+
+/* MARK: - Inquiry Row */
+"inquiry.title" = "نعم";
+
+
+/* MARK: - Error Messages */
+"error.requiredField" = "هذا الحقل مطلوب";
+"error.phoneRequired" = "الرجاء إدخال رقم الجوال";
+"name_required" = "الاسم مطلوب";
+"phone_required..." = "رقم الجوال مطلوب";
+"phone_invalid" = "الرجاء إدخال رقم جوال صحيح";
+"trip_name_required" = "اسم الرحلة مطلوب";
+"destination_required" = "الوجهة مطلوبة";
+"return_time_invalid" = "وقت العودة يجب أن يكون بعد ساعة على الأقل من الآن";
+"car_model_required" = "موديل السيارة مطلوب";
+"car_color_required" = "لون السيارة مطلوب";
+"plate_required" = "معلومات اللوحة مطلوبة";
+"max_contacts_reached" = "الحد الأقصى 3 جهات اتصال";
+"contact_phone_invalid" = "الرجاء اختيار جهة اتصال برقم سعودي صحيح";
+"contact_already_added" = "هذه الجهة مضافة مسبقاً.";
+"emergency_contact_required" = "يجب إضافة جهة طوارئ واحدة على الأقل";
+"no_internet_connection" = "لا يوجد اتصال بالإنترنت. تحقق من اتصالك قبل بدء الرحلة";
+

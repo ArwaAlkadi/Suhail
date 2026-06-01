@@ -161,7 +161,7 @@ private extension HistoryTripCard {
             badgeStyle: .positive,
             durationKey: "history.mock.duration",
             distanceKey: "history.mock.distance",
-            peopleKey: "history.mock.people",
+            peopleKey: "1",
             dateKey: "history.mock.date"
         )
         

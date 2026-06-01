@@ -60,21 +60,24 @@ class ActiveTripCardViewModel: ObservableObject {
             let minutes = Int(overdueSeconds / 60)
 
             if days > 0 {
-                return String(format: "activeTrip.daysOverdue".localized, days)
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.daysOverdue", tableName: "PluralStrings", comment: ""), days)
             } else if hours > 0 {
-                return String(format: "activeTrip.hoursOverdue".localized, hours)
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.hoursOverdue", tableName: "PluralStrings", comment: ""), hours)
             } else {
-                return String(format: "activeTrip.minutesOverdue".localized, minutes)
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.minutesOverdue", tableName: "PluralStrings", comment: ""), minutes)
             }
         }
 
         let days = Int(seconds / 86400)
         let hours = Int(seconds / 3600)
+        let minutes = Int(seconds / 60)
 
         if days > 0 {
-            return String(format: "activeTrip.daysLeft".localized, days)
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.daysLeft", tableName: "PluralStrings", comment: ""), days)
+        } else if hours > 0 {
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.hoursLeft", tableName: "PluralStrings", comment: ""), hours)
         } else {
-            return String(format: "activeTrip.hoursLeft".localized, hours)
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.minutesLeft", tableName: "PluralStrings", comment: ""), minutes)
         }
     }
 

@@ -55,7 +55,7 @@ private extension HistoryTemplate {
                 .font(AppTypography.title1)
                 .foregroundStyle(Color.black)
             
-            Text(String(format: "history.tripsCount".localized, tripsCount))
+            Text(String.localizedStringWithFormat(NSLocalizedString("history.tripsCount", tableName: "PluralStrings", comment: ""), tripsCount))
                 .font(AppTypography.caption)
                 .foregroundStyle(Color.lableSec)
         }
