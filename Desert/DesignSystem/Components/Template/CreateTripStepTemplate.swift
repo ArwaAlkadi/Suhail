@@ -12,9 +12,10 @@ struct CreateTripStepTemplate<Content: View>: View {
     var titleKey: String
     var currentStep: Int
     var totalSteps: Int = 3
-    
+
     var buttonTitleKey: String
     var leadingButton: HeaderView.LeadingButton
+    var showsProgressBar: Bool = true
     
     var isInputFocused: Bool = false
     
@@ -35,9 +36,11 @@ struct CreateTripStepTemplate<Content: View>: View {
             .padding(.bottom, AppSpacing.md)
             .padding(.horizontal, AppSpacing.xxl)
             
-            ProgressBar(currentStep: currentStep)
-                .padding(.bottom, AppSpacing.xl)
-                .padding(.horizontal, AppSpacing.lg)
+            if showsProgressBar {
+                ProgressBar(currentStep: currentStep)
+                    .padding(.bottom, AppSpacing.xl)
+                    .padding(.horizontal, AppSpacing.lg)
+            }
             
             content
                 .frame(maxWidth: .infinity, alignment: .leading)

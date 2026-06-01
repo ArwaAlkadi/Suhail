@@ -32,7 +32,23 @@ struct HomeView: View {
                 case .history:
                     TripHistoryView(currentPage: $currentPage)
                 }
+
+                VStack {
+                    Spacer()
+
+                    AppTabBar(selectedTab: $currentPage)
+                        .padding(.bottom, 16)
+                        .background(
+                            Group {
+                                if currentPage == .history {
+                                    Color.Background
+                                        .ignoresSafeArea(edges: .bottom)
+                                }
+                            }
+                        )                }
+                .frame(maxWidth: .infinity)
             }
+            .ignoresSafeArea(edges: .bottom)
             .navigationDestination(isPresented: $showCreateTrip) {
                 CreateTripStepsView(
                     showParentSheet: $showCreateTrip,

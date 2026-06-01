@@ -21,16 +21,18 @@ struct PersonalDetailsTemplate: View {
     var onAddContact: () -> Void = {}
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: AppSpacing.lg) {
-                fullNameSection
-                phoneNumberSection
-                emergencyContactsSection
+        GeometryReader { geometry in
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: AppSpacing.lg) {
+                    fullNameSection
+                    phoneNumberSection
+                    emergencyContactsSection
+                }
+                .frame(width: geometry.size.width - (AppSpacing.lg * 2), alignment: .leading)
+                .padding(.top, AppSpacing.sm)
+                .padding(.bottom, AppSpacing.xxl)
+                .padding(.horizontal, AppSpacing.lg)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.top, AppSpacing.sm)
-            .padding(.bottom, AppSpacing.xxl)
-            .padding(.horizontal, AppSpacing.lg)
         }
         .background(Color.Background)
     }
@@ -59,6 +61,7 @@ private extension PersonalDetailsTemplate {
                 ErrorMessageRow(messageKey: "name_required")
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     var phoneNumberSection: some View {
@@ -96,6 +99,7 @@ private extension PersonalDetailsTemplate {
                 ErrorMessageRow(messageKey: phoneError.messageKey)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     var emergencyContactsSection: some View {
         EmergencyContactsSection(
@@ -104,6 +108,8 @@ private extension PersonalDetailsTemplate {
             contactErrorMessage: contactErrorMessage,
             onAddContact: onAddContact
         )
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .clipped()
     }
 
 }

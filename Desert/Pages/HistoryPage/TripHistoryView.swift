@@ -38,6 +38,7 @@ struct TripHistoryView: View {
         ) {
             tripList
         }
+//        .ignoresSafeArea(edges: .bottom)
         .navigationDestination(isPresented: $showRepeatTrip) {
             if let tripToRepeat {
                 CreateTripStepsView(
@@ -89,40 +90,37 @@ struct TripHistoryView: View {
 extension TripHistoryView {
     var tripList: some View {
 
-        ScrollView(showsIndicators: false) {
+        LazyVStack(spacing: 16) {
 
-            LazyVStack(spacing: 16) {
+            ForEach(trips, id: \.tripId) { trip in
 
-                ForEach(trips, id: \.tripId) { trip in
-
-                    HistoryTripCard(
-                        titleKey: trip.tripName,
-                        destinationKey: trip.destination,
-                        statusKey: trip.alertSent
-                            ? "history.status.alertSent"
-                            : "history.status.noAlert",
-                        badgeStyle: trip.alertSent ? .destructive : .positive,
-                        durationKey: vm.tripDuration(trip),
-                        distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
-                        peopleType: trip.groupSize == 1 ? .solo : .group,
-                        peopleKey: trip.groupSize == 1
-                            ? "history.person".localized
-                            : String(format: "history.peopleCount".localized, trip.groupSize),
-                        dateKey: vm.formatStartDate(trip.startTime),
-                        repeatAction: {
-                            tripToRepeat = trip
-                            showRepeatTrip = true
-                        },
-                        hasActiveTrip: vm.hasActiveTrip
-                    )
-                    .onTapGesture {
-                        selectedTrip = trip
-                        showDetails = true
-                    }
+                HistoryTripCard(
+                    titleKey: trip.tripName,
+                    destinationKey: trip.destination,
+                    statusKey: trip.alertSent
+                        ? "history.status.alertSent"
+                        : "history.status.noAlert",
+                    badgeStyle: trip.alertSent ? .destructive : .positive,
+                    durationKey: vm.tripDuration(trip),
+                    distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
+                    peopleType: trip.groupSize == 1 ? .solo : .group,
+                    peopleKey: trip.groupSize == 1
+                        ? "history.person".localized
+                        : String(format: "history.peopleCount".localized, trip.groupSize),
+                    dateKey: vm.formatStartDate(trip.startTime),
+                    repeatAction: {
+                        tripToRepeat = trip
+                        showRepeatTrip = true
+                    },
+                    hasActiveTrip: vm.hasActiveTrip
+                )
+                .onTapGesture {
+                    selectedTrip = trip
+                    showDetails = true
                 }
             }
-            .padding(.horizontal, AppSpacing.lg)
         }
+        .padding(.horizontal, AppSpacing.lg)
     }
 }
 

@@ -26,56 +26,41 @@ struct SummaryTemplate: View {
     @Binding var isLoading: Bool
 
     var body: some View {
-        VStack(spacing: 0) {
-            HeaderView(
-                titleKey: "summary.title",
-                leadingButton: .back,
-                action: {
-                    onBack()
-                }
-            )
-            .padding(.top, 0)
-            .padding(.bottom, 28)
-            .padding(.horizontal, 75)
-
+        CreateTripStepTemplate(
+            titleKey: "summary.title",
+            currentStep: 3,
+            buttonTitleKey: isLoading ? "Creating..." : "summary.startNewTrip",
+            leadingButton: .back,
+            showsProgressBar: false,
+            isInputFocused: false,
+            onBack: {
+                onBack()
+            },
+            onNext: {
+                guard isConnected && !isLoading else { return }
+                isLoading = true
+                onStartTrip()
+            }
+        ) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: AppSpacing.lg) {
                     tripNameSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     emergencyContactsSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     groupContactSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     warningCard
-                        .padding(.horizontal, AppSpacing.xxl)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, AppSpacing.lg)
                 .padding(.top, AppSpacing.sm)
-                .padding(.bottom, 120)
+                .padding(.bottom, AppSpacing.xxl)
+                .padding(.horizontal, AppSpacing.lg)
+                .frame(maxWidth: 300)
+                .frame(maxWidth: .infinity, alignment: .center)
             }
         }
-        .background(Color.Background)
         .environment(\.layoutDirection, .leftToRight)
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 0) {
-                CTAButton(
-                    title: isLoading ? "Creating...".localized : "summary.startNewTrip".localized,
-                    style: isLoading ? .disabled : (isConnected ? .primary : .disabled)
-                ) {
-                    isLoading = true
-                    onStartTrip()
-                }
-                .padding(.horizontal, AppSpacing.xxl)
-                .padding(.top, AppSpacing.lg)
-                .padding(.bottom, AppSpacing.sm)
-            }
-            .background(Color.Background)
-        }
+        
     }
+    
 }
 
 
@@ -88,7 +73,7 @@ struct SummaryTemplate: View {
 private extension SummaryTemplate {
 
     var tripNameSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text(tripName)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -114,7 +99,7 @@ private extension SummaryTemplate {
     }
 
     var emergencyContactsSection: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("summary.emergencyContacts".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
@@ -137,13 +122,14 @@ private extension SummaryTemplate {
             }
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
+            
         }
     }
 
     @ViewBuilder
     var groupContactSection: some View {
         if isGroup && !groupContacts.isEmpty {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: AppSpacing.sm) {
                 Text("summary.groupContactOptional".localized)
                     .font(AppTypography.headline)
                     .foregroundStyle(Color.Primary)
@@ -160,12 +146,13 @@ private extension SummaryTemplate {
 
                         if contact.name != groupContacts.last?.name {
                             AppDivider()
-                                .padding(.horizontal, AppSpacing.md)
+                                .padding(.horizontal, AppSpacing.xxl)
                         }
                     }
                 }
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
+              
             }
         }
     }
@@ -182,12 +169,13 @@ private extension SummaryTemplate {
                 .foregroundStyle(Color.Primary)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 18)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 14)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.Secondary)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
     }
+    
 
     func formatDate(_ date: Date) -> String {
         let f = DateFormatter()
@@ -198,16 +186,24 @@ private extension SummaryTemplate {
 
 #Preview {
     SummaryTemplate(
-        tripName: "27 May Trip",
+        tripName: "Weekend Camp",
         startTime: Date(),
         returnTime: Date().addingTimeInterval(3600 * 8),
         destination: "Al Thumamah",
-        carDetails: "White Toyota",
-        plateNumber: "ABC 1234",
+        carDetails: "White Toyota Land Cruiser",
+        plateNumber: "1234 | RSX",
         isGroup: true,
         groupCount: 3,
-        emergencyContacts: [],
-        groupContacts: [],
+        emergencyContacts: [
+            Contact(name: "Om Saqr", phone: "+966 5X XXX XXXX"),
+            Contact(name: "Fajer", phone: "+966 5X XXX XXXX")
+        ],
+        groupContacts: [
+            Contact(name: "Saqr", phone: "+966 5X XXX XXXX")
+        ],
+        isConnected: true,
+        onBack: {},
+        onStartTrip: {},
         isLoading: .constant(false)
     )
 }

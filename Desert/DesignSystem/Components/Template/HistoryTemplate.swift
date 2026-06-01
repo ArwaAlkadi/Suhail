@@ -20,28 +20,25 @@ struct HistoryTemplate<Content: View>: View {
     
     var body: some View {
         
-        VStack(alignment: .leading, spacing: AppSpacing.lg) {
+        ZStack {
             
-            headerSection
-            
-            if hasTrips {
-                content
-            } else {
-                emptyStateSection
-            }
-        }
-        .padding(.top, AppSpacing.lg)
-        .background(Color.Background)
-        .safeAreaInset(edge: .bottom) {
-            
-            VStack(spacing: 0) {
+            VStack(alignment: .leading, spacing: AppSpacing.lg) {
                 
-                AppTabBar(selectedTab: $selectedTab)
-                    .padding(.horizontal, AppSpacing.md)
-                    .padding(.top, AppSpacing.md)
-                    .padding(.bottom, AppSpacing.sm)
+                headerSection
+                
+                if hasTrips {
+                    ScrollView(showsIndicators: false) {
+                        content
+                            .padding(.bottom, 130)
+                    }
+                } else {
+                    emptyStateSection
+                }
             }
-            .frame(maxWidth: .infinity)
+            .padding(.top, AppSpacing.lg)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .background(Color.Background)
+            
         }
     }
 }
@@ -92,7 +89,7 @@ private extension HistoryTemplate {
                 onStartTrip()
             }
             
-            Spacer()
+            Spacer(minLength: 120)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -106,25 +103,25 @@ private extension HistoryTemplate {
     ) {
         VStack(spacing: AppSpacing.md) {
             HistoryTripCard(
-                titleKey: "history.mock.title",
-                destinationKey: "history.mock.destination",
-                statusKey: "history.status.noAlert",
+                titleKey: "Evening Trip",
+                destinationKey: "Al Thumamah",
+                statusKey: "No Alert Sent",
                 badgeStyle: .positive,
-                durationKey: "history.mock.duration",
-                distanceKey: "history.mock.distance",
-                peopleKey: "history.mock.people",
-                dateKey: "history.mock.date"
+                durationKey: "1 Day",
+                distanceKey: "22Km",
+                peopleKey: "2 people",
+                dateKey: "01 June, 7:18PM"
             )
             
             HistoryTripCard(
-                titleKey: "history.mock.title",
-                destinationKey: "history.mock.destination",
-                statusKey: "history.status.alertSent",
+                titleKey: "Desert Camp",
+                destinationKey: "Al Rumah",
+                statusKey: "Alert Sent",
                 badgeStyle: .destructive,
-                durationKey: "history.mock.duration",
-                distanceKey: "history.mock.distance",
-                peopleKey: "history.mock.people",
-                dateKey: "history.mock.date"
+                durationKey: "2 Days",
+                distanceKey: "34Km",
+                peopleKey: "3 people",
+                dateKey: "28 May, 5:30PM"
             )
         }
         .padding(.horizontal, AppSpacing.lg)

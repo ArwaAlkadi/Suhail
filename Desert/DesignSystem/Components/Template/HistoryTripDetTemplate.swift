@@ -184,17 +184,18 @@ private extension HistoryTripDetailsTemplate {
         contacts: [(initial: String, name: String, phone: String)]
     ) -> some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
-            HStack {
+            HStack(spacing: AppSpacing.sm) {
                 Text(titleKey.localized)
                     .font(AppTypography.headline)
                     .foregroundStyle(Color.Primary)
 
-                Spacer()
-
-                Text("(\(count))")
+                Text("(\(count) Contact selected)")
                     .font(AppTypography.caption2)
-                    .foregroundStyle(Color.lableSec)
+                    .foregroundStyle(Color.black)
+
+                Spacer()
             }
+            .padding(.horizontal, AppSpacing.sm)
 
             VStack(spacing: 0) {
                 ForEach(Array(contacts.enumerated()), id: \.offset) { index, contact in
