@@ -10,22 +10,55 @@ import SwiftUI
 enum AppTypography {
 
     private static var isEnglish: Bool {
-        Locale.current.language.languageCode?.identifier == "en"
+
+           Locale.current.language.languageCode?.identifier == "en"
+
+       }
+    private static func arabicFontName(for weight: Font.Weight) -> String {
+
+        switch weight {
+
+        case .bold:
+            return "thmanyah sans"
+
+        case .semibold, .medium:
+            return "thmanyah sans"
+
+        case .light:
+            return "thmanyah sans"
+
+        case .black, .heavy:
+            return "thmanyah sans"
+
+        default:
+            return "thmanyah sans"
+        }
     }
-
-    private static let arabicFontName = "thmanyahsans"
-
+    
     private static func font(
         _ style: Font.TextStyle,
         weight: Font.Weight = .regular
     ) -> Font {
 
+        for family in UIFont.familyNames.sorted() {
+            if family.lowercased().contains("thmanyah") {
+                print("Family:", family)
+
+                for name in UIFont.fontNames(forFamilyName: family) {
+                    print("   Font:", name)
+                }
+            }
+        }
+
         if isEnglish {
+
             return .system(style, design: .default)
                 .weight(weight)
+
         } else {
+
             return .custom(
-                arabicFontName,
+                arabicFontName(for: weight),
                 size: UIFont.preferredFont(
                     forTextStyle: uiTextStyle(style)
                 ).pointSize,
@@ -33,7 +66,7 @@ enum AppTypography {
             )
         }
     }
-
+    
     private static func uiTextStyle(_ style: Font.TextStyle) -> UIFont.TextStyle {
 
         switch style {
@@ -68,3 +101,4 @@ enum AppTypography {
     static let caption2 = font(.caption2)
     static let caption2Semibold = font(.caption2, weight: .semibold)
 }
+
