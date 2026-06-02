@@ -23,7 +23,7 @@
 "discard_changes_title" = "تجاهل التغييرات؟";
 "discard_changes_message" = ".هل أنت متأكد أنك تريد المغادرة؟ ستُفقد تغييراتك";
 "open_settings" = "فتح الإعدادات";
-"Creating..." = "جارٍ الإنشاء...";
+"creating..." = "جارٍ الإنشاء...";
 "review" = "مراجعة";
 "back" = "رجوع";
 "save" = "حفظ";

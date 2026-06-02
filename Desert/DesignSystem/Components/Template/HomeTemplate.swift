@@ -54,6 +54,7 @@ extension HomeTemplate {
                     FABButton(icon: .location) {
                         onCenterTapped()
                     }
+                    .padding(.horizontal, AppSpacing.sm)
 
                     Menu {
                         Button {

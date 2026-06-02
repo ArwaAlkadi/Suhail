@@ -116,6 +116,10 @@ class CreateTripViewModel: ObservableObject {
         return local.hasPrefix("5") && local.count == 9
     }
 
+    var displayCarColor: String {
+        selectedColor.localized
+    }
+    
     var phoneError: PhoneError {
         phoneNumber.isEmpty ? .required : .invalid
     }
@@ -495,7 +499,7 @@ extension CreateTripViewModel {
             hasGroup: isGroup,
             groupSize: groupCount,
             carName: carModel,
-            carColor: selectedColor,
+            carColor: displayCarColor,
             is4WD: isFourWheelDrive,
             plateLetters: plateLetters,
             plateNumbers: plateNumbers
@@ -540,7 +544,7 @@ extension CreateTripViewModel {
             existing.userName = fullName
             existing.phoneNumber = phoneNumber
             existing.carName = carModel
-            existing.carColor = selectedColor
+            existing.carColor = displayCarColor
             existing.is4WD = isFourWheelDrive
             existing.plateLetters = plateLetters
             existing.plateNumbers = plateNumbers
@@ -556,7 +560,7 @@ extension CreateTripViewModel {
                 userName: fullName,
                 phoneNumber: phoneNumber,
                 carName: carModel,
-                carColor: selectedColor,
+                carColor: displayCarColor,
                 is4WD: isFourWheelDrive,
                 plateLetters: plateLetters,
                 plateNumbers: plateNumbers

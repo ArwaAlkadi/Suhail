@@ -53,8 +53,8 @@
 		EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */; };
 		EC2F62FA2FC7B079007FF45C /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62F92FC7B079007FF45C /* AppTabBar.swift */; };
 		EC2F62FC2FC7B07E007FF45C /* NoActiveTripsCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */; };
-		EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */; };
-		EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */; };
+		EC2F62FE2FC7B081007FF45C /* NetworkStatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FD2FC7B081007FF45C /* NetworkStatusBanner.swift */; };
+		EC2F63002FC7B084007FF45C /* HistoryTripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F62FF2FC7B084007FF45C /* HistoryTripCard.swift */; };
 		EC2F63022FC7B0C3007FF45C /* HomeTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */; };
 		EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */; };
 		EC2F63062FC88FC2007FF45C /* HistoryTripDetTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */; };
@@ -154,8 +154,8 @@
 		EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalDetTemplate.swift; sourceTree = "<group>"; };
 		EC2F62F92FC7B079007FF45C /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
 		EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoActiveTripsCard.swift; sourceTree = "<group>"; };
-		EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " NetworkStatusBanner.swift"; sourceTree = "<group>"; };
-		EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " HistoryTripCard.swift"; sourceTree = "<group>"; };
+		EC2F62FD2FC7B081007FF45C /* NetworkStatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkStatusBanner.swift; sourceTree = "<group>"; };
+		EC2F62FF2FC7B084007FF45C /* HistoryTripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripCard.swift; sourceTree = "<group>"; };
 		EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTemplate.swift; sourceTree = "<group>"; };
 		EC2F63032FC7C77B007FF45C /* KeyboardHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHelpers.swift; sourceTree = "<group>"; };
 		EC2F63052FC88FC2007FF45C /* HistoryTripDetTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripDetTemplate.swift; sourceTree = "<group>"; };
@@ -284,8 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				3354E71F2FCA01CA0072C1F0 /* ActiveTripCard.swift */,
-				EC2F62FF2FC7B084007FF45C /*  HistoryTripCard.swift */,
-				EC2F62FD2FC7B081007FF45C /*  NetworkStatusBanner.swift */,
+				EC2F62FF2FC7B084007FF45C /* HistoryTripCard.swift */,
+				EC2F62FD2FC7B081007FF45C /* NetworkStatusBanner.swift */,
 				EC2F62FB2FC7B07E007FF45C /* NoActiveTripsCard.swift */,
 				EC2F62F92FC7B079007FF45C /* AppTabBar.swift */,
 				EC1FBE762FC52FAA00CA755B /* HeaderView.swift */,
@@ -709,7 +709,7 @@
 				EC57B32B2FCB87720024DD4F /* HistoryMapTrackView.swift in Sources */,
 				33D049C72FCC991C00EA942D /* MainContainerView.swift in Sources */,
 				EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */,
-				EC2F63002FC7B084007FF45C /*  HistoryTripCard.swift in Sources */,
+				EC2F63002FC7B084007FF45C /* HistoryTripCard.swift in Sources */,
 				EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */,
 				EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */,
 				3354E7202FCA01CE0072C1F0 /* ActiveTripCard.swift in Sources */,
@@ -722,7 +722,7 @@
 				EC2F630A2FC8901D007FF45C /* SearchBar.swift in Sources */,
 				EC1FBE8F2FC52FAA00CA755B /* ProgressSegment.swift in Sources */,
 				EC1FBE902FC52FAA00CA755B /* StatusBadge.swift in Sources */,
-				EC2F62FE2FC7B081007FF45C /*  NetworkStatusBanner.swift in Sources */,
+				EC2F62FE2FC7B081007FF45C /* NetworkStatusBanner.swift in Sources */,
 				EC2F63042FC7C77B007FF45C /* KeyboardHelpers.swift in Sources */,
 				EC1FBE912FC52FAA00CA755B /* Stepper.swift in Sources */,
 				EC1FBE922FC52FAA00CA755B /* Toggle.swift in Sources */,
@@ -947,7 +947,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.1;
 			};
 			name = Debug;
@@ -996,7 +996,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				XROS_DEPLOYMENT_TARGET = 26.1;
 			};
 			name = Release;
