@@ -95,7 +95,6 @@ private extension ActiveTripCard {
                 Text(daysLeft)
                     .font(AppTypography.title1)
                     .foregroundStyle(Color.Primary)
-                    .lineLimit(1)
                 
             }
             
