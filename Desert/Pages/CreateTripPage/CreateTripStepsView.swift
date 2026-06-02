@@ -86,12 +86,12 @@ struct CreateTripStepsView: View {
             DestinationPickerView(vm: vm)
         }
         .sheet(isPresented: $vm.showEmergencyContactPicker) {
-            SingleContactPickerSheet {
+            SingleContactPickerView {
                 vm.importEmergencyContact($0)
             }
         }
         .sheet(isPresented: $vm.showGroupContactPicker) {
-            MultiContactPickerSheet { contacts in
+            MultiContactPickerView { contacts in
                 contacts.forEach { vm.importGroupContact($0) }
             }
         }

@@ -109,7 +109,9 @@
 "summary.emergencyContacts" = "جهات الطوارئ";
 "summary.groupContactOptional" = "جهة اتصال المجموعة (اختياري)";
 "summary.tripName" = "اسم الرحلة";
-"summary.warningMessage" = "تأكد من صحة المعلومات قبل المتابعة. في حال تجاوزت وقت العودة ولم يصلنا تحديث لموقعك، سيتم إبلاغ جهات الطوارئ.";
+"summary.warningPrefix" = "تأكد من صحة المعلومات لأنه لا يمكن تغييرها. إذا تجاوزت وقت العودة ولم يكن لديك إشارة، سيتم تنبيه جهات الطوارئ. بدء الرحلة يعني موافقتك على";
+"summary.termsAndConditions" = "الشروط والأحكام";
+"summary.warningSuffix" = ".";
 "solo" = "منفرد";
 "group.numberOfIndividuals" = "عدد الأفراد";
 
