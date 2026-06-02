@@ -32,7 +32,7 @@ enum AppTypography {
 
            case .black, .heavy:
 
-               return "thmanyah sans-Black"
+               return "thmanyahsans-Black"
 
            default:
 
