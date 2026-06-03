@@ -57,6 +57,9 @@ struct CreateTripStepsView: View {
             stepContent
                 .animation(.easeInOut, value: currentStep)
         }
+        .background(
+            NavigationGestureDisabler()
+        )
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
