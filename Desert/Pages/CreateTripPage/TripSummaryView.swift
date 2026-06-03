@@ -15,7 +15,7 @@ struct TripSummaryView: View {
     @Environment(\.onTripStarted) private var goToMap
     
     @StateObject private var networkMonitor = NetworkMonitorHelper()
-    @State private var isLoading = false
+    @State private var isLoading = true
     @State private var showTerms = false
 
     var onTripStarted: () -> Void
@@ -94,9 +94,6 @@ struct TripSummaryView: View {
             if isLoading {
                 Color.black.opacity(0.2)
                     .ignoresSafeArea()
-                
-                ProgressView()
-                    .scaleEffect(1.3)
             }
         }
     }
