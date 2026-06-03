@@ -47,7 +47,8 @@ struct ActiveTripCard: View {
                 .contentShape(Rectangle())
                 .onTapGesture {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-                        if isExpanded {
+
+                        if isExpanded && isUploaded {
                             showUploadStatus = false
                         }
 
@@ -302,6 +303,9 @@ private extension ActiveTripCard {
         .disabled(isConnected)
         .buttonStyle(.plain)
     }
+    
+    
+    // Helpers
     
     func merge(date: Date, time: Date) -> Date {
         let calendar = Calendar.current
