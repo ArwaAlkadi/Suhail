@@ -1,4 +1,3 @@
-
 //
 //  TripMapView.swift
 //  Desert
@@ -92,7 +91,9 @@ struct TripMapView: UIViewRepresentable {
         }
 
         let existingPolylines = mapView.overlays.compactMap { $0 as? MKPolyline }
-        if localTrack.count > 1 {
+        let existingPointCount = existingPolylines.first?.pointCount ?? 0
+
+        if localTrack.count > 1 && localTrack.count != existingPointCount {
             let newPolyline = MKPolyline(coordinates: localTrack, count: localTrack.count)
             newPolyline.title = "Local"
             mapView.removeOverlays(existingPolylines)
@@ -212,3 +213,4 @@ struct TripMapView: UIViewRepresentable {
         }
     }
 }
+
