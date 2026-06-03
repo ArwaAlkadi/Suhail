@@ -145,7 +145,6 @@ private extension ActiveTripCard {
     
     var dateChip: some View {
         Button {
-            draftReturnTime = selectedReturnTime
             activePicker = .date
         } label: {
             chipText(formatDate(displayedReturnTime))
@@ -162,7 +161,6 @@ private extension ActiveTripCard {
     
     var timeChip: some View {
         Button {
-            draftReturnTime = selectedReturnTime
             activePicker = .time
         } label: {
             chipText(formatTime(displayedReturnTime))
@@ -215,38 +213,39 @@ private extension ActiveTripCard {
     }
     
     var datePickerPopover: some View {
-        VStack(spacing: AppSpacing.md) {
-            
-            DatePicker(
-                "",
-                selection: $draftReturnTime,
-                in: Date()...,
-                displayedComponents: [.date]
-            )
-            .datePickerStyle(.graphical)
-            .labelsHidden()
-            .tint(Color.Secondary02)
-            .frame(width: 320, height: 330)
-            
-        }
+        DatePicker(
+            "",
+            selection: Binding(
+                get: { draftReturnTime },
+                set: { newDate in
+                    draftReturnTime = merge(date: newDate, time: draftReturnTime)
+                }
+            ),
+            in: Calendar.current.startOfDay(for: Date())...,
+            displayedComponents: [.date]
+        )
+        .datePickerStyle(.graphical)
+        .labelsHidden()
+        .tint(Color.Secondary02)
+        .frame(width: 320, height: 330)
         .padding(AppSpacing.md)
         .background(Color.white)
     }
     
     var timePickerPopover: some View {
-        VStack(spacing: AppSpacing.md) {
-            
-            DatePicker(
-                "",
-                selection: $draftReturnTime,
-                in: Date()...,
-                displayedComponents: [.hourAndMinute]
-            )
-            .datePickerStyle(.wheel)
-            .labelsHidden()
-            .frame(width: 260, height: 140)
-            
-        }
+        DatePicker(
+            "",
+            selection: Binding(
+                get: { draftReturnTime },
+                set: { newTime in
+                    draftReturnTime = merge(date: draftReturnTime, time: newTime)
+                }
+            ),
+            displayedComponents: [.hourAndMinute]
+        )
+        .datePickerStyle(.wheel)
+        .labelsHidden()
+        .frame(width: 260, height: 140)
         .padding(AppSpacing.md)
         .background(Color.white)
     }
@@ -302,6 +301,22 @@ private extension ActiveTripCard {
         }
         .disabled(isConnected)
         .buttonStyle(.plain)
+    }
+    
+    func merge(date: Date, time: Date) -> Date {
+        let calendar = Calendar.current
+
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+        var components = DateComponents()
+        components.year = dateComponents.year
+        components.month = dateComponents.month
+        components.day = dateComponents.day
+        components.hour = timeComponents.hour
+        components.minute = timeComponents.minute
+
+        return calendar.date(from: components) ?? draftReturnTime
     }
     
     func formatDate(_ date: Date) -> String {
