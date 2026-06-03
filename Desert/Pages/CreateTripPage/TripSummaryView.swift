@@ -15,7 +15,7 @@ struct TripSummaryView: View {
     @Environment(\.onTripStarted) private var goToMap
     
     @StateObject private var networkMonitor = NetworkMonitorHelper()
-    @State private var isLoading = true
+    @State private var isLoading = false
     @State private var showTerms = false
 
     var onTripStarted: () -> Void
