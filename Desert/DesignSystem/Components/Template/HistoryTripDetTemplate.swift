@@ -5,7 +5,6 @@
 //  Created by Samar A on 11/12/1447 AH.
 //
 
-//  يحتاج تعديل هنا لزر اعادة الرحلة يكون دس ايبل اذا فيه رحلة نشطة
 
 import SwiftUI
 
@@ -46,26 +45,17 @@ struct HistoryTripDetailsTemplate: View {
 
 
             ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: AppSpacing.lg) {
+                VStack(alignment: .leading, spacing: AppSpacing.xl) {
                     tripHeaderSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     tripMapSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     tripSummarySection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     emergencyContactsSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                     groupContactsSection
-                        .padding(.horizontal, AppSpacing.xxl)
-
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, AppSpacing.lg)
+                .frame(maxWidth: 370, alignment: .leading) //عدلت السبينق للمحتوى
+                .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.bottom, 120)
+
             }
         }
         .padding(.top, AppSpacing.sm)
@@ -74,10 +64,13 @@ struct HistoryTripDetailsTemplate: View {
         .safeAreaInset(edge: .bottom) {
             CTAButton(
                 title: "history.repeatTrip".localized,
-                style: hasActiveTrip ? .disabled : .secondary
+                style: .secondary
             ) {
+                guard !hasActiveTrip else { return }
                 onRepeatTrip()
             }
+            .disabled(hasActiveTrip)
+            .opacity(hasActiveTrip ? 0.6 : 1)
             .padding(.horizontal, AppSpacing.xxl)
             .padding(.top, AppSpacing.lg)
             .padding(.bottom, AppSpacing.sm)
@@ -195,7 +188,7 @@ private extension HistoryTripDetailsTemplate {
                     .font(AppTypography.headline)
                     .foregroundStyle(Color.Primary)
 
-                Text("(\(count) Contact selected)")
+                Text("(\(count))")
                     .font(AppTypography.caption2)
                     .foregroundStyle(Color.black)
 
