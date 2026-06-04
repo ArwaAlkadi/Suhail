@@ -471,7 +471,7 @@ extension TripSessionManager {
 
     // MARK: Constants
 
-    var minDistanceBetweenSavedPoints: CLLocationDistance { 250 }
+    var minDistanceBetweenSavedPoints: CLLocationDistance { 100 }
     var maxTimeBetweenUploads: TimeInterval { 30 * 60 }
 
     // MARK: SwiftData Context

@@ -147,13 +147,13 @@ class Contact {
 /// Saved every 250m — drawn on the map only, never uploaded to Firebase.
 @Model
 class LocationPoint {
+    var index: Int
     var lat: Double
     var lng: Double
-   
+
     init(index: Int, lat: Double, lng: Double) {
-       
+        self.index = index
         self.lat = lat
         self.lng = lng
-        
     }
 }
