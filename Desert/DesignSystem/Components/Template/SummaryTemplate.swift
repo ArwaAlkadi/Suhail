@@ -54,8 +54,8 @@ struct SummaryTemplate: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, AppSpacing.sm)
-                .padding(.bottom, AppSpacing.xxl)
-                .padding(.horizontal, AppSpacing.xxl)
+                .padding(.bottom, AppSpacing.lg)
+                .padding(.horizontal, AppSpacing.lg)
             }
         }
         .environment(\.layoutDirection, .leftToRight)
@@ -115,7 +115,6 @@ private extension SummaryTemplate {
                         isEditable: false
                     )
                     .frame(height: 70)
-
                     if contact.name != emergencyContacts.last?.name {
                         AppDivider()
                             .padding(.horizontal, AppSpacing.md)
@@ -145,10 +144,10 @@ private extension SummaryTemplate {
                             isEditable: false
                         )
                         .frame(height: 70)
-
+                        
                         if contact.name != groupContacts.last?.name {
                             AppDivider()
-                .padding(.horizontal, 40)
+                                .padding(.horizontal, AppSpacing.md)
                         }
                     }
                 }

@@ -25,8 +25,8 @@ struct PlateNumberFields: View {
                     .environment(\.layoutDirection, .leftToRight)
                     .keyboardType(.numberPad)
                     .focused($focusedIndex, equals: index)
-                    .frame(width: 78, height: 52)
-                    .background(Color.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(minHeight: 52)                .background(Color.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: AppRadius.sm)
                             .stroke(Color.Grey100, lineWidth: 1)

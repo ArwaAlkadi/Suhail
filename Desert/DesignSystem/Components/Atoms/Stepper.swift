@@ -73,12 +73,12 @@ private extension Stepper {
         case .active:
             return .white
         case .disabled:
-            return .Disabled2
+            return .Sec2
         }
     }
 
     var minusColor: Color {
-        canDecrease ? foregroundColor : Color.Disabled
+        canDecrease ? foregroundColor : Color.Sec2
     }
 }
 

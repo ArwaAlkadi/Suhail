@@ -23,16 +23,15 @@ struct NoActiveTripsCard: View {
             Text("noActiveTrips.title".localized)
                 .font(AppTypography.title3)
                 .foregroundStyle(Color.black)
+                .multilineTextAlignment(.center)
 
             CTAButton(title: "noActiveTrips.startTrip".localized) {
                 onStartTrip()
             }
 
         }
-        .frame(
-            width: UIScreen.main.bounds.width - 32,
-            height: 330
-        )
+        .frame(maxWidth: .infinity)
+        .frame(minHeight: 330)
         .background(Color.Background)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.xl))
         .shadow(
