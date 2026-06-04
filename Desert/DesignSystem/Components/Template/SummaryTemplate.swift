@@ -22,6 +22,7 @@ struct SummaryTemplate: View {
     var isConnected: Bool = true
     var onBack: () -> Void = {}
     var onStartTrip: () -> Void = {}
+    var onTermsTapped: () -> Void = {}
 
     @Binding var isLoading: Bool
 
@@ -92,7 +93,7 @@ private extension SummaryTemplate {
                 "summary.numberOfIndividuals",
                 isGroup
                     ? String.localizedStringWithFormat(
-                        NSLocalizedString("people_count", tableName: "PluralStrings", comment: ""),
+                        NSLocalizedString("people.count", tableName: "PluralStrings", comment: ""),
                         groupCount
                       )
                     : "solo".localized
@@ -165,10 +166,24 @@ private extension SummaryTemplate {
                 .foregroundStyle(Color.Secondary02)
                 .padding(.top, 2)
 
-            Text("summary.warningMessage".localized)
-                .font(AppTypography.caption)
-                .foregroundStyle(Color.Primary)
-                .fixedSize(horizontal: false, vertical: true)
+            (
+                Text("summary.warningPrefix".localized)
+                    .foregroundStyle(Color.Primary)
+                +
+                Text(" ")
+                +
+                Text("summary.termsAndConditions".localized)
+                    .foregroundStyle(Color.Secondary02)
+                    .underline()
+                +
+                Text("summary.warningSuffix".localized)
+                    .foregroundStyle(Color.Primary)
+            )
+            .font(AppTypography.caption)
+            .fixedSize(horizontal: false, vertical: true)
+            .onTapGesture {
+                onTermsTapped()
+            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 14)

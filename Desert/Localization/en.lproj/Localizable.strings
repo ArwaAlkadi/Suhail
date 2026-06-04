@@ -111,7 +111,9 @@
 "summary.emergencyContacts" = "Emergency Contacts";
 "summary.groupContactOptional" = "Group contact (optional)";
 "summary.tripName" = "Trip Name";
-"summary.warningMessage" = "Make sure information is correct as it cannot be changed. If you exceed the return time of your trip and do not have a signal, your emergency contacts will be alerted.";
+"summary.warningPrefix" = "Make sure information is correct as it cannot be changed. If you exceed the return time of your trip and do not have a signal, your emergency contacts will be alerted. By starting this trip, you agree to the";
+"summary.termsAndConditions" = "Terms & Conditions";
+"summary.warningSuffix" = ".";
 "solo" = "Solo";
 "group.numberOfIndividuals" = "Number of individuals";
 "summary.creatingTrip" = "Creating...";

@@ -16,6 +16,7 @@ struct TripSummaryView: View {
     
     @StateObject private var networkMonitor = NetworkMonitorHelper()
     @State private var isLoading = false
+    @State private var showTerms = false
 
     var onTripStarted: () -> Void
     var onReturnTimeInvalid: () -> Void = {}
@@ -61,8 +62,14 @@ struct TripSummaryView: View {
                     }
                 }
             },
+            onTermsTapped: {
+                showTerms = true
+            },
             isLoading: $isLoading
         )
+        .sheet(isPresented: $showTerms) {
+            SafariView(url: URL(string: "https://your-terms-url.com")!)
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(.hidden, for: .navigationBar)
         .alert(vm.locationAlertTitle, isPresented: $vm.showLocationAlert) {
