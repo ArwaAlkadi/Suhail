@@ -215,20 +215,6 @@ private extension ActiveTripCard {
     }
     
     var datePickerPopover: some View {
-        VStack(spacing: AppSpacing.md) {
-
-            DatePicker(
-                "",
-                selection: $draftReturnTime,
-                in: Date()...,
-                displayedComponents: [.date]
-            )
-            .datePickerStyle(.graphical)
-            .labelsHidden()
-            .tint(Color.Secondary02)
-            .frame(width: 320, height: 330)
-
-        }
         DatePicker(
             "",
             selection: Binding(
@@ -248,7 +234,6 @@ private extension ActiveTripCard {
         .background(Color.white)
         .presentationCompactAdaptation(.popover)
     }
-    
     var timePickerPopover: some View {
         DatePicker(
             "",

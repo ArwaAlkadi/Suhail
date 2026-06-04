@@ -32,8 +32,8 @@ struct Stepper: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(minusColor)
             }
-            .disabled(!canDecrease)
 
+            
             Text("\(count)")
                 .font(AppTypography.body)
                 .foregroundStyle(foregroundColor)

@@ -13,7 +13,7 @@ struct NoActiveTripsCard: View {
 
     var body: some View {
 
-        VStack(spacing: 24) {
+        VStack(spacing: AppSpacing.sm) {
 
             Image("noPreviousTrip")
                 .resizable()
@@ -28,16 +28,18 @@ struct NoActiveTripsCard: View {
             CTAButton(title: "noActiveTrips.startTrip".localized) {
                 onStartTrip()
             }
-
+            .padding(.top, AppSpacing.lg)
         }
         .frame(maxWidth: .infinity)
-        .frame(minHeight: 330)
+        .frame(maxWidth: 370)
+        .frame(minHeight: 400)
         .background(Color.Background)
-        .clipShape(RoundedRectangle(cornerRadius: AppRadius.xl))
+        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
         .shadow(
-            color: .black.opacity(0.04),
-            radius: 12,
-            y: 4
+            color: .black.opacity(0.10),
+            radius: 15,
+            x: 0,
+            y: -1
         )
     }
 }
