@@ -21,7 +21,7 @@ enum PhoneError {
 
     var messageKey: String {
         switch self {
-        case .required: return "phone_required..."
+        case .required: return "phone_required"
         case .invalid:  return "phone_invalid"
         }
     }

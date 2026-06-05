@@ -13,16 +13,15 @@
 ### Home Page
 - ``HomeViewModel``
 - ``HomeView``
-
-### Home Page — Active Trip Card
-- ``ActiveTripCardViewModel``
-- ``ActiveTripCardView``
+- ``TripMapView``
 
 ### Create Trip Page
 - ``CreateTripViewModel``
-- ``PhoneError``
 - ``CreateTripStepsView``
+- ``SingleContactPickerView``
 - ``DestinationPickerView``
+- ``DestinationPickerMapView``
+- ``MultiContactPickerView``
 - ``TripSummaryView``
 - ``SafariView``
 
@@ -31,3 +30,6 @@
 - ``TripHistoryView``
 - ``TripHistoryInDetailsView``
 - ``HistoryMapTrackView``
+
+### Shared
+- ``MaintenanceView``

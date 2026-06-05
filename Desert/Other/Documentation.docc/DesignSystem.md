@@ -44,6 +44,7 @@
 - ``AppDivider``
 - ``AppTextField``
 - ``AppTextFieldState``
+- ``PhoneError``
 - ``AppToggle``
 - ``ConnectivityIcon``
 - ``CounterButton``

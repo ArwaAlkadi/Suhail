@@ -200,7 +200,7 @@
 "error.requiredField" = "This field is required";
 "error.phoneRequired" = "Please enter a phone number";
 "name_required" = "Name is required";
-"phone_required..." = "Phone number is required";
+"phone_required" = "Phone number is required";
 "phone_invalid" = "Please enter a valid phone number";
 "trip_name_required" = "Trip name is required";
 "destination_required" = "Destination is required";

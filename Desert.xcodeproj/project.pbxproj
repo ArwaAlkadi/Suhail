@@ -387,7 +387,10 @@
 			children = (
 				EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */,
 				EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */,
+				EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */,
 				EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */,
+				EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */,
+				EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */,
 				ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */,
 				ECBF0B4E2FCE6F1A00C02248 /* SafariView.swift */,
 			);
@@ -417,7 +420,6 @@
 				EC309FEC2FABDC58003E343E /* Managers */,
 				EC309F8F2F97FAFD003E343E /* Models */,
 				EC309F8E2F97FAF9003E343E /* Pages */,
-				EC309FC92FA386C8003E343E /* Shared */,
 				ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */,
 				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
 				EC57B3442FCD2F6E0024DD4F /* Localization */,
@@ -442,6 +444,7 @@
 			children = (
 				EC309FA52F97FDF5003E343E /* HomeViewModel.swift */,
 				EC309FA32F97FDDF003E343E /* HomeView.swift */,
+				EC57B3282FCB87720024DD4F /* TripMapView.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				EC309F8B2F97FAF9003E343E /* HomePage */,
 				EC2F63472FCA6BFD007FF45C /* CreateTripPage */,
 				EC309F8A2F97FAF9003E343E /* HistoryPage */,
+				EC309FC92FA386C8003E343E /* Shared */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -511,8 +515,6 @@
 		EC309FC92FA386C8003E343E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				EC57B3292FCB87720024DD4F /* Maps */,
-				EC57B3242FCB87080024DD4F /* ContactSheets */,
 				ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */,
 			);
 			path = Shared;
@@ -527,24 +529,6 @@
 				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		EC57B3242FCB87080024DD4F /* ContactSheets */ = {
-			isa = PBXGroup;
-			children = (
-				EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */,
-				EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */,
-			);
-			path = ContactSheets;
-			sourceTree = "<group>";
-		};
-		EC57B3292FCB87720024DD4F /* Maps */ = {
-			isa = PBXGroup;
-			children = (
-				EC57B3282FCB87720024DD4F /* TripMapView.swift */,
-				EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */,
-			);
-			path = Maps;
 			sourceTree = "<group>";
 		};
 		EC57B3442FCD2F6E0024DD4F /* Localization */ = {

@@ -41,13 +41,6 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 ### Pages
 - <doc:AppPages>
 
-### Shared
-- ``TripMapView``
-- ``DestinationPickerMapView``
-- ``SingleContactPickerView``
-- ``MultiContactPickerView``
-- ``MaintenanceView``
-
 ### Helpers
 - ``NetworkMonitorHelper``
 - ``AppPage``
