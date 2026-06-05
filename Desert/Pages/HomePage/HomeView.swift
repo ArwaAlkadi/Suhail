@@ -10,7 +10,6 @@ import SwiftData
 struct HomeView: View {
 
     @State private var vm = HomeViewModel()
-    @StateObject private var locationManager = LocationManager.shared
     @Environment(\.modelContext) private var context
     @Query var trips: [Trip]
 
@@ -84,7 +83,7 @@ extension HomeView {
                 localTrack: vm.localTrack(for: activeTrip),
                 lastUploadedLocation: vm.lastUploadedLocation(),
                 destinationLocation: vm.destinationLocation(for: activeTrip),
-                userLocation: locationManager.currentUserLocation,
+                userLocation: LocationManager.shared.currentUserLocation,
                 mapType: mapType,
                 centerTrigger: centerTrigger,
                 resetNorthTrigger: resetNorthTrigger
