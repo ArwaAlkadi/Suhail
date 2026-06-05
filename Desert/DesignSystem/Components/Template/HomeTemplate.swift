@@ -5,8 +5,6 @@
 //  Created by Samar A on 10/12/1447 AH.
 //
 
-// هلا سمر هنا اضفت الماب تايب الدوائر
-
 import SwiftUI
 import MapKit
 
@@ -16,8 +14,13 @@ struct HomeTemplate: View {
     @Binding var mapType: MKMapType
 
     var activeTrip: Trip?
+    var daysLeft: String = ""
+    var isUploaded: Bool = false
+    var isConnected: Bool = false
     var onStartTrip: () -> Void
     var onCenterTapped: () -> Void
+    var onUpdateReturnTime: (Date) -> Void = { _ in }
+    var onEndTrip: () -> Void = {}
 
     var body: some View {
         ZStack {
@@ -28,9 +31,19 @@ struct HomeTemplate: View {
                 Spacer()
 
                 if let activeTrip {
-                    ActiveTripCardView(trip: activeTrip)
-                        .padding(.horizontal, AppSpacing.lg)
-                        .padding(.bottom, 96)
+                    ActiveTripCard(
+                        tripName: activeTrip.tripName,
+                        daysLeft: daysLeft,
+                        isUploaded: isUploaded,
+                        returnTime: activeTrip.returnTime,
+                        isOverdue: activeTrip.isOverdue,
+                        isConnected: isConnected,
+                        emergencyContacts: activeTrip.emergencyContacts,
+                        onUpdateReturnTime: onUpdateReturnTime,
+                        onEndTrip: onEndTrip
+                    )
+                    .padding(.horizontal, AppSpacing.lg)
+                    .padding(.bottom, 96)
                 } else {
                     NoActiveTripsCard {
                         onStartTrip()

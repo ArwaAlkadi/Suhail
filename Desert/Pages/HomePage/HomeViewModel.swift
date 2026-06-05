@@ -3,19 +3,52 @@
 //  Desert
 //
 //  Provides computed map data for the active trip displayed in HomeView.
-//  Used by TripMapView to render the GPS track, last uploaded location, and destination pin.
-//
-//  Also handles app-level setup on first appear:
-//  - Sets SwiftData context on TripSessionManager
-//  - Resumes any active trip session after force quit
-//  - Requests notification permission on second app visit
+//  Also handles app-level setup and active trip card logic.
 //
 
 import SwiftUI
 import MapKit
 import SwiftData
+import Network
+import Combine
 
-struct HomeViewModel {
+class HomeViewModel: ObservableObject {
+
+    // MARK: - Upload Status
+
+    enum UploadStatus {
+        case idle, uploading, uploaded, pending
+
+        var label: String {
+            switch self {
+            case .idle:      return ""
+            case .uploading: return "uploading".localized
+            case .uploaded:  return "uploaded".localized
+            case .pending:   return "pending_upload".localized
+            }
+        }
+    }
+
+    @Published var returnTimeUploadStatus: UploadStatus = .idle
+    @Published var isConnected = true
+
+    private let monitor = NWPathMonitor()
+    private let queue = DispatchQueue(label: "HomeViewNetworkMonitor")
+
+    // MARK: - Network Monitoring
+
+    func startMonitoring() {
+        monitor.pathUpdateHandler = { [weak self] path in
+            DispatchQueue.main.async {
+                self?.isConnected = path.status == .satisfied
+            }
+        }
+        monitor.start(queue: queue)
+    }
+
+    func stopMonitoring() {
+        monitor.cancel()
+    }
 
     // MARK: - Map Data Helpers
 
@@ -37,26 +70,75 @@ struct HomeViewModel {
         return CLLocationCoordinate2D(latitude: trip.destinationLat, longitude: trip.destinationLng)
     }
 
-    // MARK: - App Setup
+    // MARK: - Days Left Text
 
-    /// Called on HomeView.onAppear.
-    /// Routes all manager setup through a single entry point.
-    func onAppear(context: ModelContext) {
-        TripSessionManager.shared.setModelContext(context)
-        TripSessionManager.shared.resumeActiveSessionIfNeeded(context: context)
-        NotificationsManager.shared.requestPermission()
+    func daysLeftText(for returnTime: Date) -> String {
+        let seconds = returnTime.timeIntervalSince(Date())
+
+        if seconds <= 0 {
+            let overdueSeconds = abs(seconds)
+            let days    = Int(overdueSeconds / 86400)
+            let hours   = Int(overdueSeconds / 3600)
+            let minutes = Int(overdueSeconds / 60)
+
+            if days > 0 {
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.daysOverdue", tableName: "PluralStrings", comment: ""), days)
+            } else if hours > 0 {
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.hoursOverdue", tableName: "PluralStrings", comment: ""), hours)
+            } else {
+                return String.localizedStringWithFormat(NSLocalizedString("activeTrip.minutesOverdue", tableName: "PluralStrings", comment: ""), minutes)
+            }
+        }
+
+        let days    = Int(seconds / 86400)
+        let hours   = Int(seconds / 3600)
+        let minutes = Int(seconds / 60)
+
+        if days > 0 {
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.daysLeft", tableName: "PluralStrings", comment: ""), days)
+        } else if hours > 0 {
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.hoursLeft", tableName: "PluralStrings", comment: ""), hours)
+        } else {
+            return String.localizedStringWithFormat(NSLocalizedString("activeTrip.minutesLeft", tableName: "PluralStrings", comment: ""), minutes)
+        }
     }
 
-    // MARK: - End Trip
+    // MARK: - Active Trip Card Actions
 
-    /// Ends the active trip via TripSessionManager.
+    func saveReturnTime(trip: Trip, editedReturnTime: Date) {
+        guard editedReturnTime > Date() else { return }
+
+        returnTimeUploadStatus = isConnected ? .uploading : .pending
+
+        TripSessionManager.shared.updateReturnTime(
+            trip: trip,
+            newReturnTime: editedReturnTime
+        ) { [weak self] in
+            DispatchQueue.main.async {
+                self?.returnTimeUploadStatus = .uploaded
+            }
+        } onFailure: { [weak self] in
+            DispatchQueue.main.async {
+                self?.returnTimeUploadStatus = .pending
+            }
+        }
+    }
+
     func endTrip(_ trip: Trip, context: ModelContext) {
         TripSessionManager.shared.finishTrip(trip: trip, context: context)
     }
 
-    // MARK: - Reschedule Return Time Reminder
-    /// Called when the user updates the return time from ActiveTripCardView.
-    func rescheduleReturnTimeReminder(returnTime: Date) {
-        TripSessionManager.shared.rescheduleReturnTimeReminder(returnTime: returnTime)
+    // MARK: - App Setup
+
+    /// Called on HomeView.onAppear.
+    func onAppear(context: ModelContext) {
+        TripSessionManager.shared.setModelContext(context)
+        TripSessionManager.shared.resumeActiveSessionIfNeeded(context: context)
+        NotificationsManager.shared.requestPermission()
+        startMonitoring()
+    }
+
+    func onDisappear() {
+        stopMonitoring()
     }
 }

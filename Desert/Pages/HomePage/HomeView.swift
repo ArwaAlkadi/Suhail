@@ -9,7 +9,7 @@ import SwiftData
 
 struct HomeView: View {
 
-    @State private var vm = HomeViewModel()
+    @StateObject private var vm = HomeViewModel()
     @Environment(\.modelContext) private var context
     @Query var trips: [Trip]
 
@@ -19,7 +19,7 @@ struct HomeView: View {
     @State private var centerTrigger: Int = 0
     @State private var resetNorthTrigger: Int = 0
     @State private var navigationResetID = UUID()
-    
+
     var activeTrip: Trip? { trips.first { $0.isActive || $0.isOverdue } }
 
     var body: some View {
@@ -34,7 +34,6 @@ struct HomeView: View {
 
                 VStack {
                     Spacer()
-
                     AppTabBar(selectedTab: $currentPage)
                         .padding(.bottom, 16)
                 }
@@ -44,15 +43,14 @@ struct HomeView: View {
             .navigationDestination(isPresented: $showCreateTrip) {
                 CreateTripStepsView(
                     showParentSheet: $showCreateTrip,
-                    onTripStarted: {
-                        goToMap()
-                    }
+                    onTripStarted: { goToMap() }
                 )
             }
         }
         .id(navigationResetID)
         .environment(\.onTripStarted, { goToMap() })
         .onAppear { vm.onAppear(context: context) }
+        .onDisappear { vm.onDisappear() }
         .navigationBarBackButtonHidden()
     }
 }
@@ -94,8 +92,19 @@ extension HomeView {
                 selectedTab: $currentPage,
                 mapType: $mapType,
                 activeTrip: activeTrip,
+                daysLeft: vm.daysLeftText(for: activeTrip?.returnTime ?? Date()),
+                isUploaded: vm.returnTimeUploadStatus == .uploaded,
+                isConnected: !vm.isConnected,
                 onStartTrip: { showCreateTrip = true },
-                onCenterTapped: { centerTrigger += 1 }
+                onCenterTapped: { centerTrigger += 1 },
+                onUpdateReturnTime: { newTime in
+                    guard let trip = activeTrip else { return }
+                    vm.saveReturnTime(trip: trip, editedReturnTime: newTime)
+                },
+                onEndTrip: {
+                    guard let trip = activeTrip else { return }
+                    vm.endTrip(trip, context: context)
+                }
             )
         }
         .ignoresSafeArea(edges: .bottom)
