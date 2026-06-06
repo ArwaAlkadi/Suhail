@@ -125,8 +125,7 @@ private extension AppTextField {
 
         case .error:
 
-            Image(systemName: "exclamationmark.circle")
-                .foregroundStyle(Color.Destructive)
+            EmptyView()
 
         default:
 
