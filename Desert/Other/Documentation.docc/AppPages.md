@@ -19,7 +19,6 @@
 - ``CreateTripStepsView``
 - ``SingleContactPickerView``
 - ``DestinationPickerView``
-- ``DestinationPickerMapView``
 - ``MultiContactPickerView``
 - ``TripSummaryView``
 - ``SafariView``

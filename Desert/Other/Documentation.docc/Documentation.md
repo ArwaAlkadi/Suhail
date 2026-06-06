@@ -24,12 +24,6 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``AppDelegate``
 - ``RootView``
 
-### Managers
-- ``ActiveTripSession``
-- ``LocationManager``
-- ``NotificationsManager``
-- ``FirebaseManager``
-
 ### Models
 - ``AppSettings``
 - ``SavedInfo``
@@ -37,6 +31,15 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``Trip``
 - ``Contact``
 - ``LocationPoint``
+
+### Managers
+- ``ActiveTripSession``
+- ``LocationManager``
+- ``NotificationsManager``
+- ``FirebaseManager``
+
+### Session
+- ``ActiveTripSession``
 
 ### Pages
 - <doc:AppPages>
