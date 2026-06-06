@@ -25,7 +25,7 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``RootView``
 
 ### Managers
-- ``TripSessionManager``
+- ``ActiveTripSession``
 - ``LocationManager``
 - ``NotificationsManager``
 - ``FirebaseManager``

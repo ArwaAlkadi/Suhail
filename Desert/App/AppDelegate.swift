@@ -22,8 +22,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // 2. sign in anonymously — persists userId on device
         FirebaseManager.shared.signInAnonymously()
 
-        // 3. set TripSessionManager as LocationManager delegate
-        LocationManager.shared.delegate = TripSessionManager.shared
+        // 3. set ActiveTripSession as LocationManager delegate
+        LocationManager.shared.delegate = ActiveTripSession.shared
 
         // 4. if iOS relaunched due to location update — restore session
         if launchOptions?[.location] != nil {

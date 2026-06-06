@@ -30,7 +30,7 @@ class TripHistoryViewModel: ObservableObject {
     private let firebase = FirebaseManager.shared
 
     var hasActiveTrip: Bool {
-        TripSessionManager.shared.hasActiveTrip
+        ActiveTripSession.shared.hasActiveTrip
     }
 
     // MARK: - Alert Status

@@ -496,7 +496,7 @@ extension CreateTripViewModel {
 
         saveUserInfo(context: context)
 
-        TripSessionManager.shared.startTrip(
+        ActiveTripSession.shared.startTrip(
             trip: trip,
             context: context,
             completion: completion

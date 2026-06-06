@@ -227,7 +227,7 @@ class FirebaseManager {
     /// Updates the last known location in Firestore.
     ///
     /// Writes to `c-lastKnownLocation` only — does not rewrite the full document.
-    /// Called by `TripSessionManager` every 2km moved or every 30 minutes, whichever comes first.
+    /// Called by `ActiveTripSession` every 2km moved or every 30 minutes, whichever comes first.
     ///
     /// - Parameters:
     ///   - tripId: The Firebase trip ID to update.
@@ -325,7 +325,7 @@ class FirebaseManager {
     // MARK: - Listen to Trip Status
     /// Listens to real-time changes on the trip document.
     ///
-    /// Used by `TripSessionManager` to detect when the Cloud Function
+    /// Used by `ActiveTripSession` to detect when the Cloud Function
     /// marks the trip as completed after 3 updated alerts.
     ///
     /// - Parameters:

@@ -61,7 +61,7 @@ class HomeViewModel: ObservableObject {
 
     /// Returns the last successfully uploaded location to Firebase, if available.
     func lastUploadedLocation() -> CLLocationCoordinate2D? {
-        TripSessionManager.shared.lastUploadedLocation
+        ActiveTripSession.shared.lastUploadedLocation
     }
 
     /// Returns the trip's selected destination coordinate, if set.
@@ -110,7 +110,7 @@ class HomeViewModel: ObservableObject {
 
         returnTimeUploadStatus = isConnected ? .uploading : .pending
 
-        TripSessionManager.shared.updateReturnTime(
+        ActiveTripSession.shared.updateReturnTime(
             trip: trip,
             newReturnTime: editedReturnTime
         ) { [weak self] in
@@ -125,15 +125,15 @@ class HomeViewModel: ObservableObject {
     }
 
     func endTrip(_ trip: Trip, context: ModelContext) {
-        TripSessionManager.shared.finishTrip(trip: trip, context: context)
+        ActiveTripSession.shared.finishTrip(trip: trip, context: context)
     }
 
     // MARK: - App Setup
 
     /// Called on HomeView.onAppear.
     func onAppear(context: ModelContext) {
-        TripSessionManager.shared.setModelContext(context)
-        TripSessionManager.shared.resumeActiveSessionIfNeeded(context: context)
+        ActiveTripSession.shared.setModelContext(context)
+        ActiveTripSession.shared.resumeActiveSessionIfNeeded(context: context)
         NotificationsManager.shared.requestPermission()
         startMonitoring()
     }

@@ -417,8 +417,9 @@
 			isa = PBXGroup;
 			children = (
 				EC309F902F97FAFF003E343E /* App */,
-				EC309FEC2FABDC58003E343E /* Managers */,
 				EC309F8F2F97FAFD003E343E /* Models */,
+				EC309FEC2FABDC58003E343E /* Managers */,
+				ECBF0C012FD43E2300C02248 /* Session */,
 				EC309F8E2F97FAF9003E343E /* Pages */,
 				ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */,
 				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
@@ -475,7 +476,7 @@
 				EC309F8B2F97FAF9003E343E /* HomePage */,
 				EC2F63472FCA6BFD007FF45C /* CreateTripPage */,
 				EC309F8A2F97FAF9003E343E /* HistoryPage */,
-				EC309FC92FA386C8003E343E /* Shared */,
+				EC309FC92FA386C8003E343E /* SharedPages */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -512,12 +513,12 @@
 			path = Other;
 			sourceTree = "<group>";
 		};
-		EC309FC92FA386C8003E343E /* Shared */ = {
+		EC309FC92FA386C8003E343E /* SharedPages */ = {
 			isa = PBXGroup;
 			children = (
 				ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */,
 			);
-			path = Shared;
+			path = SharedPages;
 			sourceTree = "<group>";
 		};
 		EC309FEC2FABDC58003E343E /* Managers */ = {
@@ -526,7 +527,6 @@
 				EC309FEA2FABDC58003E343E /* LocationManager.swift */,
 				EC309FEB2FABDC58003E343E /* NotificationsManager.swift */,
 				EC309FE92FABDC58003E343E /* FirebaseManager.swift */,
-				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -539,6 +539,14 @@
 				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		ECBF0C012FD43E2300C02248 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
+			);
+			path = Session;
 			sourceTree = "<group>";
 		};
 		ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */ = {

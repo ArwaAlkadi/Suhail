@@ -31,5 +31,5 @@
 - ``TripHistoryInDetailsView``
 - ``HistoryMapTrackView``
 
-### Shared
+### Shared Pages
 - ``MaintenanceView``
