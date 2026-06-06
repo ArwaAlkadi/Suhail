@@ -1,24 +1,21 @@
 # ``Desert``
-
 A safety app for desert and remote trips.
 
 ## Overview
-
 A safety app for desert and remote trips that tracks users, provides a shareable safety card, and automatically sends their last known location to emergency contacts if they don't return on time.
 
 ## Data Schema
-
 #### Logical ERD
 ![LogicalERD](LogicalERD)
-[View ERD (Logical/Physical) ↗](https://desert-5549e.web.app/ERD.pdf)
+[View ERD (Logical/Physical) ↗](#)
 
 #### Physical ERD
 ![PhysicalERD](PhysicalERD)
-[View ERD (Logical/Physical) ↗](https://desert-5549e.web.app/ERD.pdf)
+[View ERD (Logical/Physical) ↗](#)
 
 #### UML
 ![UML](UML)
-[View UML ↗](https://desert-5549e.web.app/UML.pdf)
+[View UML ↗](#)
 
 ## Topics
 
@@ -26,14 +23,6 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``DesertApp``
 - ``AppDelegate``
 - ``RootView``
-
-### Coordinator
-- ``TripSessionManager``
-
-### Services
-- ``LocationManager``
-- ``NotificationsManager``
-- ``FirebaseManager``
 
 ### Models
 - ``AppSettings``
@@ -43,30 +32,25 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``Contact``
 - ``LocationPoint``
 
-### Splash Page
-- ``SplashView``
+### Managers
+- ``LocationManager``
+- ``NotificationsManager``
+- ``FirebaseManager``
 
-### Onboarding Page
-- ``OnboardingView``
-- ``OnboardingViewModel``
+### Session
+- ``ActiveTripSession``
 
-### Home Page
-- ``HomeView``
-- ``HomeViewModel``
-- ``WelcomeView``
+### Pages
+- <doc:AppPages>
 
-### Home Page — Trips
-- ``CreateTripView``
-- ``ActiveTripCardView``
-- ``HomePageTripsViewModel``
+### Helpers
+- ``NetworkMonitorHelper``
+- ``AppPage``
+- ``NavigationGestureDisabler``
+- ``OnTripStartedKey``
 
-### History Page
-- ``TripHistoryView``
-- ``TripHistoryInDetailsView``
-- ``RepeatTripView``
-- ``TripHistoryViewModel``
+### Design System + Compenents
+- <doc:DesignSystem>
 
-### Shared
-- ``TripMapView``
-- ``ReplayMapView``
-- ``SharedComponents``
+### Other
+- <doc:Others>

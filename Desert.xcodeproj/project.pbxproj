@@ -64,7 +64,6 @@
 		EC2F630C2FC8903E007FF45C /* TripSummaryCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */; };
 		EC2F63492FCA6DBA007FF45C /* CreateTripStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */; };
 		EC2F634B2FCA6DF9007FF45C /* CreateTripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */; };
-		EC2F634D2FCA6E30007FF45C /* ActiveTripCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC2F634C2FCA6E30007FF45C /* ActiveTripCardViewModel.swift */; };
 		EC309F722F8C1042003E343E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F712F8C1042003E343E /* FirebaseAnalytics */; };
 		EC309F742F8C1042003E343E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F732F8C1042003E343E /* FirebaseFirestore */; };
 		EC309F762F8C1042003E343E /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = EC309F752F8C1042003E343E /* FirebaseFunctions */; };
@@ -84,14 +83,12 @@
 		EC309FBA2F97FF69003E343E /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FB92F97FF69003E343E /* Trip.swift */; };
 		EC309FC02F9800DE003E343E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FBF2F9800DE003E343E /* RootView.swift */; };
 		EC309FC22FA385D3003E343E /* TripHistoryInDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */; };
-		EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */; };
 		EC309FE52FABCB93003E343E /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = EC309FE42FABCB93003E343E /* Documentation.docc */; };
 		EC309FED2FABDC58003E343E /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FE92FABDC58003E343E /* FirebaseManager.swift */; };
 		EC309FEE2FABDC58003E343E /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEA2FABDC58003E343E /* LocationManager.swift */; };
 		EC309FEF2FABDC58003E343E /* NotificationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC309FEB2FABDC58003E343E /* NotificationsManager.swift */; };
-		EC57B32A2FCB87720024DD4F /* DestinationPickerMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */; };
-		EC57B32B2FCB87720024DD4F /* HistoryMapTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */; };
-		EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3282FCB87720024DD4F /* TripMapView.swift */; };
+		EC57B32B2FCB87720024DD4F /* HistoryTripTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3272FCB87720024DD4F /* HistoryTripTrackView.swift */; };
+		EC57B32C2FCB87720024DD4F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3282FCB87720024DD4F /* MapView.swift */; };
 		EC57B32E2FCB880E0024DD4F /* MultiContactPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */; };
 		EC57B3302FCB88200024DD4F /* SingleContactPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */; };
 		EC57B3322FCCA41B0024DD4F /* DestinationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */; };
@@ -167,7 +164,6 @@
 		EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
 		EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripStepsView.swift; sourceTree = "<group>"; };
 		EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripViewModel.swift; sourceTree = "<group>"; };
-		EC2F634C2FCA6E30007FF45C /* ActiveTripCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripCardViewModel.swift; sourceTree = "<group>"; };
 		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
@@ -186,14 +182,12 @@
 		EC309FB92F97FF69003E343E /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		EC309FBF2F9800DE003E343E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryInDetailsView.swift; sourceTree = "<group>"; };
-		EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripCardView.swift; sourceTree = "<group>"; };
 		EC309FE42FABCB93003E343E /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		EC309FE92FABDC58003E343E /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		EC309FEA2FABDC58003E343E /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		EC309FEB2FABDC58003E343E /* NotificationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsManager.swift; sourceTree = "<group>"; };
-		EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerMapView.swift; sourceTree = "<group>"; };
-		EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMapTrackView.swift; sourceTree = "<group>"; };
-		EC57B3282FCB87720024DD4F /* TripMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripMapView.swift; sourceTree = "<group>"; };
+		EC57B3272FCB87720024DD4F /* HistoryTripTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTripTrackView.swift; sourceTree = "<group>"; };
+		EC57B3282FCB87720024DD4F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContactPickerView.swift; sourceTree = "<group>"; };
 		EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleContactPickerView.swift; sourceTree = "<group>"; };
 		EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPickerView.swift; sourceTree = "<group>"; };
@@ -391,21 +385,14 @@
 			path = "Grid System";
 			sourceTree = "<group>";
 		};
-		EC2F63462FCA6BF8007FF45C /* ActiveTripCard */ = {
-			isa = PBXGroup;
-			children = (
-				EC2F634C2FCA6E30007FF45C /* ActiveTripCardViewModel.swift */,
-				EC309FC32FA385E4003E343E /* ActiveTripCardView.swift */,
-			);
-			path = ActiveTripCard;
-			sourceTree = "<group>";
-		};
 		EC2F63472FCA6BFD007FF45C /* CreateTripPage */ = {
 			isa = PBXGroup;
 			children = (
 				EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */,
 				EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */,
+				EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */,
 				EC57B3312FCCA4180024DD4F /* DestinationPickerView.swift */,
+				EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */,
 				ECCD9EAF2FB7843F00E2B5B9 /* TripSummaryView.swift */,
 				ECBF0B4E2FCE6F1A00C02248 /* SafariView.swift */,
 			);
@@ -432,10 +419,10 @@
 			isa = PBXGroup;
 			children = (
 				EC309F902F97FAFF003E343E /* App */,
-				EC309FEC2FABDC58003E343E /* Managers */,
 				EC309F8F2F97FAFD003E343E /* Models */,
+				EC309FEC2FABDC58003E343E /* Managers */,
+				ECBF0C012FD43E2300C02248 /* Session */,
 				EC309F8E2F97FAF9003E343E /* Pages */,
-				EC309FC92FA386C8003E343E /* Shared */,
 				ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */,
 				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
 				EC57B3442FCD2F6E0024DD4F /* Localization */,
@@ -450,7 +437,7 @@
 				EC309FB12F97FEA0003E343E /* TripHistoryViewModel.swift */,
 				EC309FAF2F97FE92003E343E /* TripHistoryView.swift */,
 				EC309FC12FA385D3003E343E /* TripHistoryInDetailsView.swift */,
-				EC57B3272FCB87720024DD4F /* HistoryMapTrackView.swift */,
+				EC57B3272FCB87720024DD4F /* HistoryTripTrackView.swift */,
 			);
 			path = HistoryPage;
 			sourceTree = "<group>";
@@ -458,10 +445,8 @@
 		EC309F8B2F97FAF9003E343E /* HomePage */ = {
 			isa = PBXGroup;
 			children = (
-				33D049C62FCC991900EA942D /* MainContainerView.swift */,
 				EC309FA52F97FDF5003E343E /* HomeViewModel.swift */,
 				EC309FA32F97FDDF003E343E /* HomeView.swift */,
-				EC2F63462FCA6BF8007FF45C /* ActiveTripCard */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -492,6 +477,7 @@
 				EC309F8B2F97FAF9003E343E /* HomePage */,
 				EC2F63472FCA6BFD007FF45C /* CreateTripPage */,
 				EC309F8A2F97FAF9003E343E /* HistoryPage */,
+				EC309FC92FA386C8003E343E /* Shared */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -531,8 +517,7 @@
 		EC309FC92FA386C8003E343E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				EC57B3292FCB87720024DD4F /* Maps */,
-				EC57B3242FCB87080024DD4F /* ContactSheets */,
+				EC57B3282FCB87720024DD4F /* MapView.swift */,
 				ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */,
 			);
 			path = Shared;
@@ -544,27 +529,8 @@
 				EC309FEA2FABDC58003E343E /* LocationManager.swift */,
 				EC309FEB2FABDC58003E343E /* NotificationsManager.swift */,
 				EC309FE92FABDC58003E343E /* FirebaseManager.swift */,
-				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		EC57B3242FCB87080024DD4F /* ContactSheets */ = {
-			isa = PBXGroup;
-			children = (
-				EC57B32F2FCB88200024DD4F /* SingleContactPickerView.swift */,
-				EC57B32D2FCB880E0024DD4F /* MultiContactPickerView.swift */,
-			);
-			path = ContactSheets;
-			sourceTree = "<group>";
-		};
-		EC57B3292FCB87720024DD4F /* Maps */ = {
-			isa = PBXGroup;
-			children = (
-				EC57B3282FCB87720024DD4F /* TripMapView.swift */,
-				EC57B3262FCB87720024DD4F /* DestinationPickerMapView.swift */,
-			);
-			path = Maps;
 			sourceTree = "<group>";
 		};
 		EC57B3442FCD2F6E0024DD4F /* Localization */ = {
@@ -575,6 +541,14 @@
 				ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		ECBF0C012FD43E2300C02248 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
+			);
+			path = Session;
 			sourceTree = "<group>";
 		};
 		ECCD9FF02FB8AA2C00E2B5B9 /* Helpers */ = {
@@ -683,7 +657,6 @@
 				EC2F634B2FCA6DF9007FF45C /* CreateTripViewModel.swift in Sources */,
 				EC309FE52FABCB93003E343E /* Documentation.docc in Sources */,
 				EC309F7F2F8C1058003E343E /* DesertApp.swift in Sources */,
-				EC309FC42FA385E4003E343E /* ActiveTripCardView.swift in Sources */,
 				EC309F9C2F97FD87003E343E /* SplashView.swift in Sources */,
 				EC2F630C2FC8903E007FF45C /* TripSummaryCard.swift in Sources */,
 				EC309FC02F9800DE003E343E /* RootView.swift in Sources */,
@@ -713,10 +686,8 @@
 				ECBF0B4F2FCE6F2200C02248 /* SafariView.swift in Sources */,
 				EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */,
 				EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */,
-				EC57B32A2FCB87720024DD4F /* DestinationPickerMapView.swift in Sources */,
-				EC57B32B2FCB87720024DD4F /* HistoryMapTrackView.swift in Sources */,
-				33D049C72FCC991C00EA942D /* MainContainerView.swift in Sources */,
-				EC57B32C2FCB87720024DD4F /* TripMapView.swift in Sources */,
+				EC57B32B2FCB87720024DD4F /* HistoryTripTrackView.swift in Sources */,
+				EC57B32C2FCB87720024DD4F /* MapView.swift in Sources */,
 				EC2F63002FC7B084007FF45C /* HistoryTripCard.swift in Sources */,
 				EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */,
 				EC1FBEB42FC74FF100CA755B /* PersonalDetTemplate.swift in Sources */,
@@ -735,7 +706,6 @@
 				EC1FBE912FC52FAA00CA755B /* Stepper.swift in Sources */,
 				EC1FBE922FC52FAA00CA755B /* Toggle.swift in Sources */,
 				EC1FBE932FC52FAA00CA755B /* ToolbarButton.swift in Sources */,
-				EC2F634D2FCA6E30007FF45C /* ActiveTripCardViewModel.swift in Sources */,
 				EC1FBE942FC52FAA00CA755B /* CTAButton.swift in Sources */,
 				EC1FBE952FC52FAA00CA755B /* FABButton.swift in Sources */,
 				EC1FBE962FC52FAA00CA755B /* RepeatTripButton.swift in Sources */,
@@ -918,7 +888,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59XQH23G26;
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -967,7 +937,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 59XQH23G26;
+				DEVELOPMENT_TEAM = Q3BRAU32HS;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

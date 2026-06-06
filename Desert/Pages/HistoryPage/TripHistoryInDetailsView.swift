@@ -20,11 +20,13 @@ struct TripHistoryInDetailsView: View {
     @State private var showFullMap = false
 
     var localTrack: [CLLocationCoordinate2D] {
-        trip.gpsTrack.map {
-            CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng)
-        }
+        trip.gpsTrack
+            .sorted { $0.index < $1.index }
+            .map {
+                CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng)
+            }
     }
-
+    
     var destinationLocation: CLLocationCoordinate2D? {
         guard trip.destinationLat != 0 else { return nil }
         return CLLocationCoordinate2D(
@@ -77,7 +79,7 @@ struct TripHistoryInDetailsView: View {
             )
         }
         .fullScreenCover(isPresented: $showFullMap) {
-            HistoryMapTrackView(
+            HistoryTripTrackView(
                 localTrack: localTrack,
                 destinationLocation: destinationLocation,
                 onBack: { showFullMap = false }

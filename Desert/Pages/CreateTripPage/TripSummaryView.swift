@@ -44,11 +44,6 @@ struct TripSummaryView: View {
                 dismiss()
             },
             onStartTrip: {
-                guard !TripSessionManager.shared.hasActiveTrip else {
-                    isLoading = false
-                    return
-                }
-
                 let didStart = vm.startTrip(context: context) {
                     onTripStarted()
                     goToMap()
