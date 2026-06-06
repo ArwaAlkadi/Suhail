@@ -33,7 +33,6 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``LocationPoint``
 
 ### Managers
-- ``ActiveTripSession``
 - ``LocationManager``
 - ``NotificationsManager``
 - ``FirebaseManager``
