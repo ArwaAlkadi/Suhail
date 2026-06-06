@@ -13,9 +13,9 @@ import FirebaseFirestore
 /// Coordinates between LocationManager, NotificationsManager, and FirebaseManager.
 ///
 /// ## Layer Responsibilities
-/// - LocationManager:       GPS tracking and location context only.
-/// - NotificationsManager:  Local notifications only.
-/// - FirebaseManager:       Cloud sync only.
+/// - LocationManager:      GPS tracking and location context only.
+/// - NotificationsManager: Local notifications only.
+/// - FirebaseManager:      Cloud sync only.
 /// - ActiveTripSession:    Trip lifecycle decisions only.
 ///
 /// ## Trip Status Flow
@@ -42,7 +42,7 @@ import FirebaseFirestore
 /// - WhatsApp alerts are sent by Firebase Cloud Functions — not the device.
 /// - Cloud Function checks every 5 minutes:
 ///     returnTime passed + no upload for 35 min + alert not yet sent → sends WhatsApp.
-/// - The device reads h-alertStatus from Firebase to update the UI only.
+/// - The device reads alertStatus from Firebase to update the UI only.
 /// - The device schedules local notifications at trip start — no app wake-up needed.
 ///
 /// ## Notification Logic
@@ -57,40 +57,59 @@ import FirebaseFirestore
 /// - 5–15 m/s → 3km
 /// - > 15 m/s → 5km
 /// - Time fallback: every 30 minutes regardless of movement.
+///
+/// ## Usage
+/// ```swift
+/// // 1. Set the ModelContext once on app launch
+/// ActiveTripSession.shared.setModelContext(context)
+///
+/// // 2. Resume any active session (e.g. after app restart)
+/// ActiveTripSession.shared.resumeActiveSessionIfNeeded(context: context)
+///
+/// // 3. Start a new trip
+/// ActiveTripSession.shared.startTrip(trip: trip, context: context)
+///
+/// // 4. Update return time if the user edits it
+/// ActiveTripSession.shared.updateReturnTime(trip: trip, newReturnTime: date, onSuccess: {}, onFailure: {})
+///
+/// // 5a. End manually (user taps "I'm Back Safely")
+/// ActiveTripSession.shared.finishTrip(trip: trip, context: context)
+///
+/// // 5b. End automatically — triggered by overdueTimer when user is in urban area
+///
+/// // 5c. End remotely — triggered by Firestore listener when Cloud Function completes
+/// ```
+///
+/// - Note: Steps 1 and 2 are called from `HomeViewModel.onAppear`.
+///         Step 3 is called from `CreateTripViewModel.startTrip`.
 class ActiveTripSession: NSObject, ObservableObject {
+
+    // MARK: - Singleton
 
     static let shared = ActiveTripSession()
 
+    // MARK: - Published
+
     @Published var hasActiveTrip = false
     @Published var lastUploadedLocation: CLLocationCoordinate2D? = nil
-    
-    private var pinDebounceTimer: Timer?
+
+    // MARK: - Private — Dependencies
+
     private let locationManager = LocationManager.shared
     private let notifications = NotificationsManager.shared
     private let firebase = FirebaseManager.shared
+
+    // MARK: - Private — Timers & Listeners
 
     /// Fires every 60 seconds to check overdue status and location context.
     private var overdueTimer: DispatchSourceTimer?
     private var uploadTimer: DispatchSourceTimer?
 
-    /// Listens to trip status changes from Cloud Functions.
+    /// Listens to trip status changes written by Cloud Functions.
     private var tripStatusListener: ListenerRegistration?
 
-    private func startUploadTimer(context: ModelContext) {
-        uploadTimer?.cancel()
-        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
-        timer.schedule(deadline: .now() + (30 * 60), repeating: 30 * 60)
-        timer.setEventHandler { [weak self] in
-            guard let self else { return }
-            guard let context = self.activeModelContext else { return }
-            guard let trip = self.fetchActiveTrip(context: context) else { return }
-            guard let lastLocation = self.locationManager.lastKnownLocation else { return }
-            self.uploadLocationToCloud(lastLocation, trip: trip, context: context)
-            print("ActiveTripSession: periodic upload — stationary")
-        }
-        timer.resume()
-        uploadTimer = timer
-    }
+    /// Debounces the uploaded location pin to avoid map flickering.
+    private var pinDebounceTimer: Timer?
 
     // MARK: - Start Trip
 
@@ -131,15 +150,6 @@ class ActiveTripSession: NSObject, ObservableObject {
         }
     }
 
-    func updateLastUploadedLocation(_ location: CLLocationCoordinate2D) {
-        pinDebounceTimer?.invalidate()
-        pinDebounceTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.lastUploadedLocation = location
-            }
-        }
-    }
-    
     // MARK: - Finish Trip
 
     /// Stops tracking, cancels all notifications, and marks the trip as completed.
@@ -177,8 +187,7 @@ class ActiveTripSession: NSObject, ObservableObject {
         startUploadTimer(context: context)
         startTripStatusListener(tripId: settings.currentTripId, context: context)
 
-        if let trip = fetchActiveTrip(context: context),
-           trip.lastKnownLat != 0 {
+        if let trip = fetchActiveTrip(context: context), trip.lastKnownLat != 0 {
             lastUploadedLocation = CLLocationCoordinate2D(
                 latitude: trip.lastKnownLat,
                 longitude: trip.lastKnownLng
@@ -191,15 +200,15 @@ class ActiveTripSession: NSObject, ObservableObject {
 
     // MARK: - Update Return Time
 
-    /// Called when the user updates the return time during an active trip.
-    /// Cancels all existing notifications and reschedules both with the new return time.
+    /// Cancels existing notifications and reschedules both with the new return time.
     func rescheduleReturnTimeReminder(returnTime: Date) {
         notifications.cancelAllNotifications()
         let tripId = locationManager.activeTripId
         notifications.scheduleTripNotifications(tripId: tripId, returnTime: returnTime)
         print("ActiveTripSession: notifications rescheduled for new return time — \(returnTime)")
     }
-    
+
+    /// Updates the return time locally on the trip, reschedules notifications, and syncs to Firebase.
     func updateReturnTime(
         trip: Trip,
         newReturnTime: Date,
@@ -254,9 +263,28 @@ class ActiveTripSession: NSObject, ObservableObject {
         overdueTimer = timer
     }
 
+    /// Cancels and clears the overdue timer.
     private func stopOverdueTimer() {
         overdueTimer?.cancel()
         overdueTimer = nil
+    }
+
+    /// Starts a repeating 30-minute timer that uploads the last known location even if the user hasn't moved.
+    /// Acts as a fallback when `distanceFilter` hasn't fired due to inactivity.
+    private func startUploadTimer(context: ModelContext) {
+        uploadTimer?.cancel()
+        let timer = DispatchSource.makeTimerSource(queue: DispatchQueue.global())
+        timer.schedule(deadline: .now() + (30 * 60), repeating: 30 * 60)
+        timer.setEventHandler { [weak self] in
+            guard let self else { return }
+            guard let context = self.activeModelContext else { return }
+            guard let trip = self.fetchActiveTrip(context: context) else { return }
+            guard let lastLocation = self.locationManager.lastKnownLocation else { return }
+            self.uploadLocationToCloud(lastLocation, trip: trip, context: context)
+            print("ActiveTripSession: periodic upload — stationary")
+        }
+        timer.resume()
+        uploadTimer = timer
     }
 
     // MARK: - Overdue Decision
@@ -270,13 +298,11 @@ class ActiveTripSession: NSObject, ObservableObject {
     ///    - Urban  → end the trip automatically.
     ///    - Outskirts → keep monitoring.
     ///    - No network → monitoring continues, Cloud Function handles alert delivery.
-    ///    WhatsApp alert is handled by Cloud Function — not here.
     private func checkIfOverdue(context: ModelContext) {
         guard let trip = fetchActiveTrip(context: context) else { return }
         guard trip.isActive || trip.isOverdue else { return }
         guard Date() > trip.returnTime else { return }
 
-        // mark as overdue immediately
         DispatchQueue.main.async {
             if trip.isActive {
                 trip.status = "overdue"
@@ -290,8 +316,6 @@ class ActiveTripSession: NSObject, ObservableObject {
             }
         }
 
-        // auto-end starts 5 minutes after return time
-        // gives the user time to tap "I'm Back Safely" before automatic action
         let autoEndStartTime = trip.returnTime.addingTimeInterval(5 * 60)
         guard Date() >= autoEndStartTime else {
             print("ActiveTripSession: waiting 5 min before auto-end — \(trip.tripId)")
@@ -308,18 +332,13 @@ class ActiveTripSession: NSObject, ObservableObject {
 
             switch result {
             case .urban:
-                // user is in a real urban area — end the trip automatically
                 DispatchQueue.main.async {
                     self.finishTrip(trip: trip, context: context)
                     print("ActiveTripSession: trip auto-ended — user in urban area")
                 }
-
             case .outskirts:
-                // user is in outskirts or desert — keep monitoring
                 print("ActiveTripSession: user in outskirts — monitoring continues")
-
             case .unavailable:
-                // no network — monitoring continues, Cloud Function handles alert delivery
                 print("ActiveTripSession: no network — monitoring continues")
             }
         }
@@ -369,8 +388,6 @@ extension ActiveTripSession: LocationManagerDelegate {
     /// On success:
     ///   - Before return time → no notification action needed
     ///   - After return time  → cancel reassurance notification (user is fine and moving)
-    /// On failure:
-    ///   - Reassurance notification already scheduled at trip start — nothing extra needed
     private func uploadLocationToCloud(_ location: CLLocation, trip: Trip, context: ModelContext) {
         let direction = location.course >= 0 ? location.course : nil
 
@@ -400,7 +417,7 @@ extension ActiveTripSession: LocationManagerDelegate {
                 print("ActiveTripSession: location uploaded to cloud")
             },
             onFailure: { [weak self] in
-                guard let self else { return }
+                guard self != nil else { return }
                 print("ActiveTripSession: upload failed — reassurance notification already scheduled at trip start")
             }
         )
@@ -408,14 +425,12 @@ extension ActiveTripSession: LocationManagerDelegate {
 
     // MARK: - Upload Decision
 
-    /// Returns true if the user has moved far enough or enough time has passed.
+    /// Returns true if the user has moved far enough or enough time has passed since the last upload.
     ///
     /// Upload distance adapts to speed:
-    /// - Stationary / slow (< 5 m/s):   1km
-    /// - Normal off-road (5–15 m/s):    3km
-    /// - High speed (> 15 m/s):         5km
-    ///
-    /// Time fallback: every 30 minutes regardless of movement.
+    /// - Stationary / slow (< 5 m/s):  1km
+    /// - Normal off-road (5–15 m/s):   3km
+    /// - High speed (> 15 m/s):        5km
     private func shouldUploadLocationNow(_ location: CLLocation) -> Bool {
         guard let last = lastUploadedCoordinate else { return true }
         let lastCL = CLLocation(latitude: last.latitude, longitude: last.longitude)
@@ -424,12 +439,23 @@ extension ActiveTripSession: LocationManagerDelegate {
         return false
     }
 
-    /// Dynamic upload distance based on speed.
+    /// Returns the required upload distance based on current speed.
     private func uploadDistance(for speed: CLLocationSpeed) -> CLLocationDistance {
         switch speed {
         case ..<5:   return 1000
         case 5..<15: return 3000
         default:     return 5000
+        }
+    }
+
+    /// Updates the last uploaded location pin on the map with a 3-second debounce.
+    /// Prevents the pin from flickering when multiple uploads arrive in quick succession.
+    func updateLastUploadedLocation(_ location: CLLocationCoordinate2D) {
+        pinDebounceTimer?.invalidate()
+        pinDebounceTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.lastUploadedLocation = location
+            }
         }
     }
 }
@@ -440,6 +466,7 @@ extension ActiveTripSession {
 
     // MARK: Persisted GPS State
 
+    /// Last coordinate saved to the local GPS track — persisted so it survives app restarts.
     var lastSavedCoordinate: CLLocationCoordinate2D? {
         get {
             let lat = UserDefaults.standard.double(forKey: "lastSavedLat")
@@ -453,6 +480,7 @@ extension ActiveTripSession {
         }
     }
 
+    /// Number of GPS points saved locally — used as the index for new `LocationPoint` entries.
     var savedPointsCount: Int {
         get { UserDefaults.standard.integer(forKey: "savedPointsCount") }
         set { UserDefaults.standard.set(newValue, forKey: "savedPointsCount") }
@@ -460,6 +488,7 @@ extension ActiveTripSession {
 
     // MARK: Persisted Upload State
 
+    /// Timestamp of the last successful Firebase upload — defaults to `.distantPast` if never uploaded.
     var lastUploadDate: Date {
         get {
             let t = UserDefaults.standard.double(forKey: "lastUploadDate")
@@ -470,6 +499,7 @@ extension ActiveTripSession {
         }
     }
 
+    /// Last coordinate successfully uploaded to Firebase — used to measure distance since last upload.
     var lastUploadedCoordinate: CLLocationCoordinate2D? {
         get {
             let lat = UserDefaults.standard.double(forKey: "lastUploadedLat")
@@ -485,12 +515,13 @@ extension ActiveTripSession {
 
     // MARK: Constants
 
+    /// Minimum distance between locally saved GPS points (100m).
     var minDistanceBetweenSavedPoints: CLLocationDistance { 100 }
+
+    /// Maximum time allowed between Firebase uploads before a forced upload (30 min).
     var maxTimeBetweenUploads: TimeInterval { 30 * 60 }
 
     // MARK: SwiftData Context
-
-    var activeModelContext: ModelContext? { _activeModelContext }
 
     static var _activeModelContext: ModelContext?
 
@@ -499,12 +530,17 @@ extension ActiveTripSession {
         set { ActiveTripSession._activeModelContext = newValue }
     }
 
+    /// The active `ModelContext` — set once from `HomeViewModel.onAppear`.
+    var activeModelContext: ModelContext? { _activeModelContext }
+
+    /// Stores the active `ModelContext` — set once from `HomeViewModel.onAppear`.
     func setModelContext(_ context: ModelContext) {
         _activeModelContext = context
     }
 
     // MARK: AppSettings Helpers
 
+    /// Persists the active trip ID to `AppSettings` so it survives app restarts.
     private func saveActiveTripToSettings(tripId: String, context: ModelContext) {
         let descriptor = FetchDescriptor<AppSettings>()
 
@@ -519,6 +555,7 @@ extension ActiveTripSession {
         }
     }
 
+    /// Clears the active trip ID from `AppSettings` and resets all persisted GPS state.
     private func clearActiveTripFromSettings(context: ModelContext) {
         let descriptor = FetchDescriptor<AppSettings>()
 
@@ -526,11 +563,12 @@ extension ActiveTripSession {
             settings.currentTripId = ""
         }
 
-        savedPointsCount        = 0
-        lastUploadedCoordinate  = nil
-        lastSavedCoordinate     = nil
+        savedPointsCount       = 0
+        lastUploadedCoordinate = nil
+        lastSavedCoordinate    = nil
     }
 
+    /// Fetches the currently active trip from SwiftData using `activeTripId`.
     private func fetchActiveTrip(context: ModelContext) -> Trip? {
         let tripId = locationManager.activeTripId
         let descriptor = FetchDescriptor<Trip>(predicate: #Predicate { $0.tripId == tripId })

@@ -98,7 +98,7 @@
 		ECCD9F402FB7A26A00E2B5B9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECCD9F3E2FB7A26A00E2B5B9 /* Localizable.strings */; };
 		ECCD9F432FB7B79F00E2B5B9 /* MaintenanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */; };
 		ECCD9F832FB7CB0C00E2B5B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ECCD9F812FB7CB0C00E2B5B9 /* InfoPlist.strings */; };
-		ECCD9F862FB7E6FA00E2B5B9 /* TripSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */; };
+		ECCD9F862FB7E6FA00E2B5B9 /* ActiveTripSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9F852FB7E6FA00E2B5B9 /* ActiveTripSession.swift */; };
 		ECCD9FF22FB8AA5900E2B5B9 /* LocalizationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9FF12FB8AA5900E2B5B9 /* LocalizationHelper.swift */; };
 		ECCD9FF42FB8AA8E00E2B5B9 /* NavigationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9FF32FB8AA8E00E2B5B9 /* NavigationHelper.swift */; };
 		ECCD9FF62FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCD9FF52FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift */; };
@@ -196,7 +196,7 @@
 		ECCD9F422FB7B79F00E2B5B9 /* MaintenanceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceView.swift; sourceTree = "<group>"; };
 		ECCD9F822FB7CB0C00E2B5B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ECCD9F842FB7CB2700E2B5B9 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSessionManager.swift; sourceTree = "<group>"; };
+		ECCD9F852FB7E6FA00E2B5B9 /* ActiveTripSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveTripSession.swift; sourceTree = "<group>"; };
 		ECCD9FF12FB8AA5900E2B5B9 /* LocalizationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationHelper.swift; sourceTree = "<group>"; };
 		ECCD9FF32FB8AA8E00E2B5B9 /* NavigationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationHelper.swift; sourceTree = "<group>"; };
 		ECCD9FF52FB8AAA300E2B5B9 /* NetworkMonitorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorHelper.swift; sourceTree = "<group>"; };
@@ -541,7 +541,7 @@
 		ECBF0C012FD43E2300C02248 /* Session */ = {
 			isa = PBXGroup;
 			children = (
-				ECCD9F852FB7E6FA00E2B5B9 /* TripSessionManager.swift */,
+				ECCD9F852FB7E6FA00E2B5B9 /* ActiveTripSession.swift */,
 			);
 			path = Session;
 			sourceTree = "<group>";
@@ -657,7 +657,7 @@
 				EC2F63492FCA6DBA007FF45C /* CreateTripStepsView.swift in Sources */,
 				EC309FED2FABDC58003E343E /* FirebaseManager.swift in Sources */,
 				EC309FEE2FABDC58003E343E /* LocationManager.swift in Sources */,
-				ECCD9F862FB7E6FA00E2B5B9 /* TripSessionManager.swift in Sources */,
+				ECCD9F862FB7E6FA00E2B5B9 /* ActiveTripSession.swift in Sources */,
 				EC309FEF2FABDC58003E343E /* NotificationsManager.swift in Sources */,
 				EC2F62FC2FC7B07E007FF45C /* NoActiveTripsCard.swift in Sources */,
 				ECCD9FF42FB8AA8E00E2B5B9 /* NavigationHelper.swift in Sources */,

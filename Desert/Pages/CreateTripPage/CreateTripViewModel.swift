@@ -10,45 +10,50 @@ import Contacts
 import Combine
 import MapKit
 
+/// Manages all state and logic for the 3-step trip creation flow.
+///
+/// ## Responsibilities
+/// 1. Holding form fields for personal details (Step 0), vehicle details (Step 1), and trip details (Step 2)
+/// 2. Validating each step before allowing navigation to the next
+/// 3. Loading and persisting user info (name, car, plate) to SwiftData via `SavedInfo`
+/// 4. Importing and deduplicating emergency and group contacts from the device contacts
+/// 5. Searching and confirming a destination via MapKit
+/// 6. Building the `Trip` object and handing it off to `ActiveTripSession` to start
+///
+/// ## Talks To
+/// - `ActiveTripSession` — receives the built `Trip` via `startTrip`
+/// - `LocationManager` — checks authorization status before starting a trip
+/// - `SwiftData` — reads `SavedInfo` on load; writes back on trip start
 class CreateTripViewModel: ObservableObject {
 
-    // MARK: - Form Fields
+    // MARK: - Published — Form Fields
 
     @Published var tripName: String = {
         let f = DateFormatter()
         f.dateFormat = "d MMM"
         return f.string(from: Date()) + " Trip"
     }()
-
-    @Published var destination: String = ""
-    @Published var destinationLat: Double = 0
-    @Published var destinationLng: Double = 0
-
-    @Published var returnTime: Date = Date()
-
-    @Published var isGroup: Bool = false
-    @Published var groupCount: Int = 1
-
     @Published var fullName: String = ""
     @Published var phoneNumber: String = ""
-
     @Published var emergencyContacts: [Contact] = []
-    @Published var groupContacts: [Contact] = []
-
     @Published var carModel: String = ""
     @Published var selectedColor: String = ""
     @Published var isFourWheelDrive: Bool = false
-
     @Published var firstPlateLetter: String = ""
     @Published var secondPlateLetter: String = ""
     @Published var thirdPlateLetter: String = ""
-
     @Published var plateDigits: [String] = ["", "", "", ""]
-
     @Published var plateLetters: String = ""
     @Published var plateNumbers: String = ""
+    @Published var destination: String = ""
+    @Published var destinationLat: Double = 0
+    @Published var destinationLng: Double = 0
+    @Published var returnTime: Date = Date()
+    @Published var isGroup: Bool = false
+    @Published var groupCount: Int = 1
+    @Published var groupContacts: [Contact] = []
 
-    // MARK: - UI State
+    // MARK: - Published — UI State
 
     @Published var showEmergencyContactPicker = false
     @Published var showGroupContactPicker = false
@@ -56,21 +61,14 @@ class CreateTripViewModel: ObservableObject {
     @Published var showLocationAlert = false
     @Published var locationAlertTitle = ""
     @Published var locationAlertMessage = ""
-
     @Published var showErrors = false
     @Published var showStep0Errors = false
     @Published var showStep1Errors = false
     @Published var showStep2Errors = false
-
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
 
-    // MARK: - Load Guard
-
-    /// Prevents re-loading saved info on every `onAppear` (e.g. back navigation).
-    private(set) var hasLoadedInitialData: Bool = false
-
-    // MARK: - Destination Picker State
+    // MARK: - Published — Destination Picker
 
     @Published var destinationSearchText: String = ""
     @Published var destinationSearchResults: [MKMapItem] = []
@@ -80,6 +78,11 @@ class CreateTripViewModel: ObservableObject {
         center: CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
+
+    // MARK: - Private
+
+    /// Prevents re-loading saved info on every `onAppear` (e.g. back navigation).
+    private(set) var hasLoadedInitialData: Bool = false
 
     // MARK: - Validation
 
@@ -182,6 +185,8 @@ class CreateTripViewModel: ObservableObject {
         return digits + String(repeating: "-", count: max(0, 4 - digits.count))
     }
 
+    /// Validates the given step and sets the corresponding error flag if validation fails.
+    /// Returns `true` if the user can proceed to the next step.
     func canProceedFromStep(_ step: Int) -> Bool {
         switch step {
 
@@ -221,11 +226,15 @@ class CreateTripViewModel: ObservableObject {
         }
     }
 
+    /// Merges the individual plate letter and digit fields into the flat `plateLetters` and `plateNumbers` strings.
+    /// Called before validation and before building the `Trip` object.
     func updatePlateInfoFromTemplate() {
         plateLetters = firstPlateLetter + secondPlateLetter + thirdPlateLetter
         plateNumbers = plateDigits.joined()
     }
 
+    /// Splits `plateLetters` and `plateNumbers` back into the individual UI fields.
+    /// Called when loading saved info or repeating a trip.
     func loadPlateInfoToTemplate() {
         let letters = Array(plateLetters)
 
@@ -242,6 +251,8 @@ class CreateTripViewModel: ObservableObject {
         }
     }
     
+    /// A two-way binding that strips the `+966` prefix for display and re-adds it on input.
+    /// Keeps `phoneNumber` always in `+9665XXXXXXXX` format internally.
     var localPhoneBinding: Binding<String> {
         Binding(
             get: {
@@ -260,6 +271,7 @@ class CreateTripViewModel: ObservableObject {
         )
     }
 
+    /// Normalizes raw phone input into `+9665XXXXXXXX` format, stripping any leading `966` or `0`.
     func formatUserPhoneInput(_ value: String) {
         let digits = value.filter { $0.isNumber }
         var local = digits
@@ -279,6 +291,7 @@ class CreateTripViewModel: ObservableObject {
 
 extension CreateTripViewModel {
 
+    /// Pre-fills all form fields from the user's saved info. Sets `hasLoadedInitialData` to prevent re-loading on back navigation.
     func loadSavedInfo(_ savedInfo: SavedInfo?) {
         guard let saved = savedInfo else { return }
 
@@ -298,6 +311,7 @@ extension CreateTripViewModel {
         hasLoadedInitialData = true
     }
 
+    /// Populates all form fields from an existing trip — used when repeating a previous trip.
     func loadTripData(from trip: Trip) {
         tripName = trip.tripName
         destination = trip.destination
@@ -330,6 +344,8 @@ extension CreateTripViewModel {
 
 extension CreateTripViewModel {
 
+    /// Validates and adds a contact from the device contacts picker as an emergency contact.
+    /// Shows a temporary error if the contact is a duplicate, has an invalid number, or the limit (3) is reached.
     func importEmergencyContact(_ contact: CNContact) {
 
         guard emergencyContacts.count < 3 else {
@@ -363,6 +379,8 @@ extension CreateTripViewModel {
         )
     }
 
+    /// Validates and adds a contact from the device contacts picker as a group member.
+    /// Shows a temporary error if the contact is a duplicate or has an invalid Saudi number.
     func importGroupContact(_ contact: CNContact) {
 
         let rawPhone = contact.phoneNumbers.first?.value.stringValue ?? ""
@@ -505,24 +523,28 @@ extension CreateTripViewModel {
         return true
     }
     
+    /// Opens the device Settings app so the user can update location permissions.
     func openAppSettings() {
         if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
     }
 
+    /// Loads all fields from a previous trip and resets `returnTime` to now — used by the "Repeat Trip" flow.
     func loadTripForRepeat(_ trip: Trip) {
         loadTripData(from: trip)
         returnTime = Date()
         hasLoadedInitialData = true
     }
     
+    /// Generates a fallback trip name from today's date — e.g. `"6 Jun"`.
     private func defaultTripName() -> String {
         let f = DateFormatter()
         f.dateFormat = "d MMM"
         return f.string(from: Date())
     }
 
+    /// Saves or updates the user's personal and vehicle info in SwiftData for future trip auto-fill.
     private func saveUserInfo(context: ModelContext) {
         let descriptor = FetchDescriptor<SavedInfo>()
 
@@ -567,6 +589,7 @@ extension CreateTripViewModel {
 
 extension CreateTripViewModel {
 
+    /// Searches MapKit for destinations matching `destinationSearchText` within the current map region.
     func searchDestination() {
         guard !destinationSearchText.trimmingCharacters(in: .whitespaces).isEmpty else { return }
 
@@ -578,6 +601,7 @@ extension CreateTripViewModel {
         }
     }
 
+    /// Sets the map pin to a search result and updates the visible region to center on it.
     func selectDestination(_ item: MKMapItem) {
         pinCoordinate = item.placemark.coordinate
         pinName = item.name ?? destinationSearchText
@@ -586,6 +610,7 @@ extension CreateTripViewModel {
         destinationSearchText = item.name ?? ""
     }
 
+    /// Reverse-geocodes a manually dropped pin coordinate to get a human-readable place name.
     func reverseGeocode(_ coordinate: CLLocationCoordinate2D) {
         CLGeocoder().reverseGeocodeLocation(
             CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -595,6 +620,8 @@ extension CreateTripViewModel {
         }
     }
 
+    /// Commits the current pin as the trip destination and stores its coordinate.
+    /// Falls back to raw coordinate text if no place name is available.
     func confirmDestination() {
         guard let coord = pinCoordinate else { return }
         destination = pinName.isEmpty ? coordinateText() : pinName
@@ -602,6 +629,7 @@ extension CreateTripViewModel {
         destinationLng = coord.longitude
     }
 
+    /// Formats `pinCoordinate` as a readable string — e.g. `"24.7136, 46.6753"`.
     private func coordinateText() -> String {
         guard let pin = pinCoordinate else { return "" }
         return String(format: "%.4f, %.4f", pin.latitude, pin.longitude)

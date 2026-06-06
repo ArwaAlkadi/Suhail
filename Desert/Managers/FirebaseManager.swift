@@ -22,7 +22,7 @@ import FirebaseAuth
 /// 1. Signing in anonymously to get a persistent user ID
 /// 2. Generating a unique secure trip ID using an atomic Firebase counter
 /// 3. Saving full trip data to Firestore when a trip starts
-/// 4. Updating the last known location every 2km or 1 hour
+/// 4. Updating the last known location based on speed (1–5km) or every 30 minutes
 /// 5. Marking a trip as completed when it ends
 /// 6. Listening to trip status changes from Cloud Functions
 ///
@@ -42,7 +42,6 @@ import FirebaseAuth
 ///
 ///     // 4. Mark trip as completed on end
 ///     FirebaseManager.shared.endTrip(tripId: tripId)
-/// }
 /// ```
 ///
 /// - Important: Always call ``signInAnonymously()`` first on app launch,
@@ -226,8 +225,9 @@ class FirebaseManager {
     // MARK: - Update Location
     /// Updates the last known location in Firestore.
     ///
-    /// Writes to `c-lastKnownLocation` only — does not rewrite the full document.
-    /// Called by `ActiveTripSession` every 2km moved or every 30 minutes, whichever comes first.
+    /// Writes to `d-lastKnownLocation` only — does not rewrite the full document.
+    /// Called by `ActiveTripSession` based on speed (1km slow / 3km normal / 5km fast)
+    /// or every 30 minutes as a time fallback, whichever comes first.
     ///
     /// - Parameters:
     ///   - tripId: The Firebase trip ID to update.

@@ -2,9 +2,6 @@
 //  HomeViewModel.swift
 //  Desert
 //
-//  Provides computed map data for the active trip displayed in HomeView.
-//  Also handles app-level setup and active trip card logic.
-//
 
 import SwiftUI
 import MapKit
@@ -12,12 +9,33 @@ import SwiftData
 import Network
 import Combine
 
+/// Drives `HomeView` — prepares map data for the active trip and handles app-level setup.
+///
+/// ## Responsibilities
+/// 1. Providing computed map data: GPS track, last uploaded location, and destination pin
+/// 2. Formatting the time-remaining / overdue label shown on the active trip card
+/// 3. Delegating return-time updates and trip-end actions to `ActiveTripSession`
+/// 4. Monitoring network connectivity to reflect upload status in the UI
+/// 5. Bootstrapping app services on first appearance (session resume, notification permission)
+///
+/// ## Talks To
+/// - `ActiveTripSession` — for `resumeActiveSessionIfNeeded`, `updateReturnTime`, `finishTrip`
+/// - `NotificationsManager` — requests permission on `onAppear`
+/// - `LocationManager` — reads `currentUserLocation` for the map
 class HomeViewModel: ObservableObject {
 
     // MARK: - Upload Status
 
+    /// Reflects the Firebase upload state of a return-time edit.
     enum UploadStatus {
-        case idle, uploading, uploaded, pending
+        /// No edit in progress.
+        case idle
+        /// Upload request sent, awaiting Firebase response.
+        case uploading
+        /// Upload confirmed by Firebase.
+        case uploaded
+        /// No network — update will retry when connectivity returns.
+        case pending
 
         var label: String {
             switch self {
@@ -29,14 +47,19 @@ class HomeViewModel: ObservableObject {
         }
     }
 
+    // MARK: - Published
+
     @Published var returnTimeUploadStatus: UploadStatus = .idle
     @Published var isConnected = true
+
+    // MARK: - Private
 
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "HomeViewNetworkMonitor")
 
     // MARK: - Network Monitoring
 
+    /// Starts listening for connectivity changes.
     func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
             DispatchQueue.main.async {
@@ -46,6 +69,7 @@ class HomeViewModel: ObservableObject {
         monitor.start(queue: queue)
     }
 
+    /// Stops the network monitor. Call from `onDisappear`.
     func stopMonitoring() {
         monitor.cancel()
     }
@@ -72,6 +96,8 @@ class HomeViewModel: ObservableObject {
 
     // MARK: - Days Left Text
 
+    /// Formats the time remaining (or overdue) for a trip into a human-readable string.
+    /// Returns a localized plural string — e.g. "2 days left", "3 hours overdue".
     func daysLeftText(for returnTime: Date) -> String {
         let seconds = returnTime.timeIntervalSince(Date())
 
@@ -105,6 +131,8 @@ class HomeViewModel: ObservableObject {
 
     // MARK: - Active Trip Card Actions
 
+    /// Saves an edited return time to Firebase and updates `returnTimeUploadStatus` accordingly.
+    /// Silently no-ops if `editedReturnTime` is in the past.
     func saveReturnTime(trip: Trip, editedReturnTime: Date) {
         guard editedReturnTime > Date() else { return }
 
@@ -124,13 +152,14 @@ class HomeViewModel: ObservableObject {
         }
     }
 
+    /// Delegates trip termination to `ActiveTripSession`.
     func endTrip(_ trip: Trip, context: ModelContext) {
         ActiveTripSession.shared.finishTrip(trip: trip, context: context)
     }
 
     // MARK: - App Setup
 
-    /// Called on HomeView.onAppear.
+    /// Bootstraps all app-level services. Called from `HomeView.onAppear`.
     func onAppear(context: ModelContext) {
         ActiveTripSession.shared.setModelContext(context)
         ActiveTripSession.shared.resumeActiveSessionIfNeeded(context: context)
@@ -138,6 +167,7 @@ class HomeViewModel: ObservableObject {
         startMonitoring()
     }
 
+    /// Stops the network monitor when the view disappears.
     func onDisappear() {
         stopMonitoring()
     }
