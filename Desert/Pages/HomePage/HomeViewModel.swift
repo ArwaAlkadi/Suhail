@@ -14,12 +14,12 @@ import Combine
 /// ## Responsibilities
 /// 1. Providing computed map data: GPS track, last uploaded location, and destination pin
 /// 2. Formatting the time-remaining / overdue label shown on the active trip card
-/// 3. Delegating return-time updates and trip-end actions to `ActiveTripSession`
+/// 3. Delegating return-time updates and trip-end actions to `TripSessionManager`
 /// 4. Monitoring network connectivity to reflect upload status in the UI
 /// 5. Bootstrapping app services on first appearance (session resume, notification permission)
 ///
 /// ## Talks To
-/// - `ActiveTripSession` — for `resumeActiveSessionIfNeeded`, `updateReturnTime`, `finishTrip`
+/// - `TripSessionManager` — for `resumeActiveSessionIfNeeded`, `updateReturnTime`, `finishTrip`
 /// - `NotificationsManager` — requests permission on `onAppear`
 /// - `LocationManager` — reads `currentUserLocation` for the map
 class HomeViewModel: ObservableObject {
@@ -76,11 +76,12 @@ class HomeViewModel: ObservableObject {
 
     // MARK: - Map Data Helpers
 
-    /// Returns the full local GPS track for the active trip as map coordinates.
+    /// Returns the full local GPS track for the active trip as map coordinates, sorted by index.
     func localTrack(for trip: Trip?) -> [CLLocationCoordinate2D] {
-        trip?.gpsTrack.map {
-            CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng)
-        } ?? []
+        trip?.gpsTrack
+            .sorted { $0.index < $1.index }
+            .map { CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.lng) }
+        ?? []
     }
 
     /// Returns the last successfully uploaded location to Firebase, if available.
@@ -152,7 +153,7 @@ class HomeViewModel: ObservableObject {
         }
     }
 
-    /// Delegates trip termination to `ActiveTripSession`.
+    /// Delegates trip termination to `TripSessionManager`.
     func endTrip(_ trip: Trip, context: ModelContext) {
         ActiveTripSession.shared.finishTrip(trip: trip, context: context)
     }
