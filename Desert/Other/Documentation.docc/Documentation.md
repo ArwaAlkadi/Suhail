@@ -31,6 +31,7 @@ A safety app for desert and remote trips that tracks users, provides a shareable
 - ``Trip``
 - ``Contact``
 - ``LocationPoint``
+- ``UserDefaultsKeys``
 
 ### Managers
 - ``LocationManager``

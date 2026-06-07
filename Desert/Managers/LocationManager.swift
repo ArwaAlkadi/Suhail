@@ -40,7 +40,7 @@ enum LocationContextResult {
 /// 5. Restoring tracking state after a force quit using `UserDefaults`
 ///
 /// ## Talks To
-/// - `ActiveTripSession` — receives new locations via `LocationManagerDelegate`
+/// - `TripSessionManager` — receives new locations via `LocationManagerDelegate`
 ///
 /// ## Notes
 /// - `distanceFilter` is 100 m — delegate fires every 100 m, not every meter
@@ -100,7 +100,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     /// Starts full GPS tracking for a trip and persists `tripId` to `UserDefaults` for force-quit recovery.
     func startTrackingForTrip(_ tripId: String) {
-        UserDefaults.standard.set(tripId, forKey: "activeTripId")
+        UserDefaults.standard.set(tripId, forKey: UserDefaultsKeys.activeTripId)
 
         activeTripId = tripId
         isTrackingActive = true
@@ -132,7 +132,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         activeTripId = ""
         lastKnownLocation = nil
 
-        UserDefaults.standard.removeObject(forKey: "activeTripId")
+        UserDefaults.standard.removeObject(forKey: UserDefaultsKeys.activeTripId)
 
         print("LocationManager: tracking stopped — no background updates")
     }
@@ -162,7 +162,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     /// Re-attaches GPS tracking if a `tripId` was saved in `UserDefaults` from a previous session.
     /// Called from `AppDelegate.application(_:didFinishLaunchingWithOptions:)`.
     func restoreSessionAfterForceQuit() {
-        let tripId = UserDefaults.standard.string(forKey: "activeTripId") ?? ""
+        let tripId = UserDefaults.standard.string(forKey: UserDefaultsKeys.activeTripId) ?? ""
         guard !tripId.isEmpty else { return }
 
         activeTripId = tripId

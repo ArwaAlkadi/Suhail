@@ -42,6 +42,7 @@ import FirebaseAuth
 ///
 ///     // 4. Mark trip as completed on end
 ///     FirebaseManager.shared.endTrip(tripId: tripId)
+/// }
 /// ```
 ///
 /// - Important: Always call ``signInAnonymously()`` first on app launch,
@@ -57,8 +58,8 @@ class FirebaseManager {
     /// The current anonymous user ID — persists on device across sessions.
     /// `nil` until ``signInAnonymously()`` completes.
     private(set) var userId: String? {
-        get { UserDefaults.standard.string(forKey: "anonymousUserId") }
-        set { UserDefaults.standard.set(newValue, forKey: "anonymousUserId") }
+        get { UserDefaults.standard.string(forKey: UserDefaultsKeys.anonymousUserId) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.anonymousUserId) }
     }
     
     // MARK: - Remote Config Models
@@ -311,6 +312,7 @@ class FirebaseManager {
     func endTrip(tripId: String) {
         db.collection("trips").document(tripId).updateData([
             "b-status.status": "completed",
+
             "b-status.endedAt": Date().timeIntervalSince1970,
             "b-status.endedAtReadable": formatDate(Date())
         ]) { error in

@@ -20,8 +20,8 @@ import FirebaseFirestore
 ///
 /// ## Trip Status Flow
 /// ```
-/// "active" → returnTime exceeded → "overdue"
-/// "overdue" → user safely returns → "completed"
+/// .active → returnTime exceeded → .overdue
+/// .overdue → user safely returns → .completed
 /// ```
 ///
 /// ## Auto-End Logic
@@ -72,12 +72,8 @@ import FirebaseFirestore
 /// // 4. Update return time if the user edits it
 /// ActiveTripSession.shared.updateReturnTime(trip: trip, newReturnTime: date, onSuccess: {}, onFailure: {})
 ///
-/// // 5a. End manually (user taps "I'm Back Safely")
+/// // 5. End the trip manually
 /// ActiveTripSession.shared.finishTrip(trip: trip, context: context)
-///
-/// // 5b. End automatically — triggered by overdueTimer when user is in urban area
-///
-/// // 5c. End remotely — triggered by Firestore listener when Cloud Function completes
 /// ```
 ///
 /// - Note: Steps 1 and 2 are called from `HomeViewModel.onAppear`.
@@ -469,21 +465,21 @@ extension ActiveTripSession {
     /// Last coordinate saved to the local GPS track — persisted so it survives app restarts.
     var lastSavedCoordinate: CLLocationCoordinate2D? {
         get {
-            let lat = UserDefaults.standard.double(forKey: "lastSavedLat")
-            let lng = UserDefaults.standard.double(forKey: "lastSavedLng")
+            let lat = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastSavedLat)
+            let lng = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastSavedLng)
             guard lat != 0 else { return nil }
             return CLLocationCoordinate2D(latitude: lat, longitude: lng)
         }
         set {
-            UserDefaults.standard.set(newValue?.latitude ?? 0, forKey: "lastSavedLat")
-            UserDefaults.standard.set(newValue?.longitude ?? 0, forKey: "lastSavedLng")
+            UserDefaults.standard.set(newValue?.latitude ?? 0, forKey: UserDefaultsKeys.lastSavedLat)
+            UserDefaults.standard.set(newValue?.longitude ?? 0, forKey: UserDefaultsKeys.lastSavedLng)
         }
     }
 
     /// Number of GPS points saved locally — used as the index for new `LocationPoint` entries.
     var savedPointsCount: Int {
-        get { UserDefaults.standard.integer(forKey: "savedPointsCount") }
-        set { UserDefaults.standard.set(newValue, forKey: "savedPointsCount") }
+        get { UserDefaults.standard.integer(forKey: UserDefaultsKeys.savedPointsCount) }
+        set { UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.savedPointsCount) }
     }
 
     // MARK: Persisted Upload State
@@ -491,25 +487,25 @@ extension ActiveTripSession {
     /// Timestamp of the last successful Firebase upload — defaults to `.distantPast` if never uploaded.
     var lastUploadDate: Date {
         get {
-            let t = UserDefaults.standard.double(forKey: "lastUploadDate")
+            let t = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastUploadDate)
             return t == 0 ? .distantPast : Date(timeIntervalSince1970: t)
         }
         set {
-            UserDefaults.standard.set(newValue.timeIntervalSince1970, forKey: "lastUploadDate")
+            UserDefaults.standard.set(newValue.timeIntervalSince1970, forKey: UserDefaultsKeys.lastUploadDate)
         }
     }
 
     /// Last coordinate successfully uploaded to Firebase — used to measure distance since last upload.
     var lastUploadedCoordinate: CLLocationCoordinate2D? {
         get {
-            let lat = UserDefaults.standard.double(forKey: "lastUploadedLat")
-            let lng = UserDefaults.standard.double(forKey: "lastUploadedLng")
+            let lat = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastUploadedLat)
+            let lng = UserDefaults.standard.double(forKey: UserDefaultsKeys.lastUploadedLng)
             guard lat != 0 else { return nil }
             return CLLocationCoordinate2D(latitude: lat, longitude: lng)
         }
         set {
-            UserDefaults.standard.set(newValue?.latitude ?? 0, forKey: "lastUploadedLat")
-            UserDefaults.standard.set(newValue?.longitude ?? 0, forKey: "lastUploadedLng")
+            UserDefaults.standard.set(newValue?.latitude ?? 0, forKey: UserDefaultsKeys.lastUploadedLat)
+            UserDefaults.standard.set(newValue?.longitude ?? 0, forKey: UserDefaultsKeys.lastUploadedLng)
         }
     }
 

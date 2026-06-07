@@ -162,7 +162,7 @@ class Contact {
 // MARK: - LocationPoint
 
 /// A single GPS point in the local trip track.
-/// Saved every 250m — drawn on the map only, never uploaded to Firebase.
+/// Saved every 100 to 250m — drawn on the map only, never uploaded to Firebase.
 @Model
 class LocationPoint {
     var index: Int

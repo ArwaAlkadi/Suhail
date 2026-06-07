@@ -31,9 +31,9 @@ struct DesertApp: App {
     }
     
     init() {
-        if UserDefaults.standard.object(forKey: "AppLanguageSet") == nil {
-            UserDefaults.standard.set(["en"], forKey: "AppleLanguages")
-//            UserDefaults.standard.set(true, forKey: "AppLanguageSet") until the aribic problem fixed
+        if UserDefaults.standard.object(forKey: UserDefaultsKeys.appLanguageSet) == nil {
+            UserDefaults.standard.set(["en"], forKey: UserDefaultsKeys.appleLanguages)
+//            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.appLanguageSet) until the arabic problem fixed
         }
     }
 }
