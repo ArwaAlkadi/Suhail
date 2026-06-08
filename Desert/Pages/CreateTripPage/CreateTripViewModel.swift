@@ -18,10 +18,10 @@ import MapKit
 /// 3. Loading and persisting user info (name, car, plate) to SwiftData via `SavedInfo`
 /// 4. Importing and deduplicating emergency and group contacts from the device contacts
 /// 5. Searching and confirming a destination via MapKit
-/// 6. Building the `Trip` object and handing it off to `ActiveTripSession` to start
+/// 6. Building the `Trip` object and handing it off to `TripSessionManager` to start
 ///
 /// ## Talks To
-/// - `ActiveTripSession` — receives the built `Trip` via `startTrip`
+/// - `TripSessionManager` — receives the built `Trip` via `startTrip`
 /// - `LocationManager` — checks authorization status before starting a trip
 /// - `SwiftData` — reads `SavedInfo` on load; writes back on trip start
 class CreateTripViewModel: ObservableObject {
@@ -558,7 +558,7 @@ extension CreateTripViewModel {
             existing.plateNumbers = plateNumbers
 
             existing.defaultEmergencyContacts = emergencyContacts.map {
-                SavedContact(name: $0.name, phone: $0.phone, contactType: "emergency")
+                SavedContact(name: $0.name, phone: $0.phone)
             }
 
           
@@ -575,7 +575,7 @@ extension CreateTripViewModel {
             )
 
             saved.defaultEmergencyContacts = emergencyContacts.map {
-                SavedContact(name: $0.name, phone: $0.phone, contactType: "emergency")
+                SavedContact(name: $0.name, phone: $0.phone)
             }
 
            

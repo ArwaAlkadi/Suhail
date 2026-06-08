@@ -6,7 +6,7 @@
 import SwiftData
 import Foundation
 
-/// One instance per device that stores the user's most recent trip data for auto-filling future trips.
+/// Stores the user's default trip data for auto-filling future trips.
 ///
 /// ## Responsibilities
 /// 1. Holding personal and vehicle details entered during previous trips
@@ -54,7 +54,7 @@ class SavedInfo {
 
 // MARK: - SavedContact
 
-/// One instance per saved contact inside `SavedInfo` — converted to `Contact` when a new trip starts.
+/// A persisted contact inside `SavedInfo` — converted to `Contact` when a new trip starts.
 @Model
 class SavedContact {
 
@@ -63,14 +63,10 @@ class SavedContact {
     var name: String
     var phone: String
 
-    /// Either `"emergency"` or `"group"`.
-    var contactType: String
-
     // MARK: - Init
 
-    init(name: String, phone: String, contactType: String) {
+    init(name: String, phone: String) {
         self.name = name
         self.phone = phone
-        self.contactType = contactType
     }
 }
