@@ -198,53 +198,53 @@ async function sendAlert({ tripId, trip, type }) {
     const tripStartTime = tripInfo["c-startTimeReadable"] ?? "غير معروف";
     const returnTime = tripInfo["e-returnTimeReadable"] ?? "غير معروف";
     const lastUpload = location["e-lastUploadTimeReadable"] ?? "غير معروف";
-    const direction = location["c-direction"] ?? "غير معروف";
-    const directionLine = `\nاتجاه الحركة:\n${direction}`;
+    const direction = location["c-direction"];
+    const directionLine = direction ? `\nاتجاه الحركة:\n${direction}` : "";
 
     const mapsLink = `https://maps.google.com/?q=${lat},${lng}`;
     const tripLink = `https://suhail-1.web.app/?id=${tripId}`;
 
     const batteryLevel = location["f-deviceBatteryLevel"];
     const batteryLine = (batteryLevel != null && batteryLevel >= 0)
-        ? `\nنسبة البطارية:\n${batteryLevel}%`
+        ? `\nنسبة بطارية المستخدم عند آخر تحديث:\n${batteryLevel}%`
         : "";
 
     const message = type === "updated"
         ? `عزيزي وليّ الأمر،
 
-    وصلنا تحديث جديد لموقع ${userName} بعد تنبيه عدم العودة السابق.
+وصلنا تحديث جديد لموقع ${userName} بعد تنبيه عدم العودة السابق.
 
-    📍 آخر موقع معروف:
-    ${mapsLink}
+📍 آخر موقع معروف:
+${mapsLink}
 
-    آخر تحديث للموقع:
-    ${lastUpload}${directionLine}${batteryLine}
+آخر تحديث للموقع:
+${lastUpload}${directionLine}${batteryLine}
 
-    سنستمر في متابعة أي تحديثات، وسنقوم بإشعاركم فور وصول أي معلومات جديدة للموقع.
+سنستمر في متابعة أي تحديثات، وسنقوم بإشعاركم فور وصول أي معلومات جديدة للموقع.
 
-    للاطلاع على تفاصيل الرحلة كاملة:
-    ${tripLink}
+للاطلاع على تفاصيل الرحلة كاملة:
+${tripLink}
 
-    — تطبيق سهيل`
+— تطبيق سهيل`
         : `عزيزي وليّ الأمر،
 
-    لم نتلقَّ أي إشارة من ${userName} بعد وقت العودة المتوقع.
-    بدأت رحلته الساعة ${tripStartTime}، وكان من المفترض أن تنتهي الساعة ${returnTime}.
+لم نتلقَّ أي إشارة من ${userName} بعد وقت العودة المتوقع.
+بدأت رحلته الساعة ${tripStartTime}، وكان من المفترض أن تنتهي الساعة ${returnTime}.
 
-    📍 آخر موقع معروف:
-    ${mapsLink}
+📍 آخر موقع معروف:
+${mapsLink}
 
-    آخر تحديث للموقع:
-    ${lastUpload}${directionLine}${batteryLine}
+آخر تحديث للموقع:
+${lastUpload}${directionLine}${batteryLine}
 
-    ندرك أن هذا الموقف قد يكون مقلقًا، لذلك نوصي بمحاولة التواصل معه مباشرة. وفي حال عدم القدرة على الوصول إليه، يُرجى التواصل مع الجهات المختصة على الرقم: 911
+ندرك أن هذا الموقف قد يكون مقلقًا، لذلك نوصي بمحاولة التواصل معه مباشرة. وفي حال عدم القدرة على الوصول إليه، يُرجى التواصل مع الجهات المختصة على الرقم: 911
 
-    سنستمر في متابعة أي تحديثات، وسنقوم بإشعاركم فور وصول أي معلومات أو تحديث جديد للموقع.
+سنستمر في متابعة أي تحديثات، وسنقوم بإشعاركم فور وصول أي معلومات أو تحديث جديد للموقع.
 
-    للاطلاع على تفاصيل الرحلة كاملة:
-    ${tripLink}
+للاطلاع على تفاصيل الرحلة كاملة:
+${tripLink}
 
-    — تطبيق سهيل`;
+— تطبيق سهيل`;
 
     let sentToAtLeastOneContact = false;
 
