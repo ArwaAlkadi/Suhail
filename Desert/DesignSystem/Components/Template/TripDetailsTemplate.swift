@@ -45,7 +45,7 @@ private extension TripDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("trip.name".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             AppTextField(
                 placeholderKey: "trip.name.placeholder",
@@ -66,7 +66,7 @@ private extension TripDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("trip.destination".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             Button {
                 onSelectDestination()
@@ -91,7 +91,7 @@ private extension TripDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("trip.time".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             DateRangeRow(
                 startLabelKey: "trip.startTime",

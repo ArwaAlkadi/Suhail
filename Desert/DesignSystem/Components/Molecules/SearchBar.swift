@@ -61,8 +61,6 @@ struct SearchBar: View {
                 }
             }
             .padding(.horizontal, AppSpacing.md)
-            .frame(width: style == .withBackButton ? 318 : nil)
-            .frame(maxWidth: style == .withBackButton ? nil : .infinity)
             .frame(height: 52)
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: 50))

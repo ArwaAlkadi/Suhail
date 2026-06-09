@@ -44,7 +44,7 @@ private extension ToolbarButton {
     var iconName: String {
         switch icon {
         case .back:
-            return "chevron.left"
+            return "chevron.backward"
 
         case .close:
             return "xmark"

@@ -29,7 +29,8 @@ struct ActiveTripCard: View {
     @State private var isExpanded = false
     @State private var selectedReturnTime = Date()
     @State private var draftReturnTime = Date()
-    @State private var activePicker: ActivePicker? = nil
+    @State private var showDatePicker = false
+    @State private var showTimePicker = false
     @State private var showUploadStatus = false
     
     private var hasReturnTimeChanges: Bool {
@@ -41,13 +42,13 @@ struct ActiveTripCard: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.lg) {
+           VStack(alignment: .leading, spacing: AppSpacing.lg) {
             
             headerSection
                 .contentShape(Rectangle())
                 .onTapGesture {
                     withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-
+                        
                         isExpanded.toggle()
                     }
                 }
@@ -60,7 +61,7 @@ struct ActiveTripCard: View {
         }
         .padding(.horizontal, AppSpacing.lg)
         .padding(.vertical, AppSpacing.lg)
-        .frame(maxWidth: 360, alignment: .leading)
+        .frame(maxWidth: 360, alignment: .center)
         .frame(maxWidth: .infinity, alignment: .center)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
@@ -81,13 +82,15 @@ struct ActiveTripCard: View {
                     showUploadStatus = false
                 }
             }
-        }        .sheet(isPresented: Binding(
-            get: { activePicker != nil },
-            set: { if !$0 { activePicker = nil } }
-        )) {
-            dateTimePickerSheet
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
+        }
+        .sheet(isPresented: $showDatePicker) {
+            DateTimePickerSheet(
+                selectedDate: $draftReturnTime,
+                mode: .date
+            )
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
+            .presentationBackground(Color.white)
         }
     }
 }
@@ -101,43 +104,53 @@ private extension ActiveTripCard {
     var headerSection: some View {
         HStack(alignment: .top) {
             
-            VStack(alignment: .leading, spacing: 6) {
-                Text(tripName)
-                    .font(AppTypography.body)
-                    .foregroundStyle(Color.Primary)
-                
-                Text(daysLeft)
-                    .font(AppTypography.title1)
-                    .foregroundStyle(Color.Primary)
-                
-            }
+            headerTitle
             
             Spacer()
             
-            HStack(spacing: AppSpacing.sm) {
-                StatusBadge(
-                    titleKey: isOverdue ? "activeTrip.overdue" : "activeTrip.active",
-                    style: isOverdue ? .destructive : .positive,
-                    size: .small
-                )
-                
-                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(Color.lableSec)
-            }
+            headerActions
+        }
+    }
+    
+    var headerTitle: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(tripName)
+                .font(AppTypography.body)
+                .foregroundStyle(Color.Primary)
+                .multilineTextAlignment(.leading)
+            
+            Text(daysLeft)
+                .font(AppTypography.title1)
+                .foregroundStyle(Color.Primary)
+                .multilineTextAlignment(.leading)
+        }
+    }
+    
+    
+    var headerActions: some View {
+        HStack(spacing: AppSpacing.sm) {
+            StatusBadge(
+                titleKey: isOverdue ? "activeTrip.overdue" : "activeTrip.active",
+                style: isOverdue ? .destructive : .positive,
+                size: .small
+            )
+            
+            Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(Color.lableSec)
         }
     }
     
     var returnTimeSection: some View {
-        VStack(alignment: .leading, spacing: AppSpacing.sm) {
+        VStack(alignment: AppLanguage.horizontalAlignment, spacing: AppSpacing.sm) {
             
             HStack {
                 Text("activeTrip.returnTime".localized)
-                    .font(AppTypography.caption)
-                    .foregroundStyle(Color.lableSec)
-
+                    .font(AppTypography.headline)
+                    .foregroundStyle(Color.Lableblack)
+                
                 Spacer()
-
+                
                 if showUploadStatus {
                     uploadStatus
                 }
@@ -146,33 +159,42 @@ private extension ActiveTripCard {
             HStack(spacing: AppSpacing.sm) {
                 dateChip
                 timeChip
-
+                
                 if hasReturnTimeChanges {
                     updateButton
                 }
             }
         }
         .padding(AppSpacing.md)
-        .background(Color.Primary.opacity(0.06))
-        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
+        //        .background(Color.Primary.opacity(0.06))
+        //        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
     }
     
     var dateChip: some View {
         Button {
-            activePicker = .date
+            showDatePicker = true
         } label: {
             chipText(formatDate(displayedReturnTime))
         }
         .buttonStyle(.plain)
     }
     
+    
     var timeChip: some View {
         Button {
-            activePicker = .time
+            showTimePicker = true
         } label: {
             chipText(formatTime(displayedReturnTime))
         }
         .buttonStyle(.plain)
+        .popover(isPresented: $showTimePicker) {
+            DateTimePickerSheet(
+                selectedDate: $draftReturnTime,
+                mode: .time
+            )
+            .frame(width: 320, height: 220)
+            .presentationCompactAdaptation(.popover)
+        }
     }
     
     func chipText(_ text: String) -> some View {
@@ -187,7 +209,7 @@ private extension ActiveTripCard {
             .background(Color.Primary)
             .clipShape(Capsule())
     }
-
+    
     var updateButton: some View {
         Button {
             guard draftReturnTime > Date() else { return }
@@ -212,7 +234,7 @@ private extension ActiveTripCard {
             if isUploaded {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 12))
-                    .foregroundStyle(Color.green)
+                    .foregroundStyle(Color.Positive)
             } else {
                 ProgressView()
                     .scaleEffect(0.6)
@@ -221,16 +243,31 @@ private extension ActiveTripCard {
             
             Text(isUploaded ? "activeTrip.uploaded".localized : "activeTrip.uploading".localized)
                 .font(AppTypography.caption2)
-                .foregroundStyle(isUploaded ? Color.green : Color.lableSec)
+                .foregroundStyle(isUploaded ? Color.Positive : Color.lableSec)
         }
     }
     
     var emergencyContactsSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.md) {
-            Text(String(format: "activeTrip.emergencyContactsCount".localized, emergencyContacts.count))
+            HStack {
+                if AppLanguage.isArabic {
+                    Spacer()
+                }
+                
+                Text(
+                    "activeTrip.emergencyContacts".localized
+                    + " (\(formatNumber(emergencyContacts.count)))"
+                )
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Primary)
-
+                
+                if !AppLanguage.isArabic {
+                    Spacer()
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .environment(\.layoutDirection, .leftToRight)
+            
             VStack(spacing: 0) {
                 ForEach(Array(emergencyContacts.enumerated()), id: \.offset) { index, contact in
                     ContactRow(
@@ -245,9 +282,8 @@ private extension ActiveTripCard {
             .background(Color.white)
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
-    
-    
     var endTripButton: some View {
         Button {
             onEndTrip()
@@ -256,34 +292,66 @@ private extension ActiveTripCard {
                 .font(AppTypography.headline)
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
-                .frame(minHeight: 52)
-                .background(isConnected ? Color.Disabled : Color.Primary)
-                .clipShape(RoundedRectangle(cornerRadius: AppRadius.xxl))
+                .frame(height: 52)
+                .background(
+                    isConnected ? Color.Disabled : Color.Primary
+                )
+                .clipShape(
+                    RoundedRectangle(cornerRadius: AppRadius.xxl)
+                )
         }
-        .frame(maxWidth: 291)
-        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal, AppSpacing.md)
         .disabled(isConnected)
         .buttonStyle(.plain)
     }
-    
     
     // Helpers
     
     func formatDate(_ date: Date) -> String {
         let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: AppLanguage.isArabic ? "ar" : "en_US")
+        formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "d MMM yyyy"
-        return formatter.string(from: date)
-    }
-
-    func formatTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"
-        return formatter.string(from: date)
+        
+        let value = formatter.string(from: date)
+        return AppLanguage.isArabic ? localizeDigits(value) : value
     }
     
-    var dateTimePickerSheet: some View {
-        DateTimePickerSheet(selectedDate: $draftReturnTime)
+    func formatTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: AppLanguage.isArabic ? "ar" : "en_US")
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "h:mm a"
+        
+        let value = formatter.string(from: date)
+        return AppLanguage.isArabic ? localizeDigits(value) : value
     }
+    
+    func localizeDigits(_ text: String) -> String {
+        guard AppLanguage.isArabic else { return text }
+        
+        let westernDigits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+        let arabicDigits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"]
+        
+        var result = text
+        
+        for index in westernDigits.indices {
+            result = result.replacingOccurrences(
+                of: westernDigits[index],
+                with: arabicDigits[index]
+            )
+        }
+        
+        return result
+    }
+    
+    func formatNumber(_ number: Int) -> String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: AppLanguage.isArabic ? "ar_SA" : "en_US")
+        formatter.numberStyle = .decimal
+        return formatter.string(from: NSNumber(value: number)) ?? "\(number)"
+    }
+
 }
 
 #Preview {

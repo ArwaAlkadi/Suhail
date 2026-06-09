@@ -127,8 +127,8 @@ extension TripHistoryView {
                             : "history.status.noAlert",
                         badgeStyle: trip.alertSent ? .destructive : .positive,
                         durationKey: vm.tripDuration(trip),
-                        distanceKey: "\(trip.gpsTrack.count * 250 / 1000) KM",
-                        peopleType: trip.groupSize == 1 ? .solo : .group,
+                        distanceKey: vm.formatDistance(trip.gpsTrack.count),
+                      peopleType: trip.groupSize == 1 ? .solo : .group,
                         peopleKey: String.localizedStringWithFormat(
                             NSLocalizedString("history.peopleCount", tableName: "PluralStrings", comment: ""),
                             trip.groupSize

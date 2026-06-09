@@ -6,66 +6,80 @@
 //
 
 import SwiftUI
-
 struct DateTimePickerSheet: View {
 
+    enum PickerMode {
+        case date
+        case time
+        case dateAndTime
+    }
+
     @Binding var selectedDate: Date
+    var mode: PickerMode = .dateAndTime
+
+    private var isArabic: Bool {
+        Locale.current.language.languageCode?.identifier == "ar"
+    }
 
     var body: some View {
-
         VStack(spacing: AppSpacing.md) {
-
-            DatePicker(
-                "",
-                selection: Binding(
-                    get: { selectedDate },
-                    set: { newDate in
-                        selectedDate = merge(date: newDate, time: selectedDate)
-                    }
-                ),
-                in: Calendar.current.startOfDay(for: Date())...,
-                displayedComponents: [.date]
-            )
-            .datePickerStyle(.graphical)
-            .labelsHidden()
-            .tint(Color.Secondary02)
-
-            AppDivider()
-
-            HStack {
-
-                Text("activeTrip.time".localized)
-                    .font(AppTypography.headline)
-                    .foregroundStyle(Color.Primary)
-
-                Spacer()
-
+            
+            if mode == .date || mode == .dateAndTime {
                 DatePicker(
                     "",
                     selection: Binding(
                         get: { selectedDate },
-                        set: { newTime in
-                            selectedDate = merge(date: selectedDate, time: newTime)
+                        set: { newDate in
+                            selectedDate = merge(date: newDate, time: selectedDate)
                         }
                     ),
-                    displayedComponents: [.hourAndMinute]
+                    in: Calendar(identifier: .gregorian).startOfDay(for: Date())...,
+                    displayedComponents: [.date]
                 )
+                .datePickerStyle(.graphical)
                 .labelsHidden()
                 .tint(Color.Secondary02)
             }
+
+            if mode == .dateAndTime {
+                AppDivider()
+            
+            }
+            
+            if mode == .time || mode == .dateAndTime {
+                if mode == .time {
+                    DatePicker(
+                        "",
+                        selection: Binding(
+                            get: { selectedDate },
+                            set: { newTime in
+                                selectedDate = merge(date: selectedDate, time: newTime)
+                            }
+                        ),
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .datePickerStyle(.wheel)
+                    .labelsHidden()
+                    .tint(Color.Secondary02)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 180)
+                }
+            }
         }
         .padding(AppSpacing.lg)
-        .background(Color.white)
+        .environment(\.locale, Locale(identifier: isArabic ? "ar_SA" : "en_US"))
+        .environment(\.calendar, Calendar(identifier: .gregorian))
+        .environment(\.layoutDirection, isArabic ? .rightToLeft : .leftToRight)
     }
 
     private func merge(date: Date, time: Date) -> Date {
-
-        let calendar = Calendar.current
+        let calendar = Calendar(identifier: .gregorian)
 
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
         let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
 
         var components = DateComponents()
+        components.calendar = calendar
         components.year = dateComponents.year
         components.month = dateComponents.month
         components.day = dateComponents.day
@@ -74,11 +88,4 @@ struct DateTimePickerSheet: View {
 
         return calendar.date(from: components) ?? selectedDate
     }
-}
-
-#Preview {
-
-    DateTimePickerSheet(
-        selectedDate: .constant(Date())
-    )
 }

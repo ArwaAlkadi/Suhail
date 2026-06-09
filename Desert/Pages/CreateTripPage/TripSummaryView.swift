@@ -34,7 +34,10 @@ struct TripSummaryView: View {
             returnTime: vm.returnTime,
             destination: vm.destination,
             carDetails: vm.carModel.isEmpty ? "—" : "\(vm.selectedColor.localized) \(vm.carModel)",
-            plateNumber: vm.plateLetters.isEmpty ? "—" : "\(vm.plateNumbers) | \(vm.plateLetters)",
+            plateNumber: PlateFormatter.display(
+                numbers: vm.plateNumbers,
+                letters: vm.plateLetters
+            ),
             isGroup: vm.isGroup,
             groupCount: vm.groupCount,
             emergencyContacts: vm.emergencyContacts,

@@ -59,7 +59,6 @@ struct SummaryTemplate: View {
                 .padding(.horizontal, AppSpacing.md)
             }
         }
-        .environment(\.layoutDirection, .leftToRight)
     }
 }
 
@@ -105,7 +104,7 @@ private extension SummaryTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("summary.emergencyContacts".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             VStack(spacing: 0) {
                 ForEach(emergencyContacts, id: \.name) { contact in
@@ -134,7 +133,7 @@ private extension SummaryTemplate {
             VStack(alignment: .leading, spacing: AppSpacing.sm) {
                 Text("summary.groupContactOptional".localized)
                     .font(AppTypography.headline)
-                    .foregroundStyle(Color.Primary)
+                    .foregroundStyle(Color.Lableblack)
 
                 VStack(spacing: 0) {
                     ForEach(groupContacts, id: \.name) { contact in
@@ -191,6 +190,7 @@ private extension SummaryTemplate {
 
     func formatDate(_ date: Date) -> String {
         let f = DateFormatter()
+        f.locale = Locale(identifier: Locale.current.language.languageCode?.identifier == "ar" ? "ar_SA" : "en_US")
         f.dateFormat = "d MMMM, h:mma"
         return f.string(from: date)
     }

@@ -14,33 +14,18 @@ enum AppTypography {
            Locale.current.language.languageCode?.identifier == "en"
 
        }
-       private static func arabicFontName(for weight: Font.Weight) -> String {
-
-           switch weight {
-
-           case .bold:
-
-               return "thmanyah sans-Bold"
-
-           case .semibold, .medium:
-
-               return "thmanyah sans-Medium"
-
-           case .light:
-
-               return "thmanyah sans-Light"
-
-           case .black, .heavy:
-
-               return "thmanyahsans-Black"
-
-           default:
-
-               return "thmanyahsans-Regular"
-
-           }
-
-       }
+    private static func arabicFontName(for weight: Font.Weight) -> String {
+        switch weight {
+        case .bold, .semibold, .medium:
+            return "thmanyahsans-Bold"
+        case .light:
+            return "thmanyahsans-Light"
+        case .black, .heavy:
+            return "thmanyahsans-Black"
+        default:
+            return "thmanyahsans-Regular"
+        }
+    }
 
        private static func font(
 
@@ -71,7 +56,6 @@ enum AppTypography {
                    relativeTo: style
 
                )
-
            }
 
        }

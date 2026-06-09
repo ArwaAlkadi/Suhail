@@ -12,7 +12,7 @@ struct CreateTripStepTemplate<Content: View>: View {
     var titleKey: String
     var currentStep: Int
     var totalSteps: Int = 3
-
+    
     var buttonTitleKey: String
     var isLoading: Bool = false
     var leadingButton: HeaderView.LeadingButton
@@ -45,21 +45,27 @@ struct CreateTripStepTemplate<Content: View>: View {
             }
             
             content
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: AppLanguage.frameAlignment)
         }
         .safeAreaInset(edge: .bottom) {
             VStack(spacing: 0) {
                 if !isInputFocused {
                     CTAButton(
-                        title: buttonTitleKey.localized
+                        title: isLoading ? "" : buttonTitleKey.localized
                     ) {
                         guard !isLoading else { return }
                         onNext()
                     }
                     .overlay {
                         if isLoading {
-                            ProgressView()
-                                .tint(.white)
+                            HStack(spacing: AppSpacing.sm) {
+                                ProgressView()
+                                    .tint(.white)
+                                
+                                Text(buttonTitleKey.localized)
+                                    .font(AppTypography.headline)
+                                    .foregroundStyle(.white)
+                            }
                         }
                     }
                     .disabled(isLoading)
@@ -67,11 +73,13 @@ struct CreateTripStepTemplate<Content: View>: View {
                     .padding(.vertical, AppSpacing.xl)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .background(Color.Background.ignoresSafeArea(edges: .bottom))
+                    .frame(maxWidth: .infinity)
+                    .background(Color.Background.ignoresSafeArea(edges: .bottom))
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .background(Color.Background.ignoresSafeArea())
+            .ignoresSafeArea(.keyboard, edges: .bottom)
+            .environment(\.layoutDirection, AppLanguage.layoutDirection)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.Background.ignoresSafeArea())
-        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
-}
+

@@ -44,7 +44,7 @@ private extension PersonalDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("trip.fullName".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             AppTextField(
                 placeholderKey: "trip.fullName.placeholder",
@@ -69,13 +69,13 @@ private extension PersonalDetailsTemplate {
 
             Text("trip.phone".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             HStack(spacing: AppSpacing.sm) {
 
                 Text("trip.phone.countryCode".localized)
                     .font(AppTypography.body)
-                    .foregroundStyle(Color.Primary)
+                    .foregroundStyle(Color.Lableblack)
 
                 Rectangle()
                     .fill(Color.Grey100)
@@ -112,14 +112,3 @@ private extension PersonalDetailsTemplate {
 
 }
 
-#Preview {
-    PersonalDetailsTemplate(
-        fullName: .constant("Samar Alqahtani"),
-        phoneNumber: .constant("512345678"),
-        emergencyContacts: .constant([
-            Contact(name: "Om Saqr", phone: "+966 5X XXX XXXX"),
-            Contact(name: "Fajer", phone: "+966 5X XXX XXXX"),
-            Contact(name: "Nouf", phone: "+966 5X XXX XXXX")
-        ])
-    )
-}
