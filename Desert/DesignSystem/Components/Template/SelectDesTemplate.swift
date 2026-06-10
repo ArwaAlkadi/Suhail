@@ -35,7 +35,6 @@ struct SelectDestinationTemplate<MapContent: View>: View {
                     backAction: onBack,
                     searchAction: onSearch
                 )
-                .frame(maxWidth: 340)
                 .padding(.horizontal, AppSpacing.md)
                 .zIndex(1)
                 
@@ -56,24 +55,26 @@ struct SelectDestinationTemplate<MapContent: View>: View {
                                                     .foregroundStyle(Color.Primary)
                                             }
 
-                                        VStack(alignment: .leading, spacing: 2) {
+                                        VStack(alignment: AppLanguage.horizontalAlignment, spacing: 2) {
                                             Text(result.item.name ?? "")
                                                 .font(AppTypography.body)
                                                 .foregroundStyle(Color.Primary)
                                                 .lineLimit(1)
+                                                .multilineTextAlignment(AppLanguage.textAlignment)
 
                                             if let subtitle = result.subtitle {
                                                 Text(subtitle)
                                                     .font(AppTypography.caption)
                                                     .foregroundStyle(Color.lableSec)
                                                     .lineLimit(1)
+                                                    .multilineTextAlignment(AppLanguage.textAlignment)
                                             }
                                         }
 
                                         Spacer()
                                     }
                                     .padding(.horizontal, AppSpacing.md)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .frame(maxWidth: .infinity, alignment: AppLanguage.frameAlignment)
                                     .frame(height: 68)
                                 }
                                 .buttonStyle(.plain)
@@ -85,21 +86,18 @@ struct SelectDestinationTemplate<MapContent: View>: View {
                             }
                         }
                     }
-                    .frame(width: 370)
                     .frame(maxHeight: min(CGFloat(searchResults.count) * 68, 370))
                     .background(Color.white)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(.top, AppSpacing.sm)
-                    .frame(maxWidth: .infinity, alignment: .top)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .zIndex(0)
+                    .padding(.horizontal, AppSpacing.md)
+                    .padding(.top, AppSpacing.md)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .top)
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
-        .environment(\.layoutDirection, .leftToRight)
+        .environment(\.layoutDirection, AppLanguage.layoutDirection)
         .safeAreaInset(edge: .bottom) {
             CTAButton(
                 title: "common.select".localized,
@@ -108,8 +106,7 @@ struct SelectDestinationTemplate<MapContent: View>: View {
                 onConfirm()
             }
             .padding(.horizontal, AppSpacing.md)
-            .padding(.top, AppSpacing.lg)
-            .padding(.bottom, AppSpacing.sm)
+            .padding(.vertical, AppSpacing.xl)
         }
         
     }

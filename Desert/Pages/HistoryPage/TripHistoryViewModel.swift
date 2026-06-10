@@ -35,6 +35,7 @@ class TripHistoryViewModel: ObservableObject {
 
     var localTrack: [CLLocationCoordinate2D] = []
     var destinationLocation: CLLocationCoordinate2D? = nil
+      
 
     // MARK: - Private
 
@@ -48,7 +49,6 @@ class TripHistoryViewModel: ObservableObject {
         ActiveTripSession.shared.hasActiveTrip
     }
 
-    // MARK: - Alert Status
 
     /// Fetches `alertSent` from Firebase and caches it in `alertStatuses` for display.
     func fetchAlertStatus(
@@ -67,7 +67,7 @@ class TripHistoryViewModel: ObservableObject {
     /// Skips trips that have already been synced (`didSyncAlertStatus == true`).
     func syncAlertStatusIfNeeded(for trip: Trip, context: ModelContext) {
         guard trip.didSyncAlertStatus == false else { return }
-
+        
         firebase.fetchAlertStatus(tripId: trip.tripId) { sent in
             DispatchQueue.main.async {
                 trip.alertSent = sent
@@ -76,7 +76,7 @@ class TripHistoryViewModel: ObservableObject {
             }
         }
     }
-
+    
     // MARK: - Delete
 
     /// Deletes all trips that are currently selected in multi-select mode.
@@ -87,14 +87,17 @@ class TripHistoryViewModel: ObservableObject {
         }
         selectedTrips.removeAll()
     }
+    
 
     /// Deletes a single trip from SwiftData immediately.
     func deleteTrip(_ trip: Trip, context: ModelContext) {
         context.delete(trip)
         try? context.save()
     }
-
+    
     // MARK: - Formatting
+
+    
 
     /// Formats a trip start date into a readable string — e.g. `"06 May, 03:45pm"`.
     func formatStartDate(_ date: Date) -> String {
@@ -103,24 +106,31 @@ class TripHistoryViewModel: ObservableObject {
         return formatter.string(from: date)
     }
 
+
     /// Returns the trip duration as a human-readable string — e.g. "2D 3h", "5h".
     /// Uses `endedAt` if available, falls back to `returnTime`.
     func tripDuration(_ trip: Trip) -> String {
         let endDate = trip.endedAt ?? trip.returnTime
         let seconds = endDate.timeIntervalSince(trip.startTime)
+
         let totalHours = max(0, Int(seconds / 3600))
         let days = totalHours / 24
         let hours = totalHours % 24
 
+        let dayUnit = AppLanguage.isArabic ? "ي" : "D"
+        let hourUnit = AppLanguage.isArabic ? "س" : "h"
+
+        let daysText = formatNumber(days)
+        let hoursText = formatNumber(hours)
+
         if days > 0 && hours > 0 {
-            return "\(days)D \(hours)h"
+            return "\(daysText)\(dayUnit) \(hoursText)\(hourUnit)"
         } else if days > 0 {
-            return "\(days)D"
+            return "\(daysText)\(dayUnit)"
         } else {
-            return "\(hours)h"
+            return "\(hoursText)\(hourUnit)"
         }
     }
-
     // MARK: - Replay
 
     /// Returns the visible portion of the track based on the current replay position.
@@ -161,5 +171,36 @@ class TripHistoryViewModel: ObservableObject {
     func resetReplay() {
         stopReplay()
         replayIndex = 0
+    }
+    
+    // MARK: - Formatting
+
+    func formatNumber(_ number: Int) -> String {
+        guard AppLanguage.isArabic else {
+            return "\(number)"
+        }
+
+        let western = ["0","1","2","3","4","5","6","7","8","9"]
+        let arabic = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"]
+
+        var result = "\(number)"
+
+        for index in western.indices {
+            result = result.replacingOccurrences(
+                of: western[index],
+                with: arabic[index]
+            )
+        }
+
+        return result
+    }
+
+    func formatDistance(_ gpsCount: Int) -> String {
+        let km = gpsCount * 250 / 1000
+        let value = formatNumber(km)
+
+        return AppLanguage.isArabic
+            ? "\(value) كم"
+            : "\(value) KM"
     }
 }

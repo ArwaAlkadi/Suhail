@@ -65,7 +65,6 @@ struct TripTrackTemplate<MapContent: View>: View {
                 .padding(.bottom, 40)
             }
         }
-        .environment(\.layoutDirection, .leftToRight)
     }
 }
 

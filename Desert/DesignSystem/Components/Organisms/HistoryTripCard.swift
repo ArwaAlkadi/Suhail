@@ -11,7 +11,7 @@ struct HistoryTripCard: View {
     enum HistoryPeopleType {
         case solo
         case group
-
+        
         var icon: String {
             switch self {
             case .solo:
@@ -21,7 +21,7 @@ struct HistoryTripCard: View {
             }
         }
     }
-
+    
     var titleKey: String
     var destinationKey: String
     var statusKey: String
@@ -36,21 +36,27 @@ struct HistoryTripCard: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            
             headerSection
-                .padding(.bottom, 12)
-            
+                .padding(.horizontal, AppSpacing.md)
+                .padding(.top, AppSpacing.md)
+                .padding(.bottom, 10)
+
             AppDivider()
-            
+                .padding(.horizontal, AppSpacing.md)
+
             infoSection
-                .frame(minHeight: 52)
-            
+                .padding(.horizontal, AppSpacing.md)
+                .padding(.vertical, AppSpacing.sm)
+
             AppDivider()
-            
+                .padding(.horizontal, AppSpacing.md)
+
             footerSection
-                .padding(.top, 12)
+                .padding(.horizontal, AppSpacing.md)
+                .padding(.top, 10)
+                .padding(.bottom, AppSpacing.md)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 16)
         .frame(maxWidth: .infinity)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
@@ -65,7 +71,7 @@ private extension HistoryTripCard {
             VStack(alignment: .leading, spacing: 2) {
                 Text(titleKey.localized)
                     .font(AppTypography.headline)
-                    .foregroundStyle(Color.Primary)
+                    .foregroundStyle(Color.Lableblack)
                     .lineLimit(1)
                 
                 Text(destinationKey.localized)
@@ -108,13 +114,13 @@ private extension HistoryTripCard {
             
             HStack(spacing: 8) {
                 Image(systemName: "calendar")
-                    .font(.system(size: 15, weight: .semibold))
+                    .font(.system(size: 17, weight: .semibold))
                 
                 Text(dateKey.localized)
                     .font(AppTypography.caption)
                     .lineLimit(1)
             }
-            .foregroundStyle(Color.Primary)
+            .foregroundStyle(Color.Lableblack)
             
             Spacer(minLength: AppSpacing.sm)
             
@@ -143,7 +149,7 @@ private extension HistoryTripCard {
                 .lineLimit(1)
                 .minimumScaleFactor(0.8)
         }
-        .foregroundStyle(Color.Primary)
+        .foregroundStyle(Color.Lableblack)
         .frame(maxWidth: .infinity)
     }
 }

@@ -51,6 +51,7 @@ struct HomeTemplate: View {
                     .padding(.horizontal, AppSpacing.lg)
                     .padding(.bottom, 100)
                 }
+                
             }
 
         }
@@ -88,8 +89,9 @@ extension HomeTemplate {
                     } label: {
                         FABButton(icon: .map) { }
                     }
+                    
                 }
-                .padding(.trailing, AppSpacing.lg)
+                .padding(.trailing, AppSpacing.md)
                 .padding(.top, 68)
             }
             Spacer()

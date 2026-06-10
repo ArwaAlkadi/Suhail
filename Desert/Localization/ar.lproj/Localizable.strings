@@ -56,6 +56,8 @@
 "trip.addContact" = "إضافة جهة طوارئ";
 "contact.add" = "إضافة جهة اتصال";
 "trip.contactsLimit" = "الحد الأقصى 3 جهات اتصال";
+"contact.delete.title" = "حذف جهة الاتصال؟";
+"contact.delete.message" = "سيتم إزالة جهة الاتصال هذه من قائمة جهات اتصال الطوارئ.";
 
 
 /* MARK: - Vehicle Details */
@@ -122,7 +124,7 @@
 "activeTrip.overdue" = "متأخرة";
 "activeTrip.returnTime" = "وقت العودة";
 "activeTrip.updateTime" = "تحديث وقت العودة";
-"activeTrip.emergencyContactsCount" = "جهات الطوارئ (%d)";
+"activeTrip.emergencyContacts" = "جهات الطوارئ";
 "activeTrip.endTrip" = "إنهاء الرحلة";
 "activeTrip.uploaded" = "تم الرفع";
 "activeTrip.uploading" = "جارٍ الرفع";

@@ -26,13 +26,20 @@ import MapKit
 /// - `SwiftData` — reads `SavedInfo` on load; writes back on trip start
 class CreateTripViewModel: ObservableObject {
 
+
     // MARK: - Published — Form Fields
 
-    @Published var tripName: String = {
-        let f = DateFormatter()
-        f.dateFormat = "d MMM"
-        return f.string(from: Date()) + " Trip"
-    }()
+    @Published var tripName: String = CreateTripViewModel.makeDefaultTripName()
+
+    @Published var destination: String = ""
+    @Published var destinationLat: Double = 0
+    @Published var destinationLng: Double = 0
+
+    @Published var returnTime: Date = Date()
+
+    @Published var isGroup: Bool = false
+    @Published var groupCount: Int = 1
+
     @Published var fullName: String = ""
     @Published var phoneNumber: String = ""
     @Published var emergencyContacts: [Contact] = []
@@ -45,15 +52,49 @@ class CreateTripViewModel: ObservableObject {
     @Published var plateDigits: [String] = ["", "", "", ""]
     @Published var plateLetters: String = ""
     @Published var plateNumbers: String = ""
-    @Published var destination: String = ""
-    @Published var destinationLat: Double = 0
-    @Published var destinationLng: Double = 0
-    @Published var returnTime: Date = Date()
-    @Published var isGroup: Bool = false
-    @Published var groupCount: Int = 1
     @Published var groupContacts: [Contact] = []
 
-    // MARK: - Published — UI State
+    static func makeDefaultTripName() -> String {
+        let formatter = DateFormatter()
+
+        if AppLanguage.isArabic {
+            formatter.locale = Locale(identifier: "ar")
+            formatter.calendar = Calendar(identifier: .gregorian)
+        } else {
+            formatter.locale = Locale(identifier: "en_US")
+        }
+
+        formatter.dateFormat = "d MMM"
+
+        var dateText = formatter.string(from: Date())
+
+        if AppLanguage.isArabic {
+            dateText = localizeDigits(dateText)
+        }
+
+        return AppLanguage.isArabic
+            ? "رحلة \(dateText)"
+            : "\(dateText) Trip"
+    }
+
+    static func localizeDigits(_ text: String) -> String {
+        guard AppLanguage.isArabic else { return text }
+
+        let western = ["0","1","2","3","4","5","6","7","8","9"]
+        let arabic = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"]
+
+        var result = text
+
+        for index in western.indices {
+            result = result.replacingOccurrences(
+                of: western[index],
+                with: arabic[index]
+            )
+        }
+
+        return result
+    }
+
 
     @Published var showEmergencyContactPicker = false
     @Published var showGroupContactPicker = false
@@ -286,6 +327,7 @@ class CreateTripViewModel: ObservableObject {
         phoneNumber = local.isEmpty ? "" : "+966\(local)"
     }
 }
+
 
 // MARK: - Load Data
 
@@ -539,9 +581,7 @@ extension CreateTripViewModel {
     
     /// Generates a fallback trip name from today's date — e.g. `"6 Jun"`.
     private func defaultTripName() -> String {
-        let f = DateFormatter()
-        f.dateFormat = "d MMM"
-        return f.string(from: Date())
+        Self.makeDefaultTripName()
     }
 
     /// Saves or updates the user's personal and vehicle info in SwiftData for future trip auto-fill.

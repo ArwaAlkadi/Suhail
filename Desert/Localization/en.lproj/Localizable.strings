@@ -124,7 +124,7 @@
 "activeTrip.overdue" = "Overdue";
 "activeTrip.returnTime" = "Return Time";
 "activeTrip.updateTime" = "Update Return Time";
-"activeTrip.emergencyContactsCount" = "Emergency Contacts (%d)";
+"activeTrip.emergencyContacts" = "Emergency Contacts";
 "activeTrip.endTrip" = "End Trip";
 "activeTrip.uploaded" = "Uploaded";
 "activeTrip.uploading" = "Uploading";

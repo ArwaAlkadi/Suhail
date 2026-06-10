@@ -32,46 +32,48 @@ private extension TripSummaryCard {
     
     
     func summaryRow(titleKey: String, valueKey: String) -> some View {
-        HStack(alignment: .top, spacing: 12){
+        HStack(alignment: .top, spacing: 12) {
             Text(titleKey.localized)
                 .font(AppTypography.body)
                 .foregroundStyle(Color.Primary)
             
             Spacer(minLength: 8)
             
-            Text(valueKey.localized)
+            Text(valueKey)
                 .font(AppTypography.body)
                 .foregroundStyle(Color.lableSec)
                 .multilineTextAlignment(.trailing)
         }
-        .frame(minHeight: 37)
+        .padding(.vertical, AppSpacing.sx)
+        
     }
-}
-
-#Preview {
     
-    VStack(spacing: 24) {
+    #Preview {
         
-        TripSummaryCard(rows: [
-            ("Start Time", "1 Jun, 04:30PM"),
-            ("Return Time", "1 Jun, 09:00PM"),
-            ("Destination", "Al Thumamah"),
-            ("Car Details", "White Toyota Land Cruiser"),
-            ("Plate Number", "1234 | RSX"),
-            ("Selected Distance", "78 km"),
-            ("No. of individuals", "3 People")
-        ])
+        VStack(spacing: 24) {
+            
+            TripSummaryCard(rows: [
+                ("Start Time", "1 Jun, 04:30PM"),
+                ("Return Time", "1 Jun, 09:00PM"),
+                ("Destination", "Al Thumamah"),
+                ("Car Details", "White Toyota Land Cruiser"),
+                ("Plate Number", "1234 | RSX"),
+                ("Selected Distance", "78 km"),
+                ("No. of individuals", "3 People")
+            ])
+            
+            TripSummaryCard(rows: [
+                ("Start Time", "24 May, 09:15AM"),
+                ("Return Time", "24 May, 05:30PM"),
+                ("Destination", "Rub' al Khali"),
+                ("No. of individuals", "5 People"),
+                ("Car Details", "Black Nissan Patrol"),
+                ("Plate Number", "5678 | ABD"),
+                ("Distance", "240 km")
+            ])
+        }
+        .padding()
+        .background(Color.Background)
         
-        TripSummaryCard(rows: [
-            ("Start Time", "24 May, 09:15AM"),
-            ("Return Time", "24 May, 05:30PM"),
-            ("Destination", "Rub' al Khali"),
-            ("No. of individuals", "5 People"),
-            ("Car Details", "Black Nissan Patrol"),
-            ("Plate Number", "5678 | ABD"),
-            ("Distance", "240 km")
-        ])
     }
-    .padding()
-    .background(Color.Background)
 }

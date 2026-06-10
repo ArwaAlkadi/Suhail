@@ -155,7 +155,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "متبقي %lld ساعةً"
+                  "value" : "متبقي %lld ساعة"
                 }
               },
               "one" : {
@@ -295,7 +295,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "متبقي %lld دقيقةً"
+                  "value" : "متبقي %lld دقيقة"
                 }
               },
               "one" : {
@@ -365,7 +365,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "متأخر %lld دقيقةً"
+                  "value" : "متأخر %lld دقيقة"
                 }
               },
               "one" : {

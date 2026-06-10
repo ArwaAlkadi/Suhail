@@ -37,13 +37,17 @@ struct TripSummaryView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+            
             SummaryTemplate(
                 tripName: vm.tripName,
                 startTime: Date(),
                 returnTime: vm.returnTime,
                 destination: vm.destination,
                 carDetails: vm.carModel.isEmpty ? "—" : "\(vm.selectedColor.localized) \(vm.carModel)",
-                plateNumber: vm.plateLetters.isEmpty ? "—" : "\(vm.plateNumbers) | \(vm.plateLetters)",
+                plateNumber: PlateFormatter.display(
+                    numbers: vm.plateNumbers,
+                    letters: vm.plateLetters
+                ),
                 isGroup: vm.isGroup,
                 groupCount: vm.groupCount,
                 emergencyContacts: vm.emergencyContacts,
@@ -63,6 +67,7 @@ struct TripSummaryView: View {
                 onTermsTapped: { showTerms = true },
                 isLoading: $isLoading
             )
+         
             .sheet(isPresented: $showTerms) {
                 SafariView(url: URL(string: "https://your-terms-url.com")!)
             }

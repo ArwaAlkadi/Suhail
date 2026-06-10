@@ -23,7 +23,7 @@ struct HistoryTemplate<Content: View>: View {
         
         ZStack {
             
-            VStack(alignment: .leading, spacing: AppSpacing.lg) {
+            VStack(alignment: .leading, spacing: AppSpacing.md) {
                 
                 headerSection
                 
@@ -58,7 +58,7 @@ private extension HistoryTemplate {
                 .font(AppTypography.caption)
                 .foregroundStyle(Color.lableSec)
         }
-        .padding(.horizontal, AppSpacing.lg)
+        .padding(.horizontal, AppSpacing.md)
     }
     
     var emptyStateSection: some View {

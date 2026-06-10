@@ -52,15 +52,14 @@ struct HistoryTripDetailsTemplate: View {
                     emergencyContactsSection
                     groupContactsSection
                 }
-                .frame(maxWidth: 370, alignment: .leading)
-                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, AppSpacing.md)
                 .padding(.bottom, 90)
 
             }
         }
         .padding(.top, AppSpacing.sm)
         .background(Color.Background)
-        .environment(\.layoutDirection, .leftToRight)
         .safeAreaInset(edge: .bottom) {
             CTAButton(
                 title: "history.repeatTrip".localized,
@@ -126,7 +125,8 @@ private extension HistoryTripDetailsTemplate {
                 Image(systemName: "arrow.up.left.and.arrow.down.right")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(Color.Primary)
-                    .padding(AppSpacing.sm)
+                    .padding(.horizontal, AppSpacing.md)
+                    .padding(.vertical, AppSpacing.md)
             }
             .buttonStyle(.plain)
         }

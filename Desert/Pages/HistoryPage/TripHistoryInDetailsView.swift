@@ -52,8 +52,11 @@ struct TripHistoryInDetailsView: View {
             isGroup: trip.hasGroup,
             groupCount: trip.groupSize,
             carDetails: "\(trip.carColor.localized) \(trip.carName)",
-            plateNumber: "\(trip.plateNumbers) | \(trip.plateLetters)",
-            distance: "\(trip.gpsTrack.count * 250 / 1000) KM",
+            plateNumber: PlateFormatter.display(
+                numbers: trip.plateNumbers,
+                letters: trip.plateLetters
+            ),
+            distance: vm.formatDistance(trip.gpsTrack.count),
             emergencyContacts: trip.emergencyContacts.map {
                 (initial: String($0.name.prefix(1)), name: $0.name, phone: $0.phone)
             },

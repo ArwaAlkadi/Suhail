@@ -56,16 +56,17 @@ struct DateRangeRow: View {
         .padding(.vertical, AppSpacing.sm)
         .background(Color.white)
         .cornerRadius(AppRadius.md)
+        
+        
         .sheet(isPresented: $showDatePicker) {
-
-            DateTimePickerSheet(selectedDate: $returnTime)
-                .presentationDetents([.medium])
-                .presentationDragIndicator(.visible)
-                .environment(\.locale, Locale(identifier: "en"))
+                DateTimePickerSheet(selectedDate: $returnTime)
+                    .presentationDetents([.medium])
+                    .presentationDragIndicator(.visible)
+            }
         }
         
     }
-}
+
 
 private struct LabelValueItem: View {
 

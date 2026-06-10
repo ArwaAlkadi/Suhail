@@ -54,7 +54,7 @@ struct MapView: UIViewRepresentable {
         mapView.addSubview(scaleView)
 
         NSLayoutConstraint.activate([
-            compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -30),
+            compassButton.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -22),
             compassButton.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 16),
             scaleView.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 16),
             scaleView.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 16)

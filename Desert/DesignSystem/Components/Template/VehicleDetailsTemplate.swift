@@ -51,7 +51,7 @@ private extension VehicleDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("vehicle.carModel".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             AppTextField(
                 placeholderKey: "vehicle.carModel.placeholder",
@@ -73,7 +73,7 @@ private extension VehicleDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("vehicle.carColor".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             ColorPickerRow(
                 placeholderKey: "vehicle.color.placeholder",
@@ -101,7 +101,7 @@ private extension VehicleDetailsTemplate {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("vehicle.plateInfo".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
+                .foregroundStyle(Color.Lableblack)
 
             PlateInfoRow(
                 firstLetter: $firstPlateLetter,

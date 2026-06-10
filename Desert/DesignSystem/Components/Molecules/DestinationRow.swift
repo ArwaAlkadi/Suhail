@@ -24,7 +24,7 @@ struct DestinationRow: View {
 
             if let valueKey {
 
-                Text(valueKey.localized)
+                Text(valueKey)
                     .font(AppTypography.body)
                     .foregroundStyle(Color.Secondary02)
                     .lineLimit(1)
