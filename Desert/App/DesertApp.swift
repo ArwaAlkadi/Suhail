@@ -17,10 +17,11 @@ struct DesertApp: App {
     init() {
         registerFonts()
         
-        if UserDefaults.standard.object(forKey: "AppLanguageSet") == nil {
-            UserDefaults.standard.set(["ar"], forKey: "AppleLanguages")
-            UserDefaults.standard.set(true, forKey: "AppLanguageSet")
-        }
+        // To force Arabic as the default language on first launch, uncomment the following:
+//        if UserDefaults.standard.object(forKey: "AppLanguageSet") == nil {
+//            UserDefaults.standard.set(["ar"], forKey: "AppleLanguages")
+//            UserDefaults.standard.set(true, forKey: "AppLanguageSet")
+//        }
         
         print("Current Language:", Locale.current.language.languageCode?.identifier ?? "nil")
     }

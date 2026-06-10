@@ -408,6 +408,7 @@ class FirebaseManager {
     
     // MARK: - Maintenance Config
 
+    
     func fetchMaintenanceConfig() async throws -> MaintenanceConfig {
         let doc = try await db
             .collection("remoteConfig")
@@ -415,11 +416,12 @@ class FirebaseManager {
             .getDocument()
 
         let data = doc.data() ?? [:]
+        let isArabic = Locale.current.language.languageCode?.identifier == "ar"
 
         return MaintenanceConfig(
             isEnabled: data["isEnabled"] as? Bool ?? false,
-            title: data["title"] as? String ?? "Maintenance Mode",
-            message: data["message"] as? String ?? "Desert is currently under maintenance."
+            title: isArabic ? data["title_ar"] as? String ?? "" : data["title_en"] as? String ?? "",
+            message: isArabic ? data["message_ar"] as? String ?? "" : data["message_en"] as? String ?? ""
         )
     }
 
