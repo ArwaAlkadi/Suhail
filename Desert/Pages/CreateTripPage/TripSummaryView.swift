@@ -53,26 +53,18 @@ struct TripSummaryView: View {
                 emergencyContacts: vm.emergencyContacts,
                 groupContacts: vm.groupContacts,
                 isConnected: isConnected,
-                onBack: {
-                    dismiss()
-                },
+                onBack: { dismiss() },
                 onStartTrip: {
                     let didStart = vm.startTrip(context: context) {
                         onTripStarted()
                         goToMap()
                     }
-
                     if !didStart {
                         isLoading = false
-
-                        if !vm.returnTimeIsValid {
-                            onReturnTimeInvalid()
-                        }
+                        if !vm.returnTimeIsValid { onReturnTimeInvalid() }
                     }
                 },
-                onTermsTapped: {
-                    showTerms = true
-                },
+                onTermsTapped: { showTerms = true },
                 isLoading: $isLoading
             )
          

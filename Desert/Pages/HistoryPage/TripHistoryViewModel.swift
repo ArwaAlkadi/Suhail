@@ -21,7 +21,7 @@ import Combine
 /// - `FirebaseManager` — fetches and syncs `alertSent` status per trip
 /// - `ActiveTripSession` — reads `hasActiveTrip` to gate history actions
 /// - `SwiftData` — deletes `Trip` objects directly via `ModelContext`
-  class TripHistoryViewModel: ObservableObject {
+class TripHistoryViewModel: ObservableObject {
 
     // MARK: - Published
 
