@@ -85,7 +85,7 @@ struct RootView: View {
             networkMonitor.stopMonitoring()
         }
         .task {
-            await checkMaintenance()
+           // await checkMaintenance()
             await checkVersion()
         }
         .alert("update_required.title".localized, isPresented: $showUpdateAlert) {

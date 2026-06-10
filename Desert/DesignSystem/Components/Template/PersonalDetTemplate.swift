@@ -5,7 +5,6 @@
 //  Created by Samar A on 07/12/1447 AH.
 //
 
-// هنا عدلت رسالة الايرور لانه فيه نوعين
 
 import SwiftUI
 

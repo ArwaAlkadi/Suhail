@@ -43,7 +43,7 @@
 "trip.group.question" = "Are you with a group?";
 "trip.groupContact.optional" = "Group contact (optional)";
 "trip.groupContact.select" = "Select group contact";
-
+"time" = "Time";
 
 /* MARK: - Personal Details */
 "trip.personalDetails" = "Personal Details";

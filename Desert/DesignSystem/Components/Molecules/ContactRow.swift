@@ -84,8 +84,12 @@ private extension ContactRow {
                     .foregroundStyle(Color.Primary)
                     .lineLimit(2)
 
-                Text(captionKey.localized)
-                    .font(AppTypography.footnote)
+                Text(
+                    AppLanguage.isArabic
+                    ? localizeDigits(captionKey)
+                    : captionKey
+                )
+                     .font(AppTypography.footnote)
                     .foregroundStyle(Color.Disabled)
                     .lineLimit(2)
             }
@@ -98,7 +102,8 @@ private extension ContactRow {
                         offsetX = -deleteWidth
                     }
                 } label: {
-                    Image(systemName: "trash.fill")                      .font(.system(size: 18, weight: .medium))
+                    Image(systemName: "trash.fill")
+                        .font(.system(size: 18, weight: .medium))
                         .foregroundStyle(Color.Disabled.opacity(0.6))
                         .frame(width: 44, height: 44)
                 }
@@ -195,4 +200,21 @@ private extension ContactRow {
     }
     .padding()
     .background(Color.Background)
+}
+
+private func localizeDigits(_ text: String) -> String {
+
+    let westernDigits = ["0","1","2","3","4","5","6","7","8","9"]
+    let arabicDigits = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"]
+
+    var result = text
+
+    for index in westernDigits.indices {
+        result = result.replacingOccurrences(
+            of: westernDigits[index],
+            with: arabicDigits[index]
+        )
+    }
+
+    return result
 }

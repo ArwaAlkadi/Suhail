@@ -188,15 +188,18 @@ private extension ActiveTripCard {
         }
         .buttonStyle(.plain)
         .popover(isPresented: $showTimePicker) {
-            DateTimePickerSheet(
-                selectedDate: $draftReturnTime,
-                mode: .time
+            DatePicker(
+                "",
+                selection: $draftReturnTime,
+                displayedComponents: [.hourAndMinute]
             )
-            .frame(width: 320, height: 220)
+            .datePickerStyle(.wheel)
+            .labelsHidden()
+            .frame(width: 240, height: 120)
+            .padding(8)
             .presentationCompactAdaptation(.popover)
         }
     }
-    
     func chipText(_ text: String) -> some View {
         Text(text)
             .font(AppTypography.caption)
