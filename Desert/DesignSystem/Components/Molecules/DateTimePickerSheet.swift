@@ -15,6 +15,7 @@ struct DateTimePickerSheet: View {
     }
 
     @Binding var selectedDate: Date
+    var showsTimeLabel: Bool = true
     var mode: PickerMode = .dateAndTime
 
     private var isArabic: Bool {
@@ -23,7 +24,7 @@ struct DateTimePickerSheet: View {
 
     var body: some View {
         VStack(spacing: AppSpacing.md) {
-            
+
             if mode == .date || mode == .dateAndTime {
                 DatePicker(
                     "",
@@ -43,11 +44,27 @@ struct DateTimePickerSheet: View {
 
             if mode == .dateAndTime {
                 AppDivider()
-            
             }
-            
+
             if mode == .time || mode == .dateAndTime {
-                if mode == .time {
+
+                if showsTimeLabel {
+
+                    DatePicker(
+                        "time".localized,
+                        selection: Binding(
+                            get: { selectedDate },
+                            set: { newTime in
+                                selectedDate = merge(date: selectedDate, time: newTime)
+                            }
+                        ),
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .datePickerStyle(.compact)
+                    .tint(Color.Secondary02)
+
+                } else {
+
                     DatePicker(
                         "",
                         selection: Binding(
@@ -58,15 +75,15 @@ struct DateTimePickerSheet: View {
                         ),
                         displayedComponents: [.hourAndMinute]
                     )
-                    .datePickerStyle(.wheel)
+                    .datePickerStyle(.compact)
                     .labelsHidden()
                     .tint(Color.Secondary02)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 180)
                 }
             }
+
         }
         .padding(AppSpacing.lg)
+        .background(Color.white)
         .environment(\.locale, Locale(identifier: isArabic ? "ar_SA" : "en_US"))
         .environment(\.calendar, Calendar(identifier: .gregorian))
         .environment(\.layoutDirection, isArabic ? .rightToLeft : .leftToRight)
