@@ -1,3 +1,25 @@
+
+
+/* MARK: - Onboarding */
+"onboarding.title1" = "Suhail is your trip companion";
+"onboarding.description1" = "Register your trip, destination, return time, and emergency contacts before you go.";
+
+"onboarding.title2" = "Location updates in the background";
+"onboarding.description2" = "Your location is updated automatically during the trip.";
+
+"onboarding.title3" = "Enable notifications";
+"onboarding.description3" = "Get important trip and safety updates when needed.";
+
+"onboarding.title4" = "Ready to explore";
+"onboarding.description4" = "Start your trip and let Suhail stay with you along the way.";
+
+"onboarding.next" = "Next";
+"onboarding.notifications" = "Yes, notify me";
+"onboarding.getStarted" = "Get Started";
+
+"onboarding.skip" = "Skip";
+
+
 /* MARK: - App */
 "app_name" = "Suhail";
 "onboarding_subtitle" = "Your desert safety companion";
@@ -214,3 +236,9 @@
 "contact_already_added" = "This contact has already been added";
 "emergency_contact_required" = "At least one emergency contact is required";
 "no_internet_connection" = "No internet connection. Please check your connection before starting";
+
+/* MARK: -  Trip Completed  */
+
+"tripCompleted.title" = "Trip Completed";
+"tripCompleted.description" = "Live tracking has been turned off.";
+"tripCompleted.done" = "Done";

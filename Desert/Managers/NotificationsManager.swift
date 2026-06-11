@@ -48,17 +48,17 @@ class NotificationsManager: NSObject, ObservableObject, UNUserNotificationCenter
     /// Requests notification permission from the user.
     /// Called once from HomeViewModel.onAppear on the second app visit.
     /// Subsequent calls are ignored by iOS if permission was already decided.
-    func requestPermission() {
+    func requestPermission(completion: @escaping () -> Void) {
         UNUserNotificationCenter.current().requestAuthorization(
             options: [.alert, .sound]
         ) { granted, _ in
             DispatchQueue.main.async {
                 self.isAuthorized = granted
                 print("NotificationsManager: permission granted = \(granted)")
+                completion()
             }
         }
     }
-
     // MARK: - Foreground Presentation
 
     /// Allows notifications to appear while the app is in the foreground.

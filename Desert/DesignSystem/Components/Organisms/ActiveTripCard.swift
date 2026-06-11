@@ -280,6 +280,11 @@ private extension ActiveTripCard {
                         isEditable: false
                     )
                     .frame(minHeight: 70)
+                    
+                    if index < emergencyContacts.count - 1 {
+                               Divider()
+                                   .padding(.horizontal, AppSpacing.md)
+                        }
                 }
             }
             .background(Color.white)

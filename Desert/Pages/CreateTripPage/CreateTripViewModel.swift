@@ -25,21 +25,21 @@ import MapKit
 /// - `LocationManager` — checks authorization status before starting a trip
 /// - `SwiftData` — reads `SavedInfo` on load; writes back on trip start
 class CreateTripViewModel: ObservableObject {
-
-
+    
+    
     // MARK: - Published — Form Fields
-
+    
     @Published var tripName: String = CreateTripViewModel.makeDefaultTripName()
-
+    
     @Published var destination: String = ""
     @Published var destinationLat: Double = 0
     @Published var destinationLng: Double = 0
-
+    
     @Published var returnTime: Date = Date()
-
+    
     @Published var isGroup: Bool = false
     @Published var groupCount: Int = 1
-
+    
     @Published var fullName: String = ""
     @Published var phoneNumber: String = ""
     @Published var emergencyContacts: [Contact] = []
@@ -53,49 +53,62 @@ class CreateTripViewModel: ObservableObject {
     @Published var plateLetters: String = ""
     @Published var plateNumbers: String = ""
     @Published var groupContacts: [Contact] = []
-
+    
     static func makeDefaultTripName() -> String {
         let formatter = DateFormatter()
-
+        
         if AppLanguage.isArabic {
             formatter.locale = Locale(identifier: "ar")
             formatter.calendar = Calendar(identifier: .gregorian)
         } else {
             formatter.locale = Locale(identifier: "en_US")
         }
-
+        
         formatter.dateFormat = "d MMM"
-
+        
         var dateText = formatter.string(from: Date())
-
+        
         if AppLanguage.isArabic {
             dateText = localizeDigits(dateText)
         }
-
+        
         return AppLanguage.isArabic
-            ? "رحلة \(dateText)"
-            : "\(dateText) Trip"
+        ? "رحلة \(dateText)"
+        : "\(dateText) Trip"
     }
-
+    
     static func localizeDigits(_ text: String) -> String {
         guard AppLanguage.isArabic else { return text }
-
+        
         let western = ["0","1","2","3","4","5","6","7","8","9"]
         let arabic = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"]
-
+        
         var result = text
-
+        
         for index in western.indices {
             result = result.replacingOccurrences(
                 of: western[index],
                 with: arabic[index]
             )
         }
-
+        
         return result
     }
-
-
+    func normalizeArabicDigits(_ text: String) -> String {
+        text
+            .replacingOccurrences(of: "٠", with: "0")
+            .replacingOccurrences(of: "١", with: "1")
+            .replacingOccurrences(of: "٢", with: "2")
+            .replacingOccurrences(of: "٣", with: "3")
+            .replacingOccurrences(of: "٤", with: "4")
+            .replacingOccurrences(of: "٥", with: "5")
+            .replacingOccurrences(of: "٦", with: "6")
+            .replacingOccurrences(of: "٧", with: "7")
+            .replacingOccurrences(of: "٨", with: "8")
+            .replacingOccurrences(of: "٩", with: "9")
+    }
+    
+    
     @Published var showEmergencyContactPicker = false
     @Published var showGroupContactPicker = false
     @Published var showDestinationPicker = false
@@ -108,9 +121,9 @@ class CreateTripViewModel: ObservableObject {
     @Published var showStep2Errors = false
     @Published var emergencyContactErrorMessage = ""
     @Published var groupContactErrorMessage = ""
-
+    
     // MARK: - Published — Destination Picker
-
+    
     @Published var destinationSearchText: String = ""
     @Published var destinationSearchResults: [MKMapItem] = []
     @Published var pinCoordinate: CLLocationCoordinate2D? = nil
@@ -119,22 +132,24 @@ class CreateTripViewModel: ObservableObject {
         center: CLLocationCoordinate2D(latitude: 24.7136, longitude: 46.6753),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
-
+    
     // MARK: - Private
-
+    
     /// Prevents re-loading saved info on every `onAppear` (e.g. back navigation).
     private(set) var hasLoadedInitialData: Bool = false
-
+    
     // MARK: - Validation
-
+    
     var destinationIsValid: Bool { !destination.isEmpty }
     var fullNameIsValid: Bool { !fullName.isEmpty }
-
+    
     var phoneNumberIsValid: Bool {
-        let digits = phoneNumber.filter(\.isNumber)
-
+        
+        let normalized = normalizeArabicDigits(phoneNumber)
+        let digits = normalized.filter(\.isNumber)
+        
         let local: String
-
+        
         if digits.hasPrefix("966") {
             local = String(digits.dropFirst(3))
         } else if digits.hasPrefix("0") {
@@ -142,10 +157,10 @@ class CreateTripViewModel: ObservableObject {
         } else {
             local = digits
         }
-
+        
         return local.hasPrefix("5") && local.count == 9
     }
-
+    
     var displayCarColor: String {
         selectedColor.localized
     }
@@ -153,7 +168,7 @@ class CreateTripViewModel: ObservableObject {
     var phoneError: PhoneError {
         phoneNumber.isEmpty ? .required : .invalid
     }
-
+    
     var formattedSearchResults: [(item: MKMapItem, subtitle: String?)] {
         let userLoc: CLLocation? = {
             guard let coord = LocationManager.shared.currentUserLocation else { return nil }
@@ -162,37 +177,49 @@ class CreateTripViewModel: ObservableObject {
 
         return destinationSearchResults.map { item in
             var parts: [String] = []
-            if let city = item.placemark.locality { parts.append(city) }
+
+            if let city = item.placemark.locality {
+                parts.append(city)
+            }
+
             if let userLoc {
                 let itemLoc = CLLocation(
                     latitude: item.placemark.coordinate.latitude,
                     longitude: item.placemark.coordinate.longitude
                 )
+
                 let km = Int(userLoc.distance(from: itemLoc) / 1000)
-                if km > 0 { parts.append("\(km) km") }
+
+                if km > 0 {
+                    parts.append("\(km) km")
+                }
             }
-            return (item: item, subtitle: parts.isEmpty ? nil : parts.joined(separator: ", "))
+
+            return (
+                item: item,
+                subtitle: parts.isEmpty ? nil : parts.joined(separator: ", ")
+            )
         }
     }
-
+        
     var returnTimeIsValid: Bool {
         returnTime >= Date().addingTimeInterval(60 * 60)
     }
     var emergencyContactsIsValid: Bool { !emergencyContacts.isEmpty }
     var carModelIsValid: Bool { !carModel.isEmpty }
-
+    
     var selectedColorIsValid: Bool {
         !selectedColor.isEmpty && selectedColor != "vehicle.color.placeholder"
     }
-
+    
     var plateLettersIsValid: Bool { plateLetters.count == 3 }
     var tripNameIsValid: Bool { !tripName.isEmpty }
-
+    
     var plateNumbersIsValid: Bool {
         let digits = plateNumbers.filter { $0.isNumber }
         return digits.count >= 1 && digits.count <= 4
     }
-
+    
     var formIsValid: Bool {
         destinationIsValid &&
         fullNameIsValid &&
@@ -204,7 +231,7 @@ class CreateTripViewModel: ObservableObject {
         plateLettersIsValid &&
         plateNumbersIsValid
     }
-
+    
     var hasUserEnteredData: Bool {
         !fullName.isEmpty ||
         !phoneNumber.isEmpty ||
@@ -220,17 +247,17 @@ class CreateTripViewModel: ObservableObject {
         isGroup ||
         !groupContacts.isEmpty
     }
-
+    
     var plateNumbersDisplay: String {
         let digits = plateNumbers.filter { $0.isNumber }
         return digits + String(repeating: "-", count: max(0, 4 - digits.count))
     }
-
+    
     /// Validates the given step and sets the corresponding error flag if validation fails.
     /// Returns `true` if the user can proceed to the next step.
     func canProceedFromStep(_ step: Int) -> Bool {
         switch step {
-
+            
         case 0:
             if fullNameIsValid && phoneNumberIsValid && emergencyContactsIsValid {
                 return true
@@ -238,10 +265,10 @@ class CreateTripViewModel: ObservableObject {
                 showStep0Errors = true
                 return false
             }
-
+            
         case 1:
             updatePlateInfoFromTemplate()
-
+            
             if carModelIsValid &&
                 selectedColorIsValid &&
                 plateLettersIsValid &&
@@ -251,7 +278,7 @@ class CreateTripViewModel: ObservableObject {
                 showStep1Errors = true
                 return false
             }
-
+            
         case 2:
             if destinationIsValid &&
                 returnTimeIsValid &&
@@ -261,32 +288,32 @@ class CreateTripViewModel: ObservableObject {
                 showStep2Errors = true
                 return false
             }
-
+            
         default:
             return true
         }
     }
-
+    
     /// Merges the individual plate letter and digit fields into the flat `plateLetters` and `plateNumbers` strings.
     /// Called before validation and before building the `Trip` object.
     func updatePlateInfoFromTemplate() {
         plateLetters = firstPlateLetter + secondPlateLetter + thirdPlateLetter
         plateNumbers = plateDigits.joined()
     }
-
+    
     /// Splits `plateLetters` and `plateNumbers` back into the individual UI fields.
     /// Called when loading saved info or repeating a trip.
     func loadPlateInfoToTemplate() {
         let letters = Array(plateLetters)
-
+        
         if letters.count == 3 {
             firstPlateLetter = String(letters[0])
             secondPlateLetter = String(letters[1])
             thirdPlateLetter = String(letters[2])
         }
-
+        
         let numbers = Array(plateNumbers)
-
+        
         plateDigits = (0..<4).map { index in
             index < numbers.count ? String(numbers[index]) : ""
         }
@@ -311,23 +338,28 @@ class CreateTripViewModel: ObservableObject {
             }
         )
     }
-
+    
     /// Normalizes raw phone input into `+9665XXXXXXXX` format, stripping any leading `966` or `0`.
     func formatUserPhoneInput(_ value: String) {
-        let digits = value.filter { $0.isNumber }
+        
+        let normalizedValue = normalizeArabicDigits(value)
+        let digits = normalizedValue.filter { $0.isNumber }
+        
         var local = digits
-
+        
         if local.hasPrefix("966") {
             local = String(local.dropFirst(3))
         }
+        
         if local.hasPrefix("0") {
             local = String(local.dropFirst())
         }
+        
         local = String(local.prefix(9))
+        
         phoneNumber = local.isEmpty ? "" : "+966\(local)"
     }
 }
-
 
 // MARK: - Load Data
 
