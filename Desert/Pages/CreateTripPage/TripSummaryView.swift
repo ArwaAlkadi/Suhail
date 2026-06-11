@@ -69,7 +69,7 @@ struct TripSummaryView: View {
             )
          
             .sheet(isPresented: $showTerms) {
-                SafariView(url: URL(string: "https://your-terms-url.com")!)
+                SafariView(url: URL(string: "https://suhail-1.web.app/privacy.html")!)
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar(.hidden, for: .navigationBar)
