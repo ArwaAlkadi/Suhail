@@ -33,6 +33,15 @@ struct VehicleDetailsTemplate: View {
                 .padding(.bottom, 260)
                 .padding(.horizontal, AppSpacing.md)
             }
+            .scrollDismissesKeyboard(.interactively)
+            .onTapGesture {
+                UIApplication.shared.sendAction(
+                    #selector(UIResponder.resignFirstResponder),
+                    to: nil,
+                    from: nil,
+                    for: nil
+                )
+            }
             .background(Color.Background)
             .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
                 withAnimation(.easeInOut(duration: 0.25)) {

@@ -164,7 +164,11 @@ class HomeViewModel: ObservableObject {
     func onAppear(context: ModelContext) {
         ActiveTripSession.shared.setModelContext(context)
         ActiveTripSession.shared.resumeActiveSessionIfNeeded(context: context)
-        NotificationsManager.shared.requestPermission()
+
+        NotificationsManager.shared.requestPermission {
+            
+        }
+
         startMonitoring()
     }
 

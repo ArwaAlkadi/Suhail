@@ -55,26 +55,28 @@ struct SelectDestinationTemplate<MapContent: View>: View {
                                                     .foregroundStyle(Color.Primary)
                                             }
 
-                                        VStack(alignment: AppLanguage.horizontalAlignment, spacing: 2) {
+                                        VStack(alignment: .leading, spacing: 2) {
                                             Text(result.item.name ?? "")
                                                 .font(AppTypography.body)
                                                 .foregroundStyle(Color.Primary)
                                                 .lineLimit(1)
-                                                .multilineTextAlignment(AppLanguage.textAlignment)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
 
                                             if let subtitle = result.subtitle {
                                                 Text(subtitle)
                                                     .font(AppTypography.caption)
                                                     .foregroundStyle(Color.lableSec)
                                                     .lineLimit(1)
-                                                    .multilineTextAlignment(AppLanguage.textAlignment)
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                                
+                                            
                                             }
                                         }
 
                                         Spacer()
                                     }
                                     .padding(.horizontal, AppSpacing.md)
-                                    .frame(maxWidth: .infinity, alignment: AppLanguage.frameAlignment)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                     .frame(height: 68)
                                 }
                                 .buttonStyle(.plain)

@@ -54,10 +54,12 @@ struct DestinationPickerView: View {
         .onChange(of: vm.destinationSearchText) { _, newValue in
             if newValue.isEmpty { vm.destinationSearchResults = [] }
         }
+        
     }
+    
 }
 
-//// MARK: - Preview
+// MARK: - Preview
 //
 //#Preview {
 //    let vm = CreateTripViewModel()

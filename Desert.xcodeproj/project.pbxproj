@@ -14,6 +14,7 @@
 		33984C482FD4759100F6DD72 /* DateTimePickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33984C472FD4758E00F6DD72 /* DateTimePickerSheet.swift */; };
 		33984C642FD4D8D800F6DD72 /* AppLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33984C632FD4D8D500F6DD72 /* AppLanguage.swift */; };
 		33984C662FD764B000F6DD72 /* PlateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33984C652FD7649C00F6DD72 /* PlateFormatter.swift */; };
+		33EED7D82FDAE0990015A914 /* TripCompletedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EED7D72FDAE0950015A914 /* TripCompletedCard.swift */; };
 		EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */; };
 		EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */; };
 		EC1FBE8A2FC52FAA00CA755B /* CounterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */; };
@@ -116,6 +117,7 @@
 		33984C472FD4758E00F6DD72 /* DateTimePickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerSheet.swift; sourceTree = "<group>"; };
 		33984C632FD4D8D500F6DD72 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		33984C652FD7649C00F6DD72 /* PlateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateFormatter.swift; sourceTree = "<group>"; };
+		33EED7D72FDAE0950015A914 /* TripCompletedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCompletedCard.swift; sourceTree = "<group>"; };
 		EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircle.swift; sourceTree = "<group>"; };
 		EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityIcon.swift; sourceTree = "<group>"; };
 		EC1FBE5A2FC52FAA00CA755B /* CounterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterButton.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 		EC1FBE782FC52FAA00CA755B /* Organisms */ = {
 			isa = PBXGroup;
 			children = (
+				33EED7D72FDAE0950015A914 /* TripCompletedCard.swift */,
 				3354E71F2FCA01CA0072C1F0 /* ActiveTripCard.swift */,
 				EC2F62FF2FC7B084007FF45C /* HistoryTripCard.swift */,
 				EC2F62FD2FC7B081007FF45C /* NetworkStatusBanner.swift */,
@@ -746,6 +749,7 @@
 				33984C662FD764B000F6DD72 /* PlateFormatter.swift in Sources */,
 				EC1FBEA02FC52FAA00CA755B /* TextFieldState.swift in Sources */,
 				336A696B2FC9BF7100C93DEB /* CreateTripStepTemplate.swift in Sources */,
+				33EED7D82FDAE0990015A914 /* TripCompletedCard.swift in Sources */,
 				EC1FBEA12FC52FAA00CA755B /* ValidatedTextField.swift in Sources */,
 				336A69672FC9055800C93DEB /* SelectDesTemplate.swift in Sources */,
 				EC1FBEA22FC52FAA00CA755B /* GroupSection.swift in Sources */,
@@ -911,7 +915,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				DEVELOPMENT_TEAM = 59XQH23G26;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -960,7 +964,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q3BRAU32HS;
+				DEVELOPMENT_TEAM = 59XQH23G26;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

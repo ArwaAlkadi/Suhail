@@ -24,21 +24,26 @@ struct HistoryTemplate<Content: View>: View {
         ZStack {
             
             VStack(alignment: .leading, spacing: AppSpacing.md) {
-                
+
                 headerSection
-                
+
                 if hasTrips {
                     ScrollView(showsIndicators: false) {
                         content
                             .padding(.bottom, 240)
                     }
                     .frame(maxWidth: .infinity)
+
                 } else {
                     emptyStateSection
                 }
             }
-            .padding(.top, AppSpacing.lg)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .padding(.top, AppSpacing.md)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .topLeading
+            )
             .background(Color.Background)
             
         }
@@ -49,25 +54,32 @@ private extension HistoryTemplate {
     
     var headerSection: some View {
         VStack(alignment: .leading, spacing: 2) {
-            
+
             Text("history.title".localized)
                 .font(AppTypography.title1)
                 .foregroundStyle(Color.black)
-            
-            Text(String.localizedStringWithFormat(NSLocalizedString("history.tripsCount", tableName: "PluralStrings", comment: ""), tripsCount))
-                .font(AppTypography.caption)
-                .foregroundStyle(Color.lableSec)
+
+            Text(
+                String.localizedStringWithFormat(
+                    NSLocalizedString(
+                        "history.tripsCount",
+                        tableName: "PluralStrings",
+                        comment: ""
+                    ),
+                    tripsCount
+                )
+            )
+            .font(AppTypography.caption)
+            .foregroundStyle(Color.lableSec)
         }
         .padding(.horizontal, AppSpacing.md)
     }
-    
     var emptyStateSection: some View {
         
         VStack(spacing: AppSpacing.xl) {
             
-            Spacer(minLength: 40)
             
-            Image("noPreviousTrip")
+            Image("Hisrory")
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: 400)
@@ -92,7 +104,7 @@ private extension HistoryTemplate {
                 onStartTrip()
             }
             
-            Spacer()
+            .padding(.vertical, AppSpacing.xl)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -128,6 +140,5 @@ private extension HistoryTemplate {
                 dateKey: "28 May, 5:30PM"
             )
         }
-        .padding(.horizontal, AppSpacing.lg)
     }
 }
