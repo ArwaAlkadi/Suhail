@@ -39,8 +39,8 @@ struct RootView: View {
     @State private var appStoreURL = ""
 
     @State private var maintenanceEnabled = false
-    @State private var maintenanceTitle = "Maintenance Mode"
-    @State private var maintenanceMessage = "Desert is currently under maintenance."
+    @State private var maintenanceTitle = ""
+    @State private var maintenanceMessage = ""
 
     var appSettings: AppSettings? { settings.first }
 
