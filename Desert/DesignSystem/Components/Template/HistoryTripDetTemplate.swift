@@ -92,15 +92,15 @@ struct HistoryTripDetailsTemplate: View {
 
 
 private extension HistoryTripDetailsTemplate {
-
+    
     var tripHeaderSection: some View {
         HStack {
             Text(tripName)
                 .font(AppTypography.title3)
                 .foregroundStyle(Color.Lableblack)
-
+            
             Spacer()
-
+            
             StatusBadge(
                 titleKey: alertSent ? "history.status.alert" : "history.status.noAlert",
                 style: alertSent ? .destructive : .positive,
@@ -108,29 +108,29 @@ private extension HistoryTripDetailsTemplate {
             )
         }
     }
-
     var tripMapSection: some View {
-        ZStack(alignment: .topTrailing) {
-            Image("tripMap")
-                .resizable()
-                .scaledToFill()
-                .frame(height: 160)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
-
-            Button {
-                onExpandMap()
-            } label: {
+        Button {
+            onExpandMap()
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                Image("tripMap")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 160)
+                    .frame(maxWidth: .infinity)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
+                
                 Image(systemName: "arrow.up.left.and.arrow.down.right")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(Color.Primary)
                     .padding(.horizontal, AppSpacing.md)
                     .padding(.vertical, AppSpacing.md)
             }
-            .buttonStyle(.plain)
         }
+        .buttonStyle(.plain)
     }
+
 
     var tripSummarySection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
