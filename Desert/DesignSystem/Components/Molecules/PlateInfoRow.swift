@@ -47,3 +47,4 @@ struct PlateInfoRow: View {
     )
     .padding()
 }
+

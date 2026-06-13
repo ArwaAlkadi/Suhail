@@ -12,24 +12,21 @@ import UIKit
 struct PlateNumberFields: View {
     
     @Binding var digits: [String]
-    
     @State private var focusedIndex: Int? = nil
     
     var body: some View {
-        
         HStack(spacing: AppSpacing.sm) {
-            
             ForEach(0..<4, id: \.self) { index in
-                
                 BackspaceDetectingTextField(
                     text: binding(for: index),
                     placeholder: "-",
                     index: index,
                     focusedIndex: $focusedIndex,
                     onBackspaceWhenEmpty: {
-                        guard index > 0 else { return }
-                        digits[index - 1] = ""
-                        focusedIndex = index - 1
+                        if index > 0 {
+                            digits[index - 1] = ""
+                            focusedIndex = index - 1
+                        }
                     }
                 )
                 .font(AppTypography.body)
@@ -51,27 +48,10 @@ struct PlateNumberFields: View {
     }
     
     private func binding(for index: Int) -> Binding<String> {
-        
         Binding(
-            get: {
-                digits[index]
-            },
+            get: { digits[index] },
             set: { newValue in
-                
-                let filtered = newValue.filter { $0.isNumber }
-                
-                if filtered.isEmpty {
-                    digits[index] = ""
-                    return
-                }
-                
-                digits[index] = String(filtered.suffix(1))
-                
-                if index < 3 {
-                    focusedIndex = index + 1
-                } else {
-                    focusedIndex = nil
-                }
+                digits[index] = String(newValue.filter { $0.isNumber }.prefix(1))
             }
         )
     }
@@ -97,6 +77,8 @@ private struct BackspaceDetectingTextField: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: BackspaceTextField, context: Context) {
+        context.coordinator.parent = self
+        
         if uiView.text != text {
             uiView.text = text
         }
@@ -105,8 +87,6 @@ private struct BackspaceDetectingTextField: UIViewRepresentable {
         
         if focusedIndex == index, !uiView.isFirstResponder {
             uiView.becomeFirstResponder()
-        } else if focusedIndex != index, uiView.isFirstResponder {
-            uiView.resignFirstResponder()
         }
     }
     
@@ -125,25 +105,31 @@ private struct BackspaceDetectingTextField: UIViewRepresentable {
             parent.focusedIndex = parent.index
         }
         
-        func textFieldDidEndEditing(_ textField: UITextField) {
-            if parent.focusedIndex == parent.index {
-                parent.focusedIndex = nil
-            }
-        }
-        
         func textField(
             _ textField: UITextField,
             shouldChangeCharactersIn range: NSRange,
             replacementString string: String
         ) -> Bool {
-            let filtered = string.filter { $0.isNumber }
             
-            if filtered.isEmpty {
-                parent.text = ""
+            if string.isEmpty {
+                if parent.text.isEmpty {
+                    parent.onBackspaceWhenEmpty()
+                } else {
+                    parent.text = ""
+                }
                 return false
             }
             
-            parent.text = String(filtered.suffix(1))
+            guard let digit = string.filter({ $0.isNumber }).last else {
+                return false
+            }
+            
+            parent.text = String(digit)
+            
+            if parent.index < 3 {
+                parent.focusedIndex = parent.index + 1
+            }
+            
             return false
         }
     }
@@ -156,6 +142,7 @@ private final class BackspaceTextField: UITextField {
     override func deleteBackward() {
         if text?.isEmpty ?? true {
             onBackspaceWhenEmpty?()
+            return
         }
         
         super.deleteBackward()
@@ -163,7 +150,6 @@ private final class BackspaceTextField: UITextField {
 }
 
 #Preview {
-    
     PlateNumberFields(
         digits: .constant(["4", "3", "", ""])
     )
