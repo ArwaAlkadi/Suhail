@@ -142,7 +142,8 @@ extension RootView {
             let config = try await FirebaseManager.shared.fetchAppUpdateConfig()
 
             if FirebaseManager.isOlderVersion(current: currentVersion, required: config.minimumVersion)
-                && !ActiveTripSession.shared.hasActiveTrip {
+                && !ActiveTripSession.shared.hasActiveTrip
+                && !maintenanceEnabled {
                 await MainActor.run {
                     updateMessage = config.message
                     appStoreURL = config.appStoreURL
