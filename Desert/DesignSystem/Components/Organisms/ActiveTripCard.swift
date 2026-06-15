@@ -165,7 +165,6 @@ private extension ActiveTripCard {
                 }
             }
         }
-        .padding(AppSpacing.md)
         //        .background(Color.Primary.opacity(0.06))
         //        .clipShape(RoundedRectangle(cornerRadius: AppRadius.md))
     }

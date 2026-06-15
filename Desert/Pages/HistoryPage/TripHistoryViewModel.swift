@@ -102,10 +102,16 @@ class TripHistoryViewModel: ObservableObject {
     /// Formats a trip start date into a readable string — e.g. `"06 May, 03:45pm"`.
     func formatStartDate(_ date: Date) -> String {
         let formatter = DateFormatter()
+
+        formatter.locale = Locale(
+            identifier: AppLanguage.isArabic ? "ar_SA" : "en_US"
+        )
+
+        formatter.calendar = Calendar(identifier: .gregorian)
         formatter.dateFormat = "dd MMMM, hh:mma"
+
         return formatter.string(from: date)
     }
-
 
     /// Returns the trip duration as a human-readable string — e.g. "2D 3h", "5h".
     /// Uses `endedAt` if available, falls back to `returnTime`.

@@ -2,16 +2,16 @@
 
 /* MARK: - Onboarding */
 "onboarding.title1" = "Suhail is your trip companion";
-"onboarding.description1" = "Register your trip, destination, return time, and emergency contacts before you go.";
+"onboarding.description1" = "Register your trip, destination, return time, and emergency contacts before you go";
 
 "onboarding.title2" = "Location updates in the background";
-"onboarding.description2" = "Your location is updated automatically during the trip.";
+"onboarding.description2" = "Your location is updated automatically during the trip";
 
 "onboarding.title3" = "Enable notifications";
-"onboarding.description3" = "Get important trip and safety updates when needed.";
+"onboarding.description3" = "Get important trip and safety updates when needed";
 
 "onboarding.title4" = "Ready to explore";
-"onboarding.description4" = "Start your trip and let Suhail stay with you along the way.";
+"onboarding.description4" = "Start your trip and let Suhail stay with you along the way";
 
 "onboarding.next" = "Next";
 "onboarding.notifications" = "Yes, notify me";

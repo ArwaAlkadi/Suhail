@@ -70,17 +70,17 @@ struct SummaryTemplate: View {
 
 
 private extension SummaryTemplate {
-
+    
     var tripNameSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text(tripName)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Lableblack)
-
+            
             tripSummaryCard
         }
     }
-
+    
     var tripSummaryCard: some View {
         TripSummaryCard(rows: [
             ("summary.startTime", formatDate(startTime)),
@@ -91,21 +91,21 @@ private extension SummaryTemplate {
             (
                 "summary.numberOfIndividuals",
                 isGroup
-                    ? String.localizedStringWithFormat(
-                        NSLocalizedString("people.count", tableName: "PluralStrings", comment: ""),
-                        groupCount
-                      )
-                    : "solo".localized
+                ? String.localizedStringWithFormat(
+                    NSLocalizedString("people.count", tableName: "PluralStrings", comment: ""),
+                    groupCount
+                )
+                : "solo".localized
             )
         ])
     }
-
+    
     var emergencyContactsSection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sx) {
             Text("summary.emergencyContacts".localized)
                 .font(AppTypography.headline)
                 .foregroundStyle(Color.Lableblack)
-
+            
             VStack(spacing: 0) {
                 ForEach(emergencyContacts, id: \.name) { contact in
                     ContactRow(
@@ -126,7 +126,7 @@ private extension SummaryTemplate {
             
         }
     }
-
+    
     @ViewBuilder
     var groupContactSection: some View {
         if isGroup && !groupContacts.isEmpty {
@@ -134,7 +134,7 @@ private extension SummaryTemplate {
                 Text("summary.groupContactOptional".localized)
                     .font(AppTypography.headline)
                     .foregroundStyle(Color.Lableblack)
-
+                
                 VStack(spacing: 0) {
                     ForEach(groupContacts, id: \.name) { contact in
                         ContactRow(
@@ -153,11 +153,11 @@ private extension SummaryTemplate {
                 }
                 .background(Color.white)
                 .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
-              
+                
             }
         }
     }
-
+    
     var warningCard: some View {
         
         (
@@ -187,12 +187,18 @@ private extension SummaryTemplate {
         }
     }
     
-
+    
     func formatDate(_ date: Date) -> String {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: Locale.current.language.languageCode?.identifier == "ar" ? "ar_SA" : "en_US")
-        f.dateFormat = "d MMMM, h:mma"
-        return f.string(from: date)
+        let formatter = DateFormatter()
+        
+        formatter.locale = Locale(
+            identifier: AppLanguage.isArabic ? "ar_SA" : "en_US"
+        )
+        
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "d MMMM, h:mma"
+        
+        return formatter.string(from: date)
     }
 }
 
