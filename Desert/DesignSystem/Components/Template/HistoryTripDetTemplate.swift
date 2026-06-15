@@ -92,15 +92,15 @@ struct HistoryTripDetailsTemplate: View {
 
 
 private extension HistoryTripDetailsTemplate {
-
+    
     var tripHeaderSection: some View {
         HStack {
             Text(tripName)
                 .font(AppTypography.title3)
-                .foregroundStyle(Color.Primary)
-
+                .foregroundStyle(Color.Lableblack)
+            
             Spacer()
-
+            
             StatusBadge(
                 titleKey: alertSent ? "history.status.alert" : "history.status.noAlert",
                 style: alertSent ? .destructive : .positive,
@@ -108,36 +108,36 @@ private extension HistoryTripDetailsTemplate {
             )
         }
     }
-
     var tripMapSection: some View {
-        ZStack(alignment: .topTrailing) {
-            Image("tripMap")
-                .resizable()
-                .scaledToFill()
-                .frame(height: 160)
-                .frame(maxWidth: .infinity)
-                .clipped()
-                .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
-
-            Button {
-                onExpandMap()
-            } label: {
+        Button {
+            onExpandMap()
+        } label: {
+            ZStack(alignment: .topTrailing) {
+                Image("tripMap")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(height: 160)
+                    .frame(maxWidth: .infinity)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
+                
                 Image(systemName: "arrow.up.left.and.arrow.down.right")
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(Color.Primary)
                     .padding(.horizontal, AppSpacing.md)
                     .padding(.vertical, AppSpacing.md)
             }
-            .buttonStyle(.plain)
         }
+        .buttonStyle(.plain)
     }
-
+    
+    
     var tripSummarySection: some View {
         VStack(alignment: .leading, spacing: AppSpacing.sm) {
             Text("history.tripSummary".localized)
                 .font(AppTypography.headline)
-                .foregroundStyle(Color.Primary)
-
+                .foregroundStyle(Color.Lableblack)
+            
             TripSummaryCard(rows: [
                 ("summary.startTime", formatDate(startTime)),
                 ("summary.returnTime", formatDate(returnTime)),
@@ -145,11 +145,11 @@ private extension HistoryTripDetailsTemplate {
                 (
                     "summary.numberOfIndividuals",
                     isGroup
-                        ? String.localizedStringWithFormat(
-                            NSLocalizedString("people.count", tableName: "PluralStrings", comment: ""),
-                            groupCount
-                          )
-                        : "solo".localized
+                    ? String.localizedStringWithFormat(
+                        NSLocalizedString("people.count", tableName: "PluralStrings", comment: ""),
+                        groupCount
+                    )
+                    : "solo".localized
                 ),
                 ("summary.carDetails", carDetails),
                 ("summary.plateNumber", plateNumber),
@@ -157,7 +157,7 @@ private extension HistoryTripDetailsTemplate {
             ])
         }
     }
-
+    
     var emergencyContactsSection: some View {
         contactsSection(
             titleKey: "summary.emergencyContacts",
@@ -165,7 +165,7 @@ private extension HistoryTripDetailsTemplate {
             contacts: emergencyContacts
         )
     }
-
+    
     @ViewBuilder
     var groupContactsSection: some View {
         if isGroup && !groupContacts.isEmpty {
@@ -176,7 +176,7 @@ private extension HistoryTripDetailsTemplate {
             )
         }
     }
-
+    
     func contactsSection(
         titleKey: String,
         count: Int,
@@ -186,16 +186,16 @@ private extension HistoryTripDetailsTemplate {
             HStack(spacing: AppSpacing.sm) {
                 Text(titleKey.localized)
                     .font(AppTypography.headline)
-                    .foregroundStyle(Color.Primary)
-
+                    .foregroundStyle(Color.Lableblack)
+                
                 Text("(\(count))")
                     .font(AppTypography.caption2)
-                    .foregroundStyle(Color.black)
-
+                    .foregroundStyle(Color.Lableblack)
+                
                 Spacer()
             }
             .padding(.horizontal, AppSpacing.sm)
-
+            
             VStack(spacing: 0) {
                 ForEach(Array(contacts.enumerated()), id: \.offset) { index, contact in
                     ContactRow(
@@ -216,14 +216,18 @@ private extension HistoryTripDetailsTemplate {
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.lg))
         }
     }
-
+    
     func formatDate(_ date: Date) -> String {
-        let f = DateFormatter()
-        f.dateFormat = "d MMMM, h:mma"
-        return f.string(from: date)
+        let formatter = DateFormatter()
+        formatter.locale = Locale(
+            identifier: AppLanguage.isArabic ? "ar_SA" : "en_US"
+        )
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.dateFormat = "d MMMM, h:mma"
+        
+        return formatter.string(from: date)
     }
 }
-
 #Preview {
     HistoryTripDetailsTemplate(
         tripName: "27 May Trip",

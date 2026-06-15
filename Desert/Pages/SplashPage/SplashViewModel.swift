@@ -14,7 +14,9 @@ struct SplashViewModel {
     /// Triggers splash dismissal after a fixed delay.
     func startTimer(dismiss: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation { dismiss() }
+            withAnimation(.easeInOut(duration: 0.8)) {
+                dismiss()
+            }
         }
     }
 }

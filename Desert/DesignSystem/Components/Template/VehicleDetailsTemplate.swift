@@ -43,11 +43,6 @@ struct VehicleDetailsTemplate: View {
                 )
             }
             .background(Color.Background)
-            .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)) { _ in
-                withAnimation(.easeInOut(duration: 0.25)) {
-                    proxy.scrollTo("plateInfoSection", anchor: .top)
-                }
-            }
         }
     }
 }

@@ -3,16 +3,16 @@
 /* MARK: - Onboarding */
 
 "onboarding.title1" = "سهيل رفيق رحلتك";
-"onboarding.description1" = "سجل رحلتك ووجهتك ووقت العودة وجهات الاتصال للطوارئ قبل الانطلاق.";
+"onboarding.description1" = "سجل رحلتك ووجهتك ووقت العودة وجهات الاتصال للطوارئ قبل الانطلاق";
 
 "onboarding.title2" = "تحديث موقعك تلقائيًا";
-"onboarding.description2" = "يتم تحديث موقعك تلقائيًا أثناء الرحلة.";
+"onboarding.description2" = "يتم تحديث موقعك تلقائيًا أثناء الرحلة";
 
 "onboarding.title3" = "فعّل الإشعارات";
-"onboarding.description3" = "استقبل التحديثات والتنبيهات المهمة عند الحاجة.";
+"onboarding.description3" = "استقبل التحديثات والتنبيهات المهمة عند الحاجة";
 
 "onboarding.title4" = "جاهز للانطلاق";
-"onboarding.description4" = "ابدأ رحلتك ودع سهيل يرافقك طوال الطريق.";
+"onboarding.description4" = "ابدأ رحلتك ودع سهيل يرافقك طوال الطريق";
 
 "onboarding.next" = "التالي";
 "onboarding.notifications" = "نعم، فعّل الإشعارات";
