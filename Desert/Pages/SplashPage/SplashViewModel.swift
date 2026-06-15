@@ -2,7 +2,21 @@
 //  SplashViewModel.swift
 //  Desert
 //
-//  Created by Arwa Alkadi on 21/04/2026.
+//  Handles splash screen timing logic.
+//  Dismisses the splash after a 2-second delay.
 //
 
 import Foundation
+import SwiftUI
+
+struct SplashViewModel {
+
+    /// Triggers splash dismissal after a fixed delay.
+    func startTimer(dismiss: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation(.easeInOut(duration: 0.8)) {
+                dismiss()
+            }
+        }
+    }
+}

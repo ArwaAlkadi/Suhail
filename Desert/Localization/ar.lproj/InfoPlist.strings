@@ -1,0 +1,8 @@
+"CFBundleDisplayName" = "سهيل";
+
+"NSLocationWhenInUseUsageDescription" = "يستخدم التطبيق موقعك أثناء الرحلة لعرض موقعك الحالي وتسجيل مسار الرحلة.";
+
+"NSLocationAlwaysAndWhenInUseUsageDescription" = "يحتاج التطبيق إلى الوصول الدائم للموقع لمتابعة رحلتك في الخلفية ومشاركة آخر موقع معروف مع جهات الطوارئ عند الحاجة.";
+
+"NSUserNotificationsUsageDescription" = "يستخدم التطبيق الإشعارات لإرسال تنبيهات السلامة والتذكيرات المتعلقة برحلتك.";
+

@@ -1,0 +1,248 @@
+
+
+/* MARK: - Onboarding */
+"onboarding.title1" = "Suhail is your trip companion";
+"onboarding.description1" = "Register your trip, destination, return time, and emergency contacts before you go";
+
+"onboarding.title2" = "Location updates in the background";
+"onboarding.description2" = "Your location is updated automatically during the trip";
+
+"onboarding.title3" = "Enable notifications";
+"onboarding.description3" = "Get important trip and safety updates when needed";
+
+"onboarding.title4" = "Ready to explore";
+"onboarding.description4" = "Start your trip and let Suhail stay with you along the way";
+
+"onboarding.next" = "Next";
+"onboarding.notifications" = "Yes, notify me";
+"onboarding.getStarted" = "Get Started";
+
+"onboarding.skip" = "Skip";
+
+
+/* MARK: - App */
+"app_name" = "Suhail";
+"onboarding_subtitle" = "Your desert safety companion";
+"get_started" = "Get Started";
+
+
+/* MARK: - Steps */
+"step_trip_details" = "Trip Details";
+"step_personal_details" = "Personal Details";
+"step_vehicle_details" = "Vehicle Details";
+
+
+/* MARK: - Common */
+"common.next" = "Next";
+"common.cancel" = "Cancel";
+"common.delete" = "Delete";
+"common.select" = "Select";
+"common.ok" = "OK";
+"common.save" = "Save";
+"cancel" = "Cancel";
+"delete" = "Delete";
+"discard" = "Discard";
+"discard_changes_title" = "Discard Changes?";
+"discard_changes_message" = "Are you sure you want to leave? Your changes will be lost.";
+"open_settings" = "Open Settings";
+"creating..." = "Creating...";
+"review" = "Review";
+"back" = "Back";
+"save" = "Save";
+
+
+/* MARK: - Trip Details */
+"destination.title" = "Destination";
+"trip.details" = "Trip Details";
+"trip.name" = "Trip Name";
+"trip.name.placeholder" = "Enter trip name";
+"trip.destination" = "Destination";
+"trip.destination.placeholder" = "Select Destination";
+"trip.time" = "Time";
+"trip.startTime" = "Start time";
+"trip.endTime" = "End time";
+"trip.group" = "Group";
+"trip.group.question" = "Are you with a group?";
+"trip.groupContact.optional" = "Group contact (optional)";
+"trip.groupContact.select" = "Select group contact";
+"time" = "Time";
+
+/* MARK: - Personal Details */
+"trip.personalDetails" = "Personal Details";
+"trip.fullName" = "Full Name";
+"trip.fullName.placeholder" = "Enter your full name";
+"trip.phone" = "Phone Number";
+"trip.phone.placeholder" = "5X XXX XXXX";
+"trip.phone.countryCode" = "+966";
+"trip.contacts" = "Emergency Contacts";
+"trip.addContact" = "Add Emergency Contact";
+"contact.add" = "Add Contact";
+"trip.contactsLimit" = "Maximum 3 contacts allowed";
+"contact.delete.title" = "Delete Contact?";
+"contact.delete.message" = "This contact will be removed from your emergency contacts.";
+
+
+/* MARK: - Vehicle Details */
+"vehicle.details" = "Vehicle Details";
+"vehicle.carModel" = "Car Model";
+"vehicle.carModel.placeholder" = "Enter car model";
+"vehicle.carColor" = "Car Color";
+"vehicle.color.placeholder" = "Select car color";
+"vehicle.color.black" = "Black";
+"vehicle.color.white" = "White";
+"vehicle.color.grey" = "Grey";
+"vehicle.color.red" = "Red";
+"vehicle.color.orange" = "Orange";
+"vehicle.color.yellow" = "Yellow";
+"vehicle.color.blue" = "Blue";
+"vehicle.color.green" = "Green";
+"vehicle.isFourWheelDrive" = "4WD Vehicle";
+"vehicle.plateInfo" = "Plate Information";
+
+
+/* MARK: - Plate Letters */
+"plate.letter.A" = "A";
+"plate.letter.B" = "B";
+"plate.letter.J" = "J";
+"plate.letter.D" = "D";
+"plate.letter.R" = "R";
+"plate.letter.S" = "S";
+"plate.letter.X" = "X";
+"plate.letter.T" = "T";
+"plate.letter.E" = "E";
+"plate.letter.G" = "G";
+"plate.letter.K" = "K";
+"plate.letter.L" = "L";
+"plate.letter.Z" = "Z";
+"plate.letter.N" = "N";
+"plate.letter.H" = "H";
+"plate.letter.U" = "U";
+"plate.letter.V" = "V";
+
+
+/* MARK: - Summary */
+"summary.title" = "Summary";
+"summary.startNewTrip" = "Start new trip";
+"summary.startTime" = "Start Time";
+"summary.returnTime" = "Return Time";
+"summary.destination" = "Destination";
+"summary.carDetails" = "Car Details";
+"summary.plateNumber" = "Plate Number";
+"summary.distance" = "Distance";
+"summary.numberOfIndividuals" = "No. of individuals";
+"summary.emergencyContacts" = "Emergency Contacts";
+"summary.groupContactOptional" = "Group contact (optional)";
+"summary.tripName" = "Trip Name";
+"summary.warningPrefix" = "Make sure information is correct as it cannot be changed. If you exceed the return time of your trip and do not have a signal, your emergency contacts will be alerted. By starting this trip, you agree to the";
+"summary.termsAndConditions" = "Terms & Conditions";
+"summary.warningSuffix" = ".";
+"solo" = "Solo";
+"group.numberOfIndividuals" = "Number of individuals";
+"summary.creatingTrip" = "Creating...";
+
+
+/* MARK: - Active Trip */
+"activeTrip.active" = "Active";
+"activeTrip.overdue" = "Overdue";
+"activeTrip.returnTime" = "Return Time";
+"activeTrip.updateTime" = "Update Return Time";
+"activeTrip.emergencyContacts" = "Emergency Contacts";
+"activeTrip.endTrip" = "End Trip";
+"activeTrip.uploaded" = "Uploaded";
+"activeTrip.uploading" = "Uploading";
+"uploaded" = "Uploaded";
+"uploading" = "Uploading";
+"pending_upload" = "Pending";
+"activeTrip.time" = "Time";
+
+
+/* MARK: - History */
+"history.title" = "History";
+"history.noPreviousTrips" = "No previous trips";
+"history.noTripsDescription" = "Create your first trip to see it here.";
+"history.startNewTrip" = "Start new trip";
+"history.repeatTrip" = "Repeat Trip";
+"history.tripSummary" = "Trip Summary";
+"history.groupContacts" = "Group Contacts";
+"history.tripTrack" = "Trip Track";
+"history.delete.title" = "Delete Trip?";
+"history.status.noAlert" = "No Alert Sent";
+"history.status.alertSent" = "Alert Sent";
+"history.status.alert" = "Alert Sent";
+"delete_trips_alert" = "Delete %d trip(s)?";
+"delete_trips_message" = "This action cannot be undone";
+"button.repeatTrip" = "Repeat Trip";
+
+
+/* MARK: - Map */
+"map_standard" = "Standard";
+"map_satellite" = "Satellite";
+"map_hybrid" = "Hybrid";
+"search.destination" = "Search for destination";
+"map.destination" = "Destination";
+"map.lastSharedLocation" = "Last Shared Location";
+
+/* MARK: - Tab Bar */
+"tab.map" = "Map";
+"tab.history" = "History";
+
+
+/* MARK: - Network Status */
+"network.disconnected.title" = "No Internet Connection";
+"network.disconnected.message" = "Check your cellular data or Wi-Fi";
+"network.connected.title" = "Connection Restored";
+
+
+/* MARK: - Location Permission */
+"location_permission_required" = "Location Permission Required";
+"location_permission_message" = "Please enable Always Allow location permission in Settings to start a trip";
+
+
+/* MARK: - Notifications */
+"notification_return_time_title" = "Your Return Time Has Arrived";
+"notification_return_time_body" = "If you're safe and back, please end your trip now so we don't send a false alert to your emergency contacts";
+"notification_reassurance_title" = "We Noticed You Haven't Returned";
+"notification_reassurance_body" = "We've shared your last known location with your emergency contacts. Stay where you are and don't move away from your vehicle";
+
+
+/* MARK: - No Active Trips */
+"noActiveTrips.title" = "No Active Trips";
+"noActiveTrips.startTrip" = "Start New Trip";
+
+
+/* MARK: - Update Required */
+"update_required.title" = "Update Required";
+"update_required.button" = "Update Now";
+
+
+/* MARK: - Inquiry Row */
+"inquiry.title" = "Yes";
+
+
+/* MARK: - Error Messages */
+"error.requiredField" = "This field is required";
+"error.phoneRequired" = "Please enter a phone number";
+"name_required" = "Name is required";
+"phone_required" = "Phone number is required";
+"phone_invalid" = "Please enter a valid phone number";
+"trip_name_required" = "Trip name is required";
+"destination_required" = "Destination is required";
+"return_time_invalid" = "Return time must be at least one hour from now";
+"car_model_required" = "Car model is required";
+"car_color_required" = "Car color is required";
+"plate_required" = "Plate information is required";
+"max_contacts_reached" = "Maximum 3 contacts allowed";
+"contact_phone_invalid" = "Please select a contact with a valid Saudi phone number";
+"contact_already_added" = "This contact has already been added";
+"emergency_contact_required" = "At least one emergency contact is required";
+"no_internet_connection" = "No internet connection. Please check your connection before starting";
+
+/* MARK: -  Trip Completed  */
+
+"tripCompleted.title" = "Trip Completed";
+"tripCompleted.description" = "Live tracking has been turned off.";
+"tripCompleted.done" = "Done";
+
+/* MARK: -  maintenance  */
+"maintenance.title" = "We're improving your experience";
+"maintenance.subtitle" = "Under maintenance. Back soon";
