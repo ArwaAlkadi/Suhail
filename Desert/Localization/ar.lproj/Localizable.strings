@@ -241,3 +241,8 @@
 "tripCompleted.title" = "تم إنهاء الرحلة";
 "tripCompleted.description" = "تم إيقاف التتبع بنجاح";
 "tripCompleted.done" = "تم";
+
+
+/* MARK: -  maintenance  */
+"maintenance.title" = "نعمل حالياً على تحسين تجربتك";
+"maintenance.subtitle" = "التطبيق تحت الصيانة وسيعود قريباً";
