@@ -83,12 +83,22 @@ struct RootView: View {
         .onAppear {
             networkMonitor.startMonitoring()
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+            guard !showSplash else { return }
+            Task {
+                await checkVersion()
+            }
+        }
         .onDisappear {
             networkMonitor.stopMonitoring()
         }
-        .task {
-           // await checkMaintenance()
-            await checkVersion()
+        .onChange(of: showSplash) { _, isSplash in
+            if !isSplash {
+                Task {
+                    await checkMaintenance()
+                    await checkVersion()
+                }
+            }
         }
         .alert("update_required.title".localized, isPresented: $showUpdateAlert) {
             Button("update_required.button".localized) {

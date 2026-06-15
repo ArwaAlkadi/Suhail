@@ -375,10 +375,11 @@ class FirebaseManager {
             .getDocument()
 
         let data = doc.data() ?? [:]
+        let isArabic = Locale.current.language.languageCode?.identifier == "ar"
 
         return AppUpdateConfig(
             minimumVersion: data["minimumVersion"] as? String ?? "1.0.0",
-            message: data["message"] as? String ?? "Please update the app to continue.",
+            message: isArabic ? data["message_ar"] as? String ?? "" : data["message_en"] as? String ?? "Please update the app to continue.",
             appStoreURL: data["appStoreURL"] as? String ?? ""
         )
     }
