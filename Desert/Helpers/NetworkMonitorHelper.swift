@@ -65,7 +65,7 @@ class NetworkMonitorHelper: ObservableObject {
                 showOnlineToast = false
             }
 
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) { [weak self] in
                 withAnimation { self?.showOfflineToast = false }
             }
 
