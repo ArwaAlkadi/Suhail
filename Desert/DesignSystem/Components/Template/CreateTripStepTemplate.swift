@@ -15,6 +15,7 @@ struct CreateTripStepTemplate<Content: View>: View {
     
     var buttonTitleKey: String
     var isLoading: Bool = false
+    var isDisabled: Bool = false
     var leadingButton: HeaderView.LeadingButton
     var showsProgressBar: Bool = true
     
@@ -51,11 +52,13 @@ struct CreateTripStepTemplate<Content: View>: View {
             VStack(spacing: 0) {
                 if !isInputFocused {
                     CTAButton(
-                        title: isLoading ? "" : buttonTitleKey.localized
+                        title: isLoading ? "" : buttonTitleKey.localized,
+                        style: isLoading ? .primary : (isDisabled ? .disabled : .primary)
                     ) {
                         guard !isLoading else { return }
                         onNext()
                     }
+                    .disabled(isLoading || isDisabled)
                     .overlay {
                         if isLoading {
                             HStack(spacing: AppSpacing.sm) {

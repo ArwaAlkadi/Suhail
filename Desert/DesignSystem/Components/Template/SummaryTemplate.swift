@@ -34,6 +34,7 @@ struct SummaryTemplate: View {
                 ? "summary.creatingTrip"
                 : "summary.startNewTrip",
             isLoading: isLoading,
+            isDisabled: !isConnected,
             leadingButton: .back,
             showsProgressBar: false,
             isInputFocused: false,
