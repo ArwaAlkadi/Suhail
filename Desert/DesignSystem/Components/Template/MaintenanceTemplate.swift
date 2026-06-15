@@ -6,7 +6,11 @@
 //
 
 import SwiftUI
+
 struct MaintenanceTemplate: View {
+    
+    var title: String
+    var message: String
     
     var body: some View {
         
@@ -17,16 +21,15 @@ struct MaintenanceTemplate: View {
             Image("maintenance")
                 .resizable()
                 .scaledToFit()
-                .frame(maxWidth: 260)
+                .frame(maxWidth: 400)
             
             VStack(spacing: AppSpacing.sx) {
-                
-                Text("maintenance.title".localized)
+                Text(title)
                     .font(AppTypography.title3)
                     .foregroundStyle(Color.Primary)
                     .multilineTextAlignment(.center)
                 
-                Text("maintenance.subtitle".localized)
+                Text(message)
                     .font(AppTypography.body)
                     .foregroundStyle(Color.lableSec)
                     .multilineTextAlignment(.center)
@@ -39,6 +42,10 @@ struct MaintenanceTemplate: View {
         .background(Color.Background)
     }
 }
+
 #Preview {
-    MaintenanceTemplate()
+    MaintenanceTemplate(
+        title: "maintenance.title".localized,
+        message: "maintenance.subtitle".localized
+    )
 }
