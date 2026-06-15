@@ -63,18 +63,20 @@ struct RootView: View {
             }
         }
         .overlay(alignment: .top) {
-            ZStack(alignment: .top) {
-                if networkMonitor.showOfflineToast {
-                    NetworkStatusBanner(status: .disconnected)
-                        .padding(.horizontal, AppSpacing.md)
-                        .onTapGesture {
-                            networkMonitor.dismissOfflineToast()
-                        }
-                }
+            if !showSplash {
+                ZStack(alignment: .top) {
+                    if networkMonitor.showOfflineToast {
+                        NetworkStatusBanner(status: .disconnected)
+                            .padding(.horizontal, AppSpacing.md)
+                            .onTapGesture {
+                                networkMonitor.dismissOfflineToast()
+                            }
+                    }
 
-                if networkMonitor.showOnlineToast {
-                    NetworkStatusBanner(status: .connected)
-                        .padding(.horizontal, AppSpacing.md)
+                    if networkMonitor.showOnlineToast {
+                        NetworkStatusBanner(status: .connected)
+                            .padding(.horizontal, AppSpacing.md)
+                    }
                 }
             }
         }
