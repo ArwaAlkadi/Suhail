@@ -242,3 +242,7 @@
 "tripCompleted.title" = "Trip Completed";
 "tripCompleted.description" = "Live tracking has been turned off.";
 "tripCompleted.done" = "Done";
+
+/* MARK: -  maintenance  */
+"maintenance.title" = "We're improving your experience";
+"maintenance.subtitle" = "Under maintenance. Back soon";

@@ -16,6 +16,7 @@
 		33984C662FD764B000F6DD72 /* PlateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33984C652FD7649C00F6DD72 /* PlateFormatter.swift */; };
 		33B4366A2FDCABB700769AA2 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 33B436692FDCABB700769AA2 /* Lottie */; };
 		33B4366E2FDCD20300769AA2 /* Splash.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 33B4366D2FDCD20300769AA2 /* Splash.lottie */; };
+		33B436702FE09EBA00769AA2 /* MaintenanceTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B4366F2FE09EAC00769AA2 /* MaintenanceTemplate.swift */; };
 		33EED7D82FDAE0990015A914 /* TripCompletedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33EED7D72FDAE0950015A914 /* TripCompletedCard.swift */; };
 		EC1FBE882FC52FAA00CA755B /* AvatarCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */; };
 		EC1FBE892FC52FAA00CA755B /* ConnectivityIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */; };
@@ -120,6 +121,7 @@
 		33984C632FD4D8D500F6DD72 /* AppLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLanguage.swift; sourceTree = "<group>"; };
 		33984C652FD7649C00F6DD72 /* PlateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlateFormatter.swift; sourceTree = "<group>"; };
 		33B4366D2FDCD20300769AA2 /* Splash.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = Splash.lottie; sourceTree = "<group>"; };
+		33B4366F2FE09EAC00769AA2 /* MaintenanceTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceTemplate.swift; sourceTree = "<group>"; };
 		33EED7D72FDAE0950015A914 /* TripCompletedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCompletedCard.swift; sourceTree = "<group>"; };
 		EC1FBE582FC52FAA00CA755B /* AvatarCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircle.swift; sourceTree = "<group>"; };
 		EC1FBE592FC52FAA00CA755B /* ConnectivityIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityIcon.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 		EC1FBE7C2FC52FAA00CA755B /* Template */ = {
 			isa = PBXGroup;
 			children = (
+				33B4366F2FE09EAC00769AA2 /* MaintenanceTemplate.swift */,
 				EC2F63012FC7B0C3007FF45C /* HomeTemplate.swift */,
 				336A696A2FC9BF6900C93DEB /* CreateTripStepTemplate.swift */,
 				EC1FBEB32FC74FF100CA755B /* PersonalDetTemplate.swift */,
@@ -711,6 +714,7 @@
 				EC309FBA2F97FF69003E343E /* Trip.swift in Sources */,
 				ECCD9F432FB7B79F00E2B5B9 /* MaintenanceView.swift in Sources */,
 				EC309FA02F97FDBC003E343E /* OnboardingView.swift in Sources */,
+				33B436702FE09EBA00769AA2 /* MaintenanceTemplate.swift in Sources */,
 				EC309FB22F97FEA0003E343E /* TripHistoryViewModel.swift in Sources */,
 				EC2F63082FC88FC5007FF45C /* TripTrackTemplate.swift in Sources */,
 				EC309FB62F97FEDD003E343E /* AppSettings.swift in Sources */,
