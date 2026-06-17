@@ -80,12 +80,13 @@ private extension PersonalDetailsTemplate {
                     .fill(Color.Grey100)
                     .frame(width: 1)
                     .frame(maxHeight: 24)
+                
                 AppTextField(
                     placeholderKey: "trip.phone.placeholder",
                     text: $phoneNumber,
-                    state: showErrors && !isPhoneNumberValid ? .error : .normal
+                    state: showErrors && !isPhoneNumberValid ? .error : .normal,
+                    keyboardType: .phonePad
                 )
-                .keyboardType(.numberPad)
             }
             .padding(.horizontal, AppSpacing.md)
             .frame(maxWidth: .infinity)

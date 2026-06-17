@@ -20,6 +20,7 @@ struct AddContactRow: View {
             HStack(spacing: AppSpacing.sm) {
 
                 CounterButton(style: .add) {
+                    action()
 
                 }
 

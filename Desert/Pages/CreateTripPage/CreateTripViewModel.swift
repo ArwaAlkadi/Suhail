@@ -148,18 +148,11 @@ class CreateTripViewModel: ObservableObject {
         let normalized = normalizeArabicDigits(phoneNumber)
         let digits = normalized.filter(\.isNumber)
         
-        let local: String
-        
-        if digits.hasPrefix("966") {
-            local = String(digits.dropFirst(3))
-        } else if digits.hasPrefix("0") {
-            local = String(digits.dropFirst())
-        } else {
-            local = digits
-        }
-        
-        return local.hasPrefix("5") && local.count == 9
+        return digits.hasPrefix("5") && digits.count == 9
     }
+
+    
+    
     
     var displayCarColor: String {
         selectedColor.localized

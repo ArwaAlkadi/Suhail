@@ -31,10 +31,9 @@ enum PhoneError {
 struct AppTextField: View {
     
     var placeholderKey: String
-    
     @Binding var text: String
-    
     var state: AppTextFieldState = .normal
+    var keyboardType: UIKeyboardType = .default
     
     @Environment(\.layoutDirection)
     private var layoutDirection
@@ -52,7 +51,8 @@ struct AppTextField: View {
                     placeholder: placeholderKey.localized,
                     text: $text,
                     isDisabled: state == .disabled,
-                    isArabic: AppLanguage.isArabic
+                    isArabic: AppLanguage.isArabic,
+                    keyboardType: keyboardType
                 )
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
@@ -147,6 +147,7 @@ private struct RTLTextField: UIViewRepresentable {
     @Binding var text: String
     var isDisabled: Bool
     var isArabic: Bool
+    var keyboardType: UIKeyboardType
 
     private func fontForText(_ value: String) -> UIFont {
         let hasArabic = value.range(of: "\\p{Arabic}", options: .regularExpression) != nil
@@ -161,9 +162,14 @@ private struct RTLTextField: UIViewRepresentable {
     func makeUIView(context: Context) -> UITextField {
         let textField = UITextField()
         textField.delegate = context.coordinator
+        textField.addTarget(
+            context.coordinator,
+            action: #selector(Coordinator.textDidChange(_:)),
+            for: .editingChanged
+        )
         textField.textAlignment = isArabic ? .right : .left
         textField.semanticContentAttribute = isArabic ? .forceRightToLeft : .forceLeftToRight
-        textField.keyboardType = .default
+        textField.keyboardType = keyboardType
         textField.autocorrectionType = .no
         textField.backgroundColor = .clear
         textField.font = fontForText(text.isEmpty ? placeholder : text)
@@ -182,7 +188,7 @@ private struct RTLTextField: UIViewRepresentable {
         if uiView.text != text {
             uiView.text = text
         }
-
+        uiView.keyboardType = keyboardType
         uiView.font = fontForText(text.isEmpty ? placeholder : text)
 
         uiView.isEnabled = !isDisabled
@@ -209,9 +215,10 @@ private struct RTLTextField: UIViewRepresentable {
             _text = text
         }
 
-        func textFieldDidChangeSelection(_ textField: UITextField) {
+        @objc func textDidChange(_ textField: UITextField) {
             text = textField.text ?? ""
         }
+        
     }
 }
 
