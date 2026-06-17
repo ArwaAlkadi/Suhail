@@ -143,7 +143,7 @@ extension RootView {
 
             if FirebaseManager.isOlderVersion(current: currentVersion, required: config.minimumVersion)
                 && !ActiveTripSession.shared.hasActiveTrip
-                && !maintenanceEnabled  && appSettings?.isFirstLaunch != true {
+                && !maintenanceEnabled {
                 await MainActor.run {
                     updateMessage = config.message
                     appStoreURL = config.appStoreURL
