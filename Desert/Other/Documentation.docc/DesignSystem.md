@@ -39,6 +39,7 @@
 - ``GroupNumberRow``
 - ``InquiryRow``
 - ``PlateInfoRow``
+- ``PlateFormatter``
 - ``AppTextFieldState``
 - ``ValidatedTextField``
 
