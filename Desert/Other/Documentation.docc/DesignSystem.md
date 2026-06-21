@@ -13,6 +13,7 @@
 - ``HistoryTemplate``
 - ``HistoryTripDetailsTemplate``
 - ``TripTrackTemplate``
+- ``MaintenanceTemplate``
 
 ### Organisms
 - ``ActiveTripCard``
@@ -51,6 +52,7 @@
 - ``CounterButton``
 - ``PlateLetterPicker``
 - ``PlateNumberFields``
+- ``PlateFormatter``
 - ``ProgressSegment``
 - ``StatusBadge``
 - ``Stepper``

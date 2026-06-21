@@ -85,6 +85,7 @@ The same Terms & Conditions and Privacy Policy published with the App Store rele
 ### Helpers
 - ``NetworkMonitorHelper``
 - ``AppPage``
+- ``AppLanguage``
 - ``NavigationGestureDisabler``
 - ``OnTripStartedKey``
 
