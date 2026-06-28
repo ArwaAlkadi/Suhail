@@ -18,6 +18,7 @@
 /// | `savedPointsCount` | Int | `TripSessionManager` | `clearActiveTripFromSettings` | Continues GPS point numbering from the correct index after a restart. |
 /// | `lastUploadDate` | Double | `TripSessionManager` | `clearActiveTripFromSettings` | Preserves the last upload timestamp so the 30-minute fallback upload rule still works after a restart. |
 /// | `lastUploadedLat/Lng` | Double | `TripSessionManager` | `clearActiveTripFromSettings` | Remembers the last uploaded coordinate to correctly measure movement distance after a restart. |
+/// | `isProductionEnabled` | Bool | `TripSummaryView` (DEBUG only) | Never | Controls whether Firebase uploads are active during development — off by default, writes to `_trips_dev` when on. |
 ///
 enum UserDefaultsKeys {
 
@@ -52,4 +53,12 @@ enum UserDefaultsKeys {
     /// Last coordinate successfully uploaded to Firebase — measures distance since last upload.
     static let lastUploadedLat  = "lastUploadedLat"
     static let lastUploadedLng  = "lastUploadedLng"
+
+    // MARK: - Developer Settings
+
+    /// Controls whether Firebase uploads are active during development.
+    /// `false` by default — no data is written to Firebase until explicitly enabled.
+    /// When `true`, writes go to `_trips_dev` — production (`trips`) is never touched.
+    /// Toggled from `TripSummaryView` in DEBUG builds only.
+    static let isProductionEnabled = "devSettings.isProductionEnabled"
 }

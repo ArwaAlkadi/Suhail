@@ -29,6 +29,15 @@ struct TripSummaryView: View {
     @State private var isLoading = false
     @State private var showTerms = false
 
+    // MARK: - Developer Settings
+
+    #if DEBUG
+    /// Controls whether trip data is uploaded to Firebase during development.
+    /// Wraps `FirebaseManager.shared.isProductionEnabled` as local state so the toggle reflects changes live.
+    /// Only visible in DEBUG builds — stripped entirely from production.
+    @State private var isProductionEnabled: Bool = FirebaseManager.shared.isProductionEnabled
+    #endif
+
     // MARK: - Computed
 
     var isConnected: Bool { networkMonitor.isConnected }
@@ -67,7 +76,6 @@ struct TripSummaryView: View {
                 onTermsTapped: { showTerms = true },
                 isLoading: $isLoading
             )
-         
             .sheet(isPresented: $showTerms) {
                 SafariView(url: URL(string: "https://suhail-1.web.app/privacy.html")!)
             }
@@ -85,6 +93,29 @@ struct TripSummaryView: View {
             .onAppear { networkMonitor.startMonitoring() }
             .onDisappear { networkMonitor.stopMonitoring() }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+
+            #if DEBUG
+            // MARK: - Dev Toggle (DEBUG only — hidden in production)
+            VStack {
+                Spacer()
+                VStack {
+                    Toggle(isOn: $isProductionEnabled) {
+                        Text("⚠️ Dev Mode — Enable to upload trip to _trips_dev and trigger WhatsApp alerts")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    .onChange(of: isProductionEnabled) { _, newValue in
+                        FirebaseManager.shared.isProductionEnabled = newValue
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal)
+                .padding(.bottom, 150)
+            }
+            #endif
         }
     }
 }
