@@ -308,6 +308,7 @@ class ActiveTripSession: NSObject, ObservableObject {
 
         if let lastLocation = locationManager.lastKnownLocation {
             if Date().timeIntervalSince(lastUploadDate) >= maxTimeBetweenUploads {
+                lastUploadDate = Date()
                 uploadLocationToCloud(lastLocation, trip: trip, context: context)
             }
         }

@@ -459,8 +459,6 @@ class FirebaseManager {
     }
     
     // MARK: - Maintenance Config
-
-    
     func fetchMaintenanceConfig() async throws -> MaintenanceConfig {
         let doc = try await db
             .collection("remoteConfig")
@@ -470,8 +468,11 @@ class FirebaseManager {
         let data = doc.data() ?? [:]
         let isArabic = Locale.current.language.languageCode?.identifier == "ar"
 
+        let manualMaintenance = data["isEnabled_manual"] as? Bool ?? false
+        let whatsappMaintenance = data["isEnabled_whatsapp"] as? Bool ?? false
+
         return MaintenanceConfig(
-            isEnabled: data["isEnabled"] as? Bool ?? false,
+            isEnabled: manualMaintenance || whatsappMaintenance,
             title: isArabic ? data["title_ar"] as? String ?? "" : data["title_en"] as? String ?? "",
             message: isArabic ? data["message_ar"] as? String ?? "" : data["message_en"] as? String ?? ""
         )
