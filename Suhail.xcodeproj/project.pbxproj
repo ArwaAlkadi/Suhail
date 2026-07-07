@@ -174,7 +174,7 @@
 		EC2F630B2FC8903E007FF45C /* TripSummaryCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripSummaryCard.swift; sourceTree = "<group>"; };
 		EC2F63482FCA6DBA007FF45C /* CreateTripStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripStepsView.swift; sourceTree = "<group>"; };
 		EC2F634A2FCA6DF9007FF45C /* CreateTripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTripViewModel.swift; sourceTree = "<group>"; };
-		EC309F602F8C0EB3003E343E /* Desert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Desert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC309F602F8C0EB3003E343E /* Suhail.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suhail.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC309F772F8C1058003E343E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EC309F792F8C1058003E343E /* DesertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesertApp.swift; sourceTree = "<group>"; };
 		EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -218,12 +218,12 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		33984C622FD4ADEC00F6DD72 /* Exceptions for "Font" folder in "Desert" target */ = {
+		33984C622FD4ADEC00F6DD72 /* Exceptions for "Font" folder in "Suhail" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"/Localized: thmanyahsans-Medium.otf",
 			);
-			target = EC309F5F2F8C0EB3003E343E /* Desert */;
+			target = EC309F5F2F8C0EB3003E343E /* Suhail */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -231,7 +231,7 @@
 		EC1FBDAA2FC52BBC00CA755B /* Font */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				33984C622FD4ADEC00F6DD72 /* Exceptions for "Font" folder in "Desert" target */,
+				33984C622FD4ADEC00F6DD72 /* Exceptions for "Font" folder in "Suhail" target */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -429,7 +429,7 @@
 		EC309F572F8C0EB3003E343E = {
 			isa = PBXGroup;
 			children = (
-				EC309F7B2F8C1058003E343E /* Desert */,
+				EC309F7B2F8C1058003E343E /* Suhail */,
 				EC309F612F8C0EB3003E343E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -437,12 +437,12 @@
 		EC309F612F8C0EB3003E343E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EC309F602F8C0EB3003E343E /* Desert.app */,
+				EC309F602F8C0EB3003E343E /* Suhail.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EC309F7B2F8C1058003E343E /* Desert */ = {
+		EC309F7B2F8C1058003E343E /* Suhail */ = {
 			isa = PBXGroup;
 			children = (
 				EC309F902F97FAFF003E343E /* App */,
@@ -455,7 +455,7 @@
 				EC57B3442FCD2F6E0024DD4F /* Localization */,
 				EC309F9A2F97FD07003E343E /* Other */,
 			);
-			path = Desert;
+			path = Suhail;
 			sourceTree = "<group>";
 		};
 		EC309F8A2F97FAF9003E343E /* HistoryPage */ = {
@@ -596,9 +596,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EC309F5F2F8C0EB3003E343E /* Desert */ = {
+		EC309F5F2F8C0EB3003E343E /* Suhail */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Desert" */;
+			buildConfigurationList = EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Suhail" */;
 			buildPhases = (
 				EC309F5C2F8C0EB3003E343E /* Sources */,
 				EC309F5D2F8C0EB3003E343E /* Frameworks */,
@@ -611,7 +611,7 @@
 			fileSystemSynchronizedGroups = (
 				EC1FBDAA2FC52BBC00CA755B /* Font */,
 			);
-			name = Desert;
+			name = Suhail;
 			packageProductDependencies = (
 				EC309F712F8C1042003E343E /* FirebaseAnalytics */,
 				EC309F732F8C1042003E343E /* FirebaseFirestore */,
@@ -620,7 +620,7 @@
 				33B436692FDCABB700769AA2 /* Lottie */,
 			);
 			productName = Desert;
-			productReference = EC309F602F8C0EB3003E343E /* Desert.app */;
+			productReference = EC309F602F8C0EB3003E343E /* Suhail.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -638,7 +638,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Desert" */;
+			buildConfigurationList = EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Suhail" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -657,7 +657,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EC309F5F2F8C0EB3003E343E /* Desert */,
+				EC309F5F2F8C0EB3003E343E /* Suhail */,
 			);
 		};
 /* End PBXProject section */
@@ -934,7 +934,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Desert/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Desert;
+				INFOPLIST_KEY_CFBundleDisplayName = Suhail;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -983,7 +983,7 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Desert/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Desert;
+				INFOPLIST_KEY_CFBundleDisplayName = Suhail;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -1021,7 +1021,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Desert" */ = {
+		EC309F5B2F8C0EB3003E343E /* Build configuration list for PBXProject "Suhail" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC309F692F8C0EB3003E343E /* Debug */,
@@ -1030,7 +1030,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Desert" */ = {
+		EC309F6B2F8C0EB3003E343E /* Build configuration list for PBXNativeTarget "Suhail" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				EC309F6C2F8C0EB3003E343E /* Debug */,

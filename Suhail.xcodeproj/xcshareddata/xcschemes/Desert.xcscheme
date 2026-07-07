@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EC309F5F2F8C0EB3003E343E"
-               BuildableName = "Desert.app"
-               BlueprintName = "Desert"
-               ReferencedContainer = "container:Desert.xcodeproj">
+               BuildableName = "Suhail.app"
+               BlueprintName = "Suhail"
+               ReferencedContainer = "container:Suhail.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EC309F5F2F8C0EB3003E343E"
-            BuildableName = "Desert.app"
-            BlueprintName = "Desert"
-            ReferencedContainer = "container:Desert.xcodeproj">
+            BuildableName = "Suhail.app"
+            BlueprintName = "Suhail"
+            ReferencedContainer = "container:Suhail.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EC309F5F2F8C0EB3003E343E"
-            BuildableName = "Desert.app"
-            BlueprintName = "Desert"
-            ReferencedContainer = "container:Desert.xcodeproj">
+            BuildableName = "Suhail.app"
+            BlueprintName = "Suhail"
+            ReferencedContainer = "container:Suhail.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
