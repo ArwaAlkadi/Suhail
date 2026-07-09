@@ -83,5 +83,5 @@ To view it in Xcode: **Product → Build Documentation** (⌃⌘D)
 
 ## Related Repositories
 
-- **[DesertWebsite](https://github.com/ArwaAlkadi/DesertWebsite)** — Firebase Hosting website serving the public web layer of the system (the tracking link recipients open)
+- **[SuhailtWebsite](https://github.com/ArwaAlkadi/SuhailWebsite)** — Firebase Hosting website serving the public web layer of the system (the tracking link recipients open)
 - **[SuhailWhatsApp](https://github.com/ArwaAlkadi/SuhailWhatsApp)** — WhatsApp messaging service responsible for delivering emergency alerts
