@@ -9,6 +9,8 @@ When an alert is triggered, emergency contacts receive a **WhatsApp message** co
 <br>
 <img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/ed59f31d-39f6-4901-91a7-53fa94dfa9c3" />
 <br>
+<br>
+
 
 ## Features
 
@@ -19,6 +21,7 @@ When an alert is triggered, emergency contacts receive a **WhatsApp message** co
 - **Offline-first** — built for remote areas: trip data lives locally and syncs when connectivity returns, with a live network status banner
 - **Trip history** with detailed route playback per trip
 - **Arabic & English localization**, custom design system, and a remote maintenance mode
+<br>
 
 ## How It Works
 
@@ -38,6 +41,8 @@ The full GPS track is saved **locally**, but uploads to the cloud are adaptive b
 ### Hybrid Storage
 Safety-critical and operational data are deliberately split: the complete route history is stored on-device with **SwiftData** (always available, even fully offline), while only what backend and emergency workflows need — trip status, contacts, destination, and latest location — is synced to **Firestore**. This reduces network dependency in remote environments and limits how much location data ever leaves the device.
 
+<br>
+
 
 ## Tech Stack
 
@@ -51,11 +56,15 @@ Safety-critical and operational data are deliberately split: the complete route 
 | Architecture | MVVM + Atomic Design system |
 | Localization | Arabic · English |
 
+<br>
+
 ## Documentation
 
 Comprehensive **DocC** documentation is included throughout the codebase and serves as the primary source of implementation-level documentation, covering architecture and system design, ViewModels and Managers, data flow and responsibilities, backend integration, and important implementation details — with layered-architecture, UML, and backend-journey diagrams.
 
 To view it in Xcode: **Product → Build Documentation** (⌃⌘D)
+
+<br>
 
 ## Related Repositories
 
