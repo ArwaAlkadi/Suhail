@@ -93,4 +93,4 @@ The same Terms & Conditions and Privacy Policy published with the App Store rele
 - <doc:DesignSystem>
 
 ### Other
-- <doc:Others>
+- <doc:Other>
