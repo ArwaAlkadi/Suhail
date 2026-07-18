@@ -454,6 +454,7 @@
 				EC1FBE872FC52FAA00CA755B /* DesignSystem */,
 				EC57B3442FCD2F6E0024DD4F /* Localization */,
 				EC309F9A2F97FD07003E343E /* Other */,
+				EC309FE42FABCB93003E343E /* Documentation.docc */,
 			);
 			path = Suhail;
 			sourceTree = "<group>";
@@ -536,7 +537,6 @@
 				33B4366D2FDCD20300769AA2 /* Splash.lottie */,
 				EC309F772F8C1058003E343E /* Assets.xcassets */,
 				EC1FBDAA2FC52BBC00CA755B /* Font */,
-				EC309FE42FABCB93003E343E /* Documentation.docc */,
 				EC309F802F91773C003E343E /* Info.plist */,
 				EC309F7A2F8C1058003E343E /* GoogleService-Info.plist */,
 			);

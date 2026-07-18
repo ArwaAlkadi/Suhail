@@ -1,4 +1,4 @@
-# ``Desert``
+# ``Suhail``
 A safety app for desert and remote trips.
 
 ## Overview
