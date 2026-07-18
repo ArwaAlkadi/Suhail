@@ -9,6 +9,8 @@ When an alert is triggered, emergency contacts receive a **WhatsApp message** co
 <br>
 <img width="1920" height="1080" alt="Untitled" src="https://github.com/user-attachments/assets/ed59f31d-39f6-4901-91a7-53fa94dfa9c3" />
 <br>
+<br>
+
 
 ## Features
 
@@ -19,6 +21,7 @@ When an alert is triggered, emergency contacts receive a **WhatsApp message** co
 - **Offline-first** — built for remote areas: trip data lives locally and syncs when connectivity returns, with a live network status banner
 - **Trip history** with detailed route playback per trip
 - **Arabic & English localization**, custom design system, and a remote maintenance mode
+<br>
 
 ## How It Works
 
@@ -38,30 +41,8 @@ The full GPS track is saved **locally**, but uploads to the cloud are adaptive b
 ### Hybrid Storage
 Safety-critical and operational data are deliberately split: the complete route history is stored on-device with **SwiftData** (always available, even fully offline), while only what backend and emergency workflows need — trip status, contacts, destination, and latest location — is synced to **Firestore**. This reduces network dependency in remote environments and limits how much location data ever leaves the device.
 
-## Architecture
+<br>
 
-MVVM on top of an Atomic Design system:
-
-```
-Suhail
-├── App/                 # Entry, AppDelegate, RootView
-├── Models/              # Trip (SwiftData @Model), contacts, settings
-├── Session/             # ActiveTripSession — the live trip engine
-├── Managers/            # Firebase, Location, Notifications
-├── Pages/               # CreateTrip (multi-step), Home, History,
-│                        # Onboarding, Splash, shared Map/Maintenance
-├── DesignSystem/        # Foundations (colors, typography, spacing,
-│                        # radius, grid) + Atoms → Molecules →
-│                        # Organisms → Templates
-├── Helpers/             # Localization, network monitor, navigation,
-│                        # plate formatting, keyboard
-└── desert-functions/    # Firebase Cloud Functions (Node.js)
-```
-
-- **`ActiveTripSession`** — a singleton trip engine: starts/finishes trips, saves the GPS track locally, decides when to upload, runs the overdue timer, and resumes the session after relaunch or force quit
-- **`LocationManager`** — background location updates with permission handling and session restoration
-- **`FirebaseManager`** — Firestore sync for trip status, contacts, and last known location
-- **`checkOverdueTrips`** (Cloud Function) — the 5-minute scheduled job implementing the alert pipeline above, calling a dedicated WhatsApp service to deliver messages
 
 ## Tech Stack
 
@@ -75,11 +56,15 @@ Suhail
 | Architecture | MVVM + Atomic Design system |
 | Localization | Arabic · English |
 
+<br>
+
 ## Documentation
 
 Comprehensive **DocC** documentation is included throughout the codebase and serves as the primary source of implementation-level documentation, covering architecture and system design, ViewModels and Managers, data flow and responsibilities, backend integration, and important implementation details — with layered-architecture, UML, and backend-journey diagrams.
 
 To view it in Xcode: **Product → Build Documentation** (⌃⌘D)
+
+<br>
 
 ## Related Repositories
 
