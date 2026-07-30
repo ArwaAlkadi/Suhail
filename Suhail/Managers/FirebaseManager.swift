@@ -214,66 +214,66 @@ class FirebaseManager {
 
         db.collection(tripsCollection).document(tripId).setData([
 
-            "01-userId": userId ?? "unknown",
+            "userId": userId ?? "unknown",
 
-            "02-status": [
-                "a-status": trip.status,
-                "b-startedAt": trip.startTime.timeIntervalSince1970,
-                "c-startedAtReadable": formatDate(trip.startTime),
-                "d-endedAt": 0,
-                "e-endedAtReadable": "",
-                "f-alertSent": false,
-                "g-alertSentAt": 0,
-                "h-alertSentAtReadable": "",
-                "i-alertReason": "",
-                "j-pendingAlertAt": 0,
-                "k-updatedAlertCount": 0,
+            "status": [
+                "value": trip.status,
+                "startedAt": trip.startTime.timeIntervalSince1970,
+                "startedAtReadable": formatDate(trip.startTime),
+                "endedAt": 0,
+                "endedAtReadable": "",
+                "alertSent": false,
+                "alertSentAt": 0,
+                "alertSentAtReadable": "",
+                "alertReason": "",
+                "pendingAlertAt": 0,
+                "updatedAlertCount": 0,
             ],
 
-            "03-userInfo": [
-                "a-userName": trip.userName,
-                "b-phoneNumber": trip.phoneNumber,
+            "userInfo": [
+                "userName": trip.userName,
+                "phoneNumber": trip.phoneNumber,
             ],
 
-            "04-lastKnownLocation": [
-                "a-lat": 0,
-                "b-lng": 0,
-                "c-direction": "",
-                "d-lastUploadTime": 0,
-                "e-lastUploadTimeReadable": "",
-                "f-deviceBatteryLevel": -1,
+            "lastKnownLocation": [
+                "lat": 0,
+                "lng": 0,
+                "direction": "",
+                "lastUploadTime": 0,
+                "lastUploadTimeReadable": "",
+                "deviceBatteryLevel": -1,
             ],
 
-            "05-emergencyContacts": trip.emergencyContacts.map {[
-                "a-name": $0.name,
-                "b-phone": $0.phone
+            "emergencyContacts": trip.emergencyContacts.map {[
+                "name": $0.name,
+                "phone": $0.phone
             ]},
 
-            "06-tripInfo": [
-                "a-tripId": tripId,
-                "b-startTime": trip.startTime.timeIntervalSince1970,
-                "c-startTimeReadable": formatDate(trip.startTime),
-                "d-returnTime": trip.returnTime.timeIntervalSince1970,
-                "e-returnTimeReadable": formatDate(trip.returnTime),
-                "f-destination": trip.destination,
-                "g-destinationCoordinates": [
+            "tripInfo": [
+                "tripId": tripId,
+                "startTime": trip.startTime.timeIntervalSince1970,
+                "startTimeReadable": formatDate(trip.startTime),
+                "returnTime": trip.returnTime.timeIntervalSince1970,
+                "returnTimeReadable": formatDate(trip.returnTime),
+                "destination": trip.destination,
+                "destinationCoordinates": [
                     "lat": trip.destinationLat,
                     "lng": trip.destinationLng
                 ],
-                "h-hasGroup": trip.hasGroup,
-                "i-groupSize": trip.groupSize,
-                "j-groupContacts": trip.groupContacts.map {[
-                    "a-name": $0.name,
-                    "b-phone": $0.phone
+                "hasGroup": trip.hasGroup,
+                "groupSize": trip.groupSize,
+                "groupContacts": trip.groupContacts.map {[
+                    "name": $0.name,
+                    "phone": $0.phone
                 ]},
             ],
 
-            "07-carInfo": [
-                "a-carName": trip.carName,
-                "b-carColor": trip.carColor,
-                "c-is4WD": trip.is4WD,
-                "d-plateLetters": trip.plateLetters,
-                "e-plateNumbers": trip.plateNumbers,
+            "carInfo": [
+                "carName": trip.carName,
+                "carColor": trip.carColor,
+                "is4WD": trip.is4WD,
+                "plateLetters": trip.plateLetters,
+                "plateNumbers": trip.plateNumbers,
             ],
 
         ]) { error in
@@ -312,20 +312,20 @@ class FirebaseManager {
         let batteryPercentage = batteryLevel >= 0 ? Int(batteryLevel * 100) : -1
 
         var location: [String: Any] = [
-            "a-lat": lat,
-            "b-lng": lng,
-            "c-direction": "",
-            "d-lastUploadTime": Date().timeIntervalSince1970,
-            "e-lastUploadTimeReadable": formatDate(Date()),
-            "f-deviceBatteryLevel": batteryPercentage
+            "lat": lat,
+            "lng": lng,
+            "direction": "",
+            "lastUploadTime": Date().timeIntervalSince1970,
+            "lastUploadTimeReadable": formatDate(Date()),
+            "deviceBatteryLevel": batteryPercentage
         ]
         
         if let direction = direction {
-            location["c-direction"] = readableDirection(from: direction)
+            location["direction"] = readableDirection(from: direction)
         }
         
         db.collection(tripsCollection).document(tripId).updateData([
-            "04-lastKnownLocation": location
+            "lastKnownLocation": location
         ]) { error in
             if error == nil {
                 print("location updated")
@@ -355,8 +355,8 @@ class FirebaseManager {
         guard !uploadsDisabled() else { return }
 
         db.collection(tripsCollection).document(tripId).updateData([
-            "06-tripInfo.d-returnTime": returnTime.timeIntervalSince1970,
-            "06-tripInfo.e-returnTimeReadable": formatDate(returnTime)
+            "tripInfo.returnTime": returnTime.timeIntervalSince1970,
+            "tripInfo.returnTimeReadable": formatDate(returnTime)
         ]) { error in
             if error == nil {
                 print("return time updated — \(tripId)")
@@ -378,9 +378,9 @@ class FirebaseManager {
         guard !uploadsDisabled() else { return }
 
         db.collection(tripsCollection).document(tripId).updateData([
-            "02-status.a-status": "completed",
-            "02-status.d-endedAt": Date().timeIntervalSince1970,
-            "02-status.e-endedAtReadable": formatDate(Date())
+            "status.value": "completed",
+            "status.endedAt": Date().timeIntervalSince1970,
+            "status.endedAtReadable": formatDate(Date())
         ]) { error in
             if error == nil {
                 print("trip ended")
@@ -411,8 +411,8 @@ class FirebaseManager {
             }
 
             guard let data = snapshot?.data() else { return }
-            let statusObj = data["02-status"] as? [String: Any]
-            let status = statusObj?["a-status"] as? String ?? ""
+            let statusObj = data["status"] as? [String: Any]
+            let status = statusObj?["value"] as? String ?? ""
             onStatusChanged(status)
         }
     }
@@ -451,8 +451,8 @@ class FirebaseManager {
             }
 
             let data = document?.data()
-            let statusObj = data?["02-status"] as? [String: Any]
-            let alertSent = statusObj?["f-alertSent"] as? Bool ?? false
+            let statusObj = data?["status"] as? [String: Any]
+            let alertSent = statusObj?["alertSent"] as? Bool ?? false
 
             completion(alertSent)
         }

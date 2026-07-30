@@ -40,20 +40,20 @@ exports.checkOverdueTrips = onSchedule({
     for (const collectionName of MONITORED_COLLECTIONS) {
         const snapshot = await db
             .collection(collectionName)
-            .where("02-status.a-status", "in", ["active", "overdue"])
+            .where("status.value", "in", ["active", "overdue"])
             .get();
 
         for (const doc of snapshot.docs) {
             const trip = doc.data();
             const tripId = doc.id;
 
-            const statusObj = trip["02-status"] ?? {};
-            const status = statusObj["a-status"];
-            const tripInfo = trip["06-tripInfo"] ?? {};
-            const location = trip["04-lastKnownLocation"] ?? {};
+            const statusObj = trip["status"] ?? {};
+            const status = statusObj["value"];
+            const tripInfo = trip["tripInfo"] ?? {};
+            const location = trip["lastKnownLocation"] ?? {};
 
-            const returnTime = tripInfo["d-returnTime"];
-            const lastUploadTime = location["d-lastUploadTime"] ?? 0;
+            const returnTime = tripInfo["returnTime"];
+            const lastUploadTime = location["lastUploadTime"] ?? 0;
 
             if (!returnTime) continue;
 
@@ -62,12 +62,12 @@ exports.checkOverdueTrips = onSchedule({
                 lastUploadTime === 0 ||
                 now - lastUploadTime >= NO_RECENT_UPLOAD_LIMIT;
 
-            const alertAlreadySent = statusObj["f-alertSent"] === true;
+            const alertAlreadySent = statusObj["alertSent"] === true;
 
             // Step 1: Mark trip as overdue immediately when return time passes
             if (returnTimePassed && status !== "overdue") {
                 await db.collection(collectionName).doc(tripId).update({
-                    "02-status.a-status": "overdue"
+                    "status.value": "overdue"
                 });
                 console.log(`[${collectionName}] Trip marked as overdue: ${tripId}`);
             }
@@ -86,22 +86,22 @@ exports.checkOverdueTrips = onSchedule({
                 }
 
                 await db.collection(collectionName).doc(tripId).update({
-                    "02-status.f-alertSent": true,
-                    "02-status.g-alertSentAt": now,
-                    "02-status.h-alertSentAtReadable": new Date().toLocaleString("ar-SA"),
-                    "02-status.k-updatedAlertCount": 0,
-                    "02-status.j-pendingAlertAt": 0,
-                    "02-status.i-alertReason": "return_time_passed_no_recent_upload"
+                    "status.alertSent": true,
+                    "status.alertSentAt": now,
+                    "status.alertSentAtReadable": new Date().toLocaleString("ar-SA"),
+                    "status.updatedAlertCount": 0,
+                    "status.pendingAlertAt": 0,
+                    "status.alertReason": "return_time_passed_no_recent_upload"
                 });
 
                 console.log(`[${collectionName}] Initial overdue alert sent for ${tripId}`);
             }
 
             // Step 3: Send debounced updated alert
-            const pendingAlertAt = statusObj["j-pendingAlertAt"] ?? 0;
+            const pendingAlertAt = statusObj["pendingAlertAt"] ?? 0;
             const hasPendingAlert = pendingAlertAt > 0;
             const debounceElapsed = now - pendingAlertAt >= DEBOUNCE_SECONDS;
-            const currentCount = statusObj["k-updatedAlertCount"] ?? 0;
+            const currentCount = statusObj["updatedAlertCount"] ?? 0;
             const maxReached = currentCount >= MAX_UPDATED_ALERTS;
 
             if (alertAlreadySent && hasPendingAlert && debounceElapsed && !maxReached) {
@@ -123,16 +123,16 @@ exports.checkOverdueTrips = onSchedule({
                 }
 
                 const updates = {
-                    "02-status.k-updatedAlertCount": newCount,
-                    "02-status.j-pendingAlertAt": 0,
-                    "02-status.updatedAlertSentAt": now,
-                    "02-status.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA")
+                    "status.updatedAlertCount": newCount,
+                    "status.pendingAlertAt": 0,
+                    "status.updatedAlertSentAt": now,
+                    "status.updatedAlertSentAtReadable": new Date().toLocaleString("ar-SA")
                 };
 
                 if (shouldCompleteTrip) {
-                    updates["02-status.a-status"] = "completed";
-                    updates["02-status.d-endedAt"] = now;
-                    updates["02-status.e-endedAtReadable"] = new Date().toLocaleString("ar-SA");
+                    updates["status.value"] = "completed";
+                    updates["status.endedAt"] = now;
+                    updates["status.endedAtReadable"] = new Date().toLocaleString("ar-SA");
                     console.log(`[${collectionName}] Trip auto-completed after ${MAX_UPDATED_ALERTS} updated alert groups — ${tripId}`);
                 } else {
                     console.log(`[${collectionName}] Updated alert #${newCount} sent for ${tripId}`);
@@ -167,26 +167,26 @@ async function handleLocationUpdate(event, collectionName) {
 
     const tripId = event.params.tripId;
 
-    const beforeLocation = before["04-lastKnownLocation"] ?? {};
-    const afterLocation = after["04-lastKnownLocation"] ?? {};
-    const statusObj = after["02-status"] ?? {};
-    const status = statusObj["a-status"];
+    const beforeLocation = before["lastKnownLocation"] ?? {};
+    const afterLocation = after["lastKnownLocation"] ?? {};
+    const statusObj = after["status"] ?? {};
+    const status = statusObj["value"];
 
-    const oldUploadTime = beforeLocation["d-lastUploadTime"] ?? 0;
-    const newUploadTime = afterLocation["d-lastUploadTime"] ?? 0;
+    const oldUploadTime = beforeLocation["lastUploadTime"] ?? 0;
+    const newUploadTime = afterLocation["lastUploadTime"] ?? 0;
     const newUploadArrived = newUploadTime > oldUploadTime;
 
     if (status !== "overdue") return;
     if (!newUploadArrived) return;
-    if (statusObj["f-alertSent"] !== true) return;
+    if (statusObj["alertSent"] !== true) return;
 
-    const currentCount = statusObj["k-updatedAlertCount"] ?? 0;
+    const currentCount = statusObj["updatedAlertCount"] ?? 0;
     if (currentCount >= MAX_UPDATED_ALERTS) return;
 
     const now = Date.now() / 1000;
 
     await db.collection(collectionName).doc(tripId).update({
-        "02-status.j-pendingAlertAt": now
+        "status.pendingAlertAt": now
     });
 
     console.log(`[${collectionName}] Pending alert set for ${tripId} — will send after ${DEBOUNCE_SECONDS}s debounce`);
@@ -194,31 +194,31 @@ async function handleLocationUpdate(event, collectionName) {
 
 // MARK: - Send Alert Helper
 async function sendAlert({ tripId, trip, type }) {
-    const tripInfo = trip["06-tripInfo"] ?? {};
-    const userInfo = trip["03-userInfo"] ?? {};
-    const contacts = trip["05-emergencyContacts"] ?? [];
-    const location = trip["04-lastKnownLocation"] ?? {};
+    const tripInfo = trip["tripInfo"] ?? {};
+    const userInfo = trip["userInfo"] ?? {};
+    const contacts = trip["emergencyContacts"] ?? [];
+    const location = trip["lastKnownLocation"] ?? {};
 
     if (contacts.length === 0) {
         console.log(`No emergency contacts for ${tripId}`);
         return false;
     }
 
-    const lat = location["a-lat"];
-    const lng = location["b-lng"];
+    const lat = location["lat"];
+    const lng = location["lng"];
     const hasLocation = lat && lng && lat !== 0 && lng !== 0;
 
-    const userName = userInfo["a-userName"] ?? "المستخدم";
-    const tripStartTime = tripInfo["c-startTimeReadable"] ?? "غير معروف";
-    const returnTime = tripInfo["e-returnTimeReadable"] ?? "غير معروف";
-    const lastUpload = location["e-lastUploadTimeReadable"] ?? "غير معروف";
-    const direction = location["c-direction"];
+    const userName = userInfo["userName"] ?? "المستخدم";
+    const tripStartTime = tripInfo["startTimeReadable"] ?? "غير معروف";
+    const returnTime = tripInfo["returnTimeReadable"] ?? "غير معروف";
+    const lastUpload = location["lastUploadTimeReadable"] ?? "غير معروف";
+    const direction = location["direction"];
     const directionLine = direction ? `\nاتجاه الحركة:\n${direction}` : "";
 
     const mapsLink = hasLocation ? `https://maps.google.com/?q=${lat},${lng}` : null;
     const tripLink = `https://suhail-1.web.app/?id=${tripId}`;
 
-    const batteryLevel = location["f-deviceBatteryLevel"];
+    const batteryLevel = location["deviceBatteryLevel"];
     const batteryLine = (batteryLevel != null && batteryLevel >= 0)
         ? `\nنسبة بطارية المستخدم عند آخر تحديث:\n${batteryLevel}%`
         : "";
@@ -260,7 +260,7 @@ ${tripLink}
     let sentToAtLeastOneContact = false;
 
     for (const contact of contacts) {
-        const contactPhone = contact["b-phone"]?.replace(/\D/g, "");
+        const contactPhone = contact["phone"]?.replace(/\D/g, "");
         if (!contactPhone) continue;
 
         try {

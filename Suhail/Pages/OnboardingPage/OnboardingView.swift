@@ -69,7 +69,11 @@ struct OnboardingView: View {
                         
                         Button("onboarding.skip".localized) {
                             withAnimation(.easeInOut(duration: 0.35)) {
-                                currentPage = onboardingItems.count - 1
+                                if currentPage == 2 {
+                                    currentPage = onboardingItems.count - 1
+                                } else {
+                                    currentPage = 2
+                                }
                             }
                         }
                         .font(AppTypography.body)
