@@ -13,7 +13,7 @@ initializeApp();
 const db = getFirestore();
 
 // WhatsApp server URL
-const WHATSAPP_SERVER = "https://suhail-whatsapp-production.up.railway.app";
+const WHATSAPP_SERVER = "https://suhailwhatsapp-production.up.railway.app";
 
 // WhatsApp API key — set via Firebase secret: WHATSAPP_API_KEY
 const WHATSAPP_API_KEY = process.env.WHATSAPP_API_KEY;
